@@ -8,6 +8,8 @@ namespace Inventory.Adjustment.Utilities
 {
     using System;
     using System.Windows.Controls;
+    using Inventory.Adjustment.UI.Infrastructure;
+    using Inventory.Adjustment.UI.Infrastructure.Events;
 
     /// <summary>
     /// Utility class to assist with page navigation
@@ -31,7 +33,7 @@ namespace Inventory.Adjustment.Utilities
         {
             if (frame.CurrentSource != sourcePageUri)
             {
-                //ApplicationEventAggregator.Instance.EventAggregator.GetEvent<PageNavigationEvent>().Publish(sourcePageUri);
+                ApplicationEventAggregator.Instance.EventAggregator.GetEvent<PageNavigationEvent>().Publish(sourcePageUri);
 
                 return frame.NavigationService.Navigate(sourcePageUri);
             }

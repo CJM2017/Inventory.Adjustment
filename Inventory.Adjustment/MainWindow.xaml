@@ -9,12 +9,16 @@
         mc:Ignorable="d"
         Title="{Binding WindowTitle}"
         TitleCaps="False"
-        Background="WhiteSmoke"
-        WindowTitleBrush="DodgerBlue"
         TitleForeground="GhostWhite"
         Height="800" Width="1200" 
         SizeToContent="Manual"
-        WindowStartupLocation="CenterScreen">
+        WindowStartupLocation="CenterScreen" 
+        Background="WhiteSmoke"
+        NonActiveWindowTitleBrush="DodgerBlue">
+    
+    <controls:MetroWindow.WindowTitleBrush>
+        <SolidColorBrush Color="DodgerBlue" Opacity="0.95"/>
+    </controls:MetroWindow.WindowTitleBrush>
 
     <controls:MetroWindow.IconTemplate>
         <DataTemplate>
@@ -87,7 +91,7 @@
                                 Foreground="DarkGray"
                                 PaneBackground="#1F1F1F"
                                 IsPaneOpen="False"
-                                ItemsSource="{Binding Menu}"
+                                ItemsSource="{Binding AppMenu}"
                                 OptionsItemsSource="{Binding OptionsMenu}"
                                 ItemTemplate="{StaticResource MenuItemTemplate}"
                                 OptionsItemTemplate="{StaticResource MenuItemTemplate}"

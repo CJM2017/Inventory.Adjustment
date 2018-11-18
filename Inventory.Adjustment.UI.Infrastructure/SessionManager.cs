@@ -12,7 +12,7 @@ namespace Inventory.Adjustment.UI.Infrastructure
     using Inventory.Adjustment.UI.Infrastructure.Interfaces;
 
     /// <summary>
-    /// Instance to hold session data for the application
+    /// Singleton class for holding session data for the application
     /// </summary>
     public class SessionManager : IDisposable, ISessionManager
     {
@@ -20,6 +20,9 @@ namespace Inventory.Adjustment.UI.Infrastructure
         private readonly CompositionContainer container;
         private bool disposedValue = false; // To detect redundant calls
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SessionManager"/> class
+        /// </summary>
         private SessionManager()
         {
             AggregateCatalog catalog = new AggregateCatalog();
