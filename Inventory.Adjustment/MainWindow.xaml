@@ -3,7 +3,6 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
         xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
         xmlns:viewModels="clr-namespace:Inventory.Adjustment.ViewModels"
         mc:Ignorable="d"
@@ -28,7 +27,7 @@
                   Background="Transparent"
                   RenderOptions.EdgeMode="Aliased"
                   RenderOptions.BitmapScalingMode="HighQuality">
-                <Image Source="Resources/inventory.png"></Image>
+                <Image Source="Resources/InventoryColor.png"></Image>
             </Grid>
         </DataTemplate>
     </controls:MetroWindow.IconTemplate>
@@ -88,7 +87,7 @@
         </Grid.Resources>
 
         <controls:HamburgerMenu x:Name="HamburgerMenuControl"
-                                Foreground="DarkGray"
+                                Foreground="White"
                                 PaneBackground="#1F1F1F"
                                 IsPaneOpen="False"
                                 ItemsSource="{Binding AppMenu}"

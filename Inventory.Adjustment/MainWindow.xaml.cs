@@ -45,6 +45,10 @@ namespace Inventory.Adjustment
             this.DataContext = viewModel;
             this.SizeChanged += WindowResizedHandler;
 
+            Navigation.Frame = new System.Windows.Controls.Frame();
+            Navigation.Frame.NavigationStopped += this.FrameOnNavigationStopped;
+            Navigation.Frame.Navigated += this.FrameOnNavigated;
+
             Application.Current.MainWindow.FontSize = 15;
         }
 
@@ -63,6 +67,28 @@ namespace Inventory.Adjustment
         private void WindowResizedHandler(object sender, SizeChangedEventArgs e)
         {
             // TODO
+        }
+
+        private void FrameOnNavigated(object sender, NavigationEventArgs e)
+        {
+            // need to set twice so mahapps doesn't cache the previous control
+            // by setting the context first to our fake control mahapp's "TransitioningContentPresenter"
+            // keeps a reference to our fake control instead of the previous page
+            this.HamburgerMenuControl.Content = fakeControl;
+            this.HamburgerMenuControl.Content = e.Content;
+
+            if (currentMenuItem != null)
+            {
+                var vm = (ShellViewModel)this.DataContext;
+                vm.UpdateActiveMenuItem(currentMenuItem);
+            }
+        }
+
+        private void FrameOnNavigationStopped(object sender, NavigationEventArgs e)
+        {
+            var vm = (ShellViewModel)this.DataContext;
+            vm.UpdateActiveMenuItem(lastMenuItem);
+            currentMenuItem = lastMenuItem;
         }
 
         private void HandleClick(object sender, ItemClickEventArgs e)

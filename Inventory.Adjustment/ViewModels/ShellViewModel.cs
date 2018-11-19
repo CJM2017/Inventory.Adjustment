@@ -29,14 +29,14 @@ namespace Inventory.Adjustment.ViewModels
         /// </summary>
         public ShellViewModel()
         {
-            AppName = Assembly.GetExecutingAssembly().GetName().Name.ToString().Replace(".", " ");
+            AppName = Assembly.GetExecutingAssembly().GetName().Name.ToString().Replace(".", " ").Replace("UI","");
             Version = Assembly.GetExecutingAssembly().GetName().Version.ToString();
             WindowTitle = $"{AppName} v{Version}";
 
             appMenu = new ObservableCollection<MenuItem>();
             optionsMenu = new ObservableCollection<MenuItem>();
 
-            BuildAppMenu();
+            BuildMenus();
 
             ApplicationEventAggregator.Instance.EventAggregator.GetEvent<PageNavigationEvent>().Subscribe(ForcePageNaviationHandler);
         }
@@ -87,25 +87,63 @@ namespace Inventory.Adjustment.ViewModels
             }
         }
 
-        private void BuildAppMenu()
+        private void BuildMenus()
         {
             // Inventory menu item image
             var inventoryImage = new Image
             {
                 Height = 24,
                 Width = 24,
-                Source = new BitmapImage(new Uri("pack://application:,,,/Inventory.Adjustment.UI;Component/Resources/inventory.png"))
+                Source = new BitmapImage(new Uri("pack://application:,,,/Inventory.Adjustment.UI;Component/Resources/InventoryButton.png"))
             };
 
             // Add inventory menu item
             this.appMenu.Add(new MenuItem()
             {
                 IsSelected = false,
-                Icon = inventoryImage,
-                Text = string.Empty,
-                Tag = "Inventory",
                 IsEnabled = true,
+                Text = "Inventory",
+                Tag = "Inventory",
+                Icon = inventoryImage,
                 NavDestination = new Uri("Views/InventoryPage.xaml", UriKind.RelativeOrAbsolute)
+            });
+
+            // Report menu item image
+            var ReportImage = new Image
+            {
+                Height = 28,
+                Width = 28,
+                Source = new BitmapImage(new Uri("pack://application:,,,/Inventory.Adjustment.UI;Component/Resources/Report.png"))
+            };
+
+            // Add inventory menu item
+            this.appMenu.Add(new MenuItem()
+            {
+                IsSelected = false,
+                IsEnabled = true,
+                Text = "Reports",
+                Tag = "Reports",
+                Icon = ReportImage,
+                NavDestination = new Uri("Views/ReportsPage.xaml", UriKind.RelativeOrAbsolute)
+            });
+
+            // Settings menu option image
+            var settingsImage = new Image
+            {
+                Height = 24,
+                Width = 24,
+                Source = new BitmapImage(new Uri("pack://application:,,,/Inventory.Adjustment.UI;Component/Resources/Settings.png"))
+            };
+
+            // Add settings option menu item
+            this.optionsMenu.Add(new MenuItem()
+            {
+                IsSelected = false,
+                IsEnabled = true,
+                Text = "Settings",
+                Tag = "Settings",
+                Icon = settingsImage,
+                NavDestination = new Uri("Views/SettingsPage.xaml", UriKind.RelativeOrAbsolute)
             });
         }
     }
