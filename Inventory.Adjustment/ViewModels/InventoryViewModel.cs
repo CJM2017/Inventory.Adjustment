@@ -6,7 +6,9 @@
 
 namespace Inventory.Adjustment.UI.ViewModels
 {
-    public class InventoryViewModel
+    using Prism.Mvvm;
+
+    public class InventoryViewModel : BindableBase
     {
     }
 }

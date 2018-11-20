@@ -13,10 +13,10 @@
         SizeToContent="Manual"
         WindowStartupLocation="CenterScreen" 
         Background="WhiteSmoke"
-        NonActiveWindowTitleBrush="DodgerBlue">
+        NonActiveWindowTitleBrush="Black">
     
     <controls:MetroWindow.WindowTitleBrush>
-        <SolidColorBrush Color="DodgerBlue" Opacity="0.95"/>
+        <SolidColorBrush Color="Black" Opacity="0.95"/>
     </controls:MetroWindow.WindowTitleBrush>
 
     <controls:MetroWindow.IconTemplate>
