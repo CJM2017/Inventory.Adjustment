@@ -120,7 +120,7 @@ namespace Inventory.Adjustment.ViewModels
             this.appMenu.Add(new MenuItem()
             {
                 IsSelected = false,
-                IsEnabled = true,
+                IsEnabled = false,
                 Text = "Reports",
                 Tag = "Reports",
                 Icon = ReportImage,
@@ -139,7 +139,7 @@ namespace Inventory.Adjustment.ViewModels
             this.optionsMenu.Add(new MenuItem()
             {
                 IsSelected = false,
-                IsEnabled = true,
+                IsEnabled = false,
                 Text = "Settings",
                 Tag = "Settings",
                 Icon = settingsImage,

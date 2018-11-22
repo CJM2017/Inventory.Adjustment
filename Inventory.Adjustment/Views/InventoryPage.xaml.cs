@@ -6,13 +6,13 @@
 
 namespace Inventory.Adjustment.UI.Views
 {
-    using System.Windows.Controls;
     using Inventory.Adjustment.UI.ViewModels;
+    using Inventory.Adjustment.UI.Infrastructure.Bases;
 
     /// <summary>
     /// Interaction logic for InventoryPage.xaml
     /// </summary>
-    public partial class InventoryPage : Page
+    public partial class InventoryPage : BasePage
     {
         private InventoryViewModel viewModel;
 
@@ -20,6 +20,24 @@ namespace Inventory.Adjustment.UI.Views
         {
             this.InitializeComponent();
             this.viewModel = new InventoryViewModel();
+        }
+
+        /// <inheritdoc />
+        public override void DoLoad()
+        {
+            // TODO
+        }
+
+        /// <inheritdoc />
+        public override void DoUnLoad()
+        {
+            // TODO
+        }
+
+        /// <inheritdoc />
+        public override bool CanNavigate()
+        {
+            return true;
         }
     }
 }

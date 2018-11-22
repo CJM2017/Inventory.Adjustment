@@ -1,16 +1,32 @@
-﻿<Page x:Class="Inventory.Adjustment.UI.Views.InventoryPage"
+﻿<bases:BasePage x:Class="Inventory.Adjustment.UI.Views.InventoryPage"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-      xmlns:local="clr-namespace:Inventory.Adjustment.UI.Views"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      xmlns:controls="clr-namespace:Inventory.Adjustment.UI.Controls"
       xmlns:Dialog="clr-namespace:MahApps.Metro.Controls.Dialogs;assembly=MahApps.Metro"
       xmlns:Controls="http://metro.mahapps.com/winfx/xaml/controls"
-      mc:Ignorable="d" 
-      d:DesignHeight="450" d:DesignWidth="800"
-      Title="InventoryPage">
-
+      xmlns:views="clr-namespace:Inventory.Adjustment.UI.Views"
+      xmlns:bases="clr-namespace:Inventory.Adjustment.UI.Infrastructure.Bases;assembly=Inventory.Adjustment.UI.Infrastructure"
+      Title="Inventory"
+      d:DesignHeight="400"
+      d:DesignWidth="600"
+      mc:Ignorable="d"
+      KeepAlive="False"
+      Dialog:DialogParticipation.Register="{Binding}">
+    
+    <Page.Resources>
+        <BooleanToVisibilityConverter x:Key="b2v"/>
+    </Page.Resources>
+    
     <Grid>
-        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <controls:WorkflowToolbar Grid.Row="0" HeaderName="Inventory" ></controls:WorkflowToolbar>
+
     </Grid>
-</Page>
+    
+</bases:BasePage>

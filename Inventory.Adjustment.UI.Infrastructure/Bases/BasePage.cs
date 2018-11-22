@@ -17,7 +17,8 @@ namespace Inventory.Adjustment.UI.Infrastructure.Bases
     /// </summary>
     public abstract class BasePage : Page
     {
-        // private field to cache navigation service (NavigationService property is null on unloaded)
+        // private field to cache navigation service
+        // (NavigationService property is null on unloaded)
         private NavigationService cachedService;
 
         /// <summary>
