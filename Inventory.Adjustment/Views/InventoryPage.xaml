@@ -26,7 +26,8 @@
         </Grid.RowDefinitions>
 
         <controls:WorkflowToolbar Grid.Row="0" HeaderName="Inventory" ></controls:WorkflowToolbar>
-
+        <controls:InventoryItemList Grid.Row="1"></controls:InventoryItemList>
+        
     </Grid>
     
 </bases:BasePage>

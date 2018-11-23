@@ -19,7 +19,7 @@ namespace Inventory.Adjustment.UI.Infrastructure.Bases
     {
         // private field to cache navigation service
         // (NavigationService property is null on unloaded)
-        private NavigationService cachedService;
+        private NavigationService _cachedService;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="BasePage"/> class.
@@ -54,7 +54,7 @@ namespace Inventory.Adjustment.UI.Infrastructure.Bases
             // if DataContext is null this does nothing (so it's safe)
             DialogParticipation.SetRegister(this, DataContext);
             NavigationService.Navigating += OnNavigating;
-            cachedService = NavigationService;
+            _cachedService = NavigationService;
             DoLoad();
         }
 
@@ -69,7 +69,7 @@ namespace Inventory.Adjustment.UI.Infrastructure.Bases
         private void OnUnloaded(object sender, RoutedEventArgs e)
         {
             DialogParticipation.SetRegister(this, null);
-            cachedService.Navigating -= OnNavigating;
+            _cachedService.Navigating -= OnNavigating;
             DoUnLoad();
         }
     }

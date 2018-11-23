@@ -8,20 +8,22 @@ namespace Inventory.Adjustment.UI.Infrastructure
 {
     using System;
     using System.Reflection;
+    using System.Collections.ObjectModel;
     using System.ComponentModel.Composition.Hosting;
+    using Inventory.Adjustment.Data.Serializable;
     using Inventory.Adjustment.UI.Infrastructure.Interfaces;
 
     /// <summary>
-    /// Singleton class for holding session data for the application
+    /// Singleton class for holding session data for the application.
     /// </summary>
     public class SessionManager : IDisposable, ISessionManager
     {
-        private static SessionManager instance;
-        private readonly CompositionContainer container;
-        private bool disposedValue = false; // To detect redundant calls
+        private static SessionManager _instance;
+        private readonly CompositionContainer _container;
+        private bool _disposedValue = false; // To detect redundant calls
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="SessionManager"/> class
+        /// Initializes a new instance of the <see cref="SessionManager"/> class.
         /// </summary>
         private SessionManager()
         {
@@ -34,11 +36,23 @@ namespace Inventory.Adjustment.UI.Infrastructure
             catalog.Catalogs.Add(new DirectoryCatalog(execPath, "*.exe"));
 
             // 2. this creates the container that is passed to map view and beyond
-            this.container = new CompositionContainer(catalog);
+            _container = new CompositionContainer(catalog);
+
+            Items = new ObservableCollection<InventoryItem>();
+            BuildMockSession();
         }
 
-        public static SessionManager Instance => instance ?? (instance = new SessionManager());
-        public CompositionContainer Container => this.container;
+        /// <summary>
+        /// Gets a singleton instance of this class.
+        /// </summary>
+        public static SessionManager Instance => _instance ?? (_instance = new SessionManager());
+
+        /// <summary>
+        /// Gets the container.
+        /// </summary>
+        public CompositionContainer Container => _container;
+
+        public ObservableCollection<InventoryItem> Items { get; set; }
 
         public void Dispose()
         {
@@ -49,7 +63,7 @@ namespace Inventory.Adjustment.UI.Infrastructure
 
         protected virtual void Dispose(bool disposing)
         {
-            if (!disposedValue)
+            if (!_disposedValue)
             {
                 if (disposing)
                 {
@@ -59,7 +73,7 @@ namespace Inventory.Adjustment.UI.Infrastructure
                 // TODO: free unmanaged resources (unmanaged objects) and override a finalizer below.
                 // TODO: set large fields to null.
 
-                disposedValue = true;
+                _disposedValue = true;
             }
         }
 
@@ -68,5 +82,18 @@ namespace Inventory.Adjustment.UI.Infrastructure
         //   // Do not change this code. Put cleanup code in Dispose(bool disposing) above.
         //   Dispose(false);
         // }
+
+        private void BuildMockSession()
+        {
+            for (int i = 0; i < 20; i++)
+            {
+                Items.Add(new InventoryItem
+                {
+                    Code = $"Item-{i}",
+                    Cost = i,
+                    Price = 2 * i
+                });
+            }
+        }
     }
 }

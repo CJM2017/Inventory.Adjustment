@@ -13,14 +13,14 @@ namespace Inventory.Adjustment.UI.Infrastructure
     /// </summary>
     public class ApplicationEventAggregator
     {
-        private static ApplicationEventAggregator instance;
-        private IEventAggregator eventAggregator;
+        private static ApplicationEventAggregator _instance;
+        private IEventAggregator _eventAggregator;
 
         private ApplicationEventAggregator()
         {
         }
 
-        public static ApplicationEventAggregator Instance => instance ?? (instance = new ApplicationEventAggregator());
-        public IEventAggregator EventAggregator => eventAggregator ?? (eventAggregator = new EventAggregator());
+        public static ApplicationEventAggregator Instance => _instance ?? (_instance = new ApplicationEventAggregator());
+        public IEventAggregator EventAggregator => _eventAggregator ?? (_eventAggregator = new EventAggregator());
     }
 }

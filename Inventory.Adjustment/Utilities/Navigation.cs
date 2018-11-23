@@ -16,12 +16,12 @@ namespace Inventory.Adjustment.Utilities
     /// </summary>
     public static class Navigation
     {
-        private static Frame frame;
+        private static Frame _frame;
 
         public static Frame Frame
         {
-            get => frame;
-            set => frame = value;
+            get => _frame;
+            set => _frame = value;
         }
 
         /// <summary>
@@ -31,11 +31,11 @@ namespace Inventory.Adjustment.Utilities
         /// <returns>status of navigation</returns>
         public static bool Navigate(Uri sourcePageUri)
         {
-            if (frame.CurrentSource != sourcePageUri)
+            if (_frame.CurrentSource != sourcePageUri)
             {
                 ApplicationEventAggregator.Instance.EventAggregator.GetEvent<PageNavigationEvent>().Publish(sourcePageUri);
 
-                return frame.NavigationService.Navigate(sourcePageUri);
+                return _frame.NavigationService.Navigate(sourcePageUri);
             }
 
             return true;

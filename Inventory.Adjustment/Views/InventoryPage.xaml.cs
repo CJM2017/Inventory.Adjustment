@@ -14,12 +14,15 @@ namespace Inventory.Adjustment.UI.Views
     /// </summary>
     public partial class InventoryPage : BasePage
     {
-        private InventoryViewModel viewModel;
+        private InventoryViewModel _viewModel;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="InventoryPage"/> class
+        /// </summary>
         public InventoryPage()
         {
-            this.InitializeComponent();
-            this.viewModel = new InventoryViewModel();
+            InitializeComponent();
+            _viewModel = new InventoryViewModel();
         }
 
         /// <inheritdoc />

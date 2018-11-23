@@ -31,23 +31,23 @@ namespace Inventory.Adjustment
     {
         // a private unpopulated control used to prevent MahApp's from caching
         // previously navigated pages
-        private readonly ContentControl fakeControl = new ContentControl();
-        private readonly ShellViewModel viewModel;
+        private readonly ContentControl _fakeControl = new ContentControl();
+        private readonly ShellViewModel _viewModel;
 
         private ViewModels.MenuItem lastMenuItem;
         private ViewModels.MenuItem currentMenuItem;
 
         public MainWindow()
         {
-            this.InitializeComponent();
+            InitializeComponent();
 
-            this.viewModel = new ShellViewModel();
-            this.DataContext = viewModel;
+            _viewModel = new ShellViewModel();
+            DataContext = _viewModel;
             this.SizeChanged += WindowResizedHandler;
 
             Navigation.Frame = new System.Windows.Controls.Frame();
-            Navigation.Frame.NavigationStopped += this.FrameOnNavigationStopped;
-            Navigation.Frame.Navigated += this.FrameOnNavigated;
+            Navigation.Frame.NavigationStopped += FrameOnNavigationStopped;
+            Navigation.Frame.Navigated += FrameOnNavigated;
 
             Application.Current.MainWindow.FontSize = 15;
         }
@@ -74,8 +74,8 @@ namespace Inventory.Adjustment
             // need to set twice so mahapps doesn't cache the previous control
             // by setting the context first to our fake control mahapp's "TransitioningContentPresenter"
             // keeps a reference to our fake control instead of the previous page
-            this.HamburgerMenuControl.Content = fakeControl;
-            this.HamburgerMenuControl.Content = e.Content;
+            HamburgerMenuControl.Content = _fakeControl;
+            HamburgerMenuControl.Content = e.Content;
 
             if (currentMenuItem != null)
             {

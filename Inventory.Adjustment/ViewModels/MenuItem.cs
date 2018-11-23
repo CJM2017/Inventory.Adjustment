@@ -6,32 +6,32 @@
 
 namespace Inventory.Adjustment.ViewModels
 {
-    using Prism.Commands;
-    using Prism.Mvvm;
     using System;
+    using Prism.Mvvm;
+    using Prism.Commands;
 
     /// <summary>
     /// Representation of hamburger menu items
     /// </summary>
     public class MenuItem : BindableBase
     {
-        private object icon;
-        private string text;
-        private string tag;
-        private bool isEnabled = true;
-        private bool isSelected = false;
-        private DelegateCommand command;
-        private Uri navDestination;
+        private object _icon;
+        private string _text;
+        private string _tag;
+        private bool _isEnabled = true;
+        private bool _isSelected = false;
+        private DelegateCommand _command;
+        private Uri _navDestination;
 
         /// <summary>
         /// Gets or sets the menu item's icon
         /// </summary>
         public object Icon
         {
-            get => this.icon;
+            get => _icon;
             set
             {
-                this.icon = value;
+                _icon = value;
                 RaisePropertyChanged();
             }
         }
@@ -41,10 +41,10 @@ namespace Inventory.Adjustment.ViewModels
         /// </summary>
         public string Text
         {
-            get => this.text;
+            get => _text;
             set
             {
-                this.text = value;
+                _text = value;
                 RaisePropertyChanged();
             }
         }
@@ -54,10 +54,10 @@ namespace Inventory.Adjustment.ViewModels
         /// </summary>
         public string Tag
         {
-            get => this.tag;
+            get => _tag;
             set
             {
-                this.tag = value;
+                _tag = value;
                 RaisePropertyChanged();
             }
         }
@@ -67,10 +67,10 @@ namespace Inventory.Adjustment.ViewModels
         /// </summary>
         public bool IsEnabled
         {
-            get => this.isEnabled;
+            get => _isEnabled;
             set
             {
-                this.isEnabled = value;
+                _isEnabled = value;
                 RaisePropertyChanged();
             }
         }
@@ -80,10 +80,10 @@ namespace Inventory.Adjustment.ViewModels
         /// </summary>
         public bool IsSelected
         {
-            get => this.isSelected;
+            get => _isSelected;
             set
             {
-                this.isSelected = value;
+                _isSelected = value;
                 RaisePropertyChanged();
             }
         }
@@ -93,10 +93,10 @@ namespace Inventory.Adjustment.ViewModels
         /// </summary>
         public DelegateCommand Command
         {
-            get => this.command;
+            get => _command;
             set
             {
-                this.command = value;
+                _command = value;
                 RaisePropertyChanged();
             }
         }
@@ -106,10 +106,10 @@ namespace Inventory.Adjustment.ViewModels
         /// </summary>
         public Uri NavDestination
         {
-            get => this.navDestination;
+            get => _navDestination;
             set
             {
-                this.navDestination = value;
+                _navDestination = value;
                 RaisePropertyChanged();
             }
         }
@@ -118,6 +118,6 @@ namespace Inventory.Adjustment.ViewModels
         /// Gets a value indicating whether this menu item navigates (if navigation destination is set)
         /// or runs a command.
         /// </summary>
-        public bool IsNavigation => this.navDestination != null;
+        public bool IsNavigation => _navDestination != null;
     }
 }

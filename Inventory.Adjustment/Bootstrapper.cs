@@ -18,7 +18,7 @@ namespace Inventory.Adjustment
     /// </summary>
     class Bootstrapper
     {
-        private SessionManager manager;
+        private SessionManager _manager;
 
         /// <summary>
         /// Run the application.
@@ -28,8 +28,8 @@ namespace Inventory.Adjustment
             Application.Current.MainWindow = new MainWindow();
             Application.Current.MainWindow.Show();
 
-            manager = SessionManager.Instance;
-            if (manager.Container == null)
+            _manager = SessionManager.Instance;
+            if (_manager.Container == null)
             {
                 throw new InvalidOperationException("Composition Container for application was not created.");
             }

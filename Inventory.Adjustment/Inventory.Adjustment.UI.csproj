@@ -71,16 +71,24 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Controls\InventoryItemList.xaml.cs">
+      <DependentUpon>InventoryItemList.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\WorkflowToolbar.xaml.cs">
       <DependentUpon>WorkflowToolbar.xaml</DependentUpon>
     </Compile>
     <Compile Include="Utilities\Navigation.cs" />
+    <Compile Include="ViewModels\InventoryItemListViewModel.cs" />
     <Compile Include="ViewModels\InventoryViewModel.cs" />
     <Compile Include="ViewModels\MenuItem.cs" />
     <Compile Include="ViewModels\ShellViewModel.cs" />
     <Compile Include="Views\InventoryPage.xaml.cs">
       <DependentUpon>InventoryPage.xaml</DependentUpon>
     </Compile>
+    <Page Include="Controls\InventoryItemList.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Controls\WorkflowToolbar.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -132,11 +140,17 @@
       <SubType>Designer</SubType>
     </None>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <WCFMetadata Include="Connected Services\" />
+  </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\InventoryColor.png" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Inventory.Adjustment.Data\Inventory.Adjustment.Data.csproj">
+      <Project>{0f71d242-d4a0-4e24-a907-fddefa72d41c}</Project>
+      <Name>Inventory.Adjustment.Data</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Inventory.Adjustment.UI.Infrastructure\Inventory.Adjustment.UI.Infrastructure.csproj">
       <Project>{70b103d5-7e78-4d63-b7c0-f480517d06ec}</Project>
       <Name>Inventory.Adjustment.UI.Infrastructure</Name>

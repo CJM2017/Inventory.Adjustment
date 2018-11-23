@@ -21,8 +21,8 @@ namespace Inventory.Adjustment.ViewModels
     /// </summary>
     public class ShellViewModel : BindableBase
     {
-        private readonly ObservableCollection<MenuItem> appMenu;
-        private readonly ObservableCollection<MenuItem> optionsMenu;
+        private readonly ObservableCollection<MenuItem> _appMenu;
+        private readonly ObservableCollection<MenuItem> _optionsMenu;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ShellViewModel"/> class
@@ -33,8 +33,8 @@ namespace Inventory.Adjustment.ViewModels
             Version = Assembly.GetExecutingAssembly().GetName().Version.ToString();
             WindowTitle = $"{AppName} v{Version}";
 
-            appMenu = new ObservableCollection<MenuItem>();
-            optionsMenu = new ObservableCollection<MenuItem>();
+            _appMenu = new ObservableCollection<MenuItem>();
+            _optionsMenu = new ObservableCollection<MenuItem>();
 
             BuildMenus();
 
@@ -59,12 +59,12 @@ namespace Inventory.Adjustment.ViewModels
         /// <summary>
         /// Gets the list of menu items to navigate to
         /// </summary>
-        public ObservableCollection<MenuItem> AppMenu => this.appMenu;
+        public ObservableCollection<MenuItem> AppMenu => _appMenu;
 
         /// <summary>
         /// Gets the list of optional menu items to navigate to
         /// </summary>
-        public ObservableCollection<MenuItem> OptionsMenu => this.optionsMenu;
+        public ObservableCollection<MenuItem> OptionsMenu => _optionsMenu;
 
         /// <summary>
         /// Update menu bar items if selected show indicator in UI is properly shown
@@ -98,7 +98,7 @@ namespace Inventory.Adjustment.ViewModels
             };
 
             // Add inventory menu item
-            this.appMenu.Add(new MenuItem()
+            _appMenu.Add(new MenuItem()
             {
                 IsSelected = false,
                 IsEnabled = true,
@@ -117,7 +117,7 @@ namespace Inventory.Adjustment.ViewModels
             };
 
             // Add inventory menu item
-            this.appMenu.Add(new MenuItem()
+            _appMenu.Add(new MenuItem()
             {
                 IsSelected = false,
                 IsEnabled = false,
@@ -136,7 +136,7 @@ namespace Inventory.Adjustment.ViewModels
             };
 
             // Add settings option menu item
-            this.optionsMenu.Add(new MenuItem()
+            _optionsMenu.Add(new MenuItem()
             {
                 IsSelected = false,
                 IsEnabled = false,
