@@ -12,7 +12,7 @@
         Height="800" Width="1200" 
         SizeToContent="Manual"
         WindowStartupLocation="CenterScreen" 
-        Background="GhostWhite"
+        Background="WhiteSmoke"
         NonActiveWindowTitleBrush="Black"
         GlowBrush="DodgerBlue">
     

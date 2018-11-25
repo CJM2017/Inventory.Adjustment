@@ -83,21 +83,91 @@
 
     <Grid Name="RootGrid">
         <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="2*" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
-        <ScrollViewer Name="InventoryScroller" 
-                            Grid.Row="0" 
-                            VerticalScrollBarVisibility="Hidden">
-            <ListBox x:Name="listBoxOne" 
-                        IsEnabled="True"
-                        ItemsSource="{Binding Items}"
-                        Style="{StaticResource NormalListBoxStyle}"
-                        ItemTemplateSelector="{StaticResource InventoryDataTemplateSelector}"
-                        ItemContainerStyle="{StaticResource NormalListItemStyle}"
-                        ScrollViewer.VerticalScrollBarVisibility="Hidden"
-                        ScrollViewer.CanContentScroll="False"
-                        Margin="5" Width="{Binding Path=ActualWidth, ElementName=RootGrid}" Height="{Binding Path=ActualHeight, ElementName=RootGrid}"/>
-        </ScrollViewer>
+        <StackPanel Grid.Row="0" Orientation="Horizontal">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+            </Grid>
+
+            <Button Grid.Column="3"
+                        Name="AddInventoryItemButton"
+                        Margin="3"
+                        Height="32"
+                        Width="90"
+                        Visibility="Visible"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Top">
+                <Button.Style>
+                    <Style TargetType="{x:Type Button}">
+                        <Setter Property="Background" Value="DodgerBlue"/>
+                        <Setter Property="Opacity" Value="1.0"/>
+                    </Style>
+                </Button.Style>
+                <TextBlock Foreground="White">Add</TextBlock>
+            </Button>
+        </StackPanel>
+
+        <DataGrid Grid.Row="1"
+                  SelectionUnit="FullRow" Margin="10,10,10,10" AlternationCount="2" AutoGenerateColumns="False" 
+                  ItemsSource="{Binding Items}" CanUserAddRows="False" CanUserDeleteRows="False" 
+                  CanUserReorderColumns="True" CanUserResizeColumns="True" CanUserResizeRows="False" CanUserSortColumns="True"
+                  ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Auto" 
+                  ScrollViewer.CanContentScroll="False" IsReadOnly="True">
+            <DataGrid.Resources>
+                <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="DarkGray" />
+                <SolidColorBrush x:Key="{x:Static SystemColors.ControlBrushKey}" Color="DarkGray" />
+                <Style BasedOn="{StaticResource MetroDataGridColumnHeader}" TargetType="{x:Type DataGridColumnHeader}">
+                    <Setter Property="Background" Value="#3f5d99" />
+                    <Setter Property="Foreground" Value="White" />
+                    <Setter Property="Padding" Value="6"/>
+                </Style>
+            </DataGrid.Resources>
+            <DataGrid.RowStyle>
+                <Style TargetType="DataGridRow">
+                    <Style.Triggers>
+                        <Trigger Property="AlternationIndex" Value="0">
+                            <Setter Property="Background" Value="White" />
+                        </Trigger>
+                        <Trigger Property="AlternationIndex" Value="1">
+                            <Setter Property="Background" Value="#eeeeee" />
+                        </Trigger>
+                        <Trigger Property="IsSelected" Value="True">
+                            <Setter Property="Background" Value="DarkGray" />
+                            <Setter Property="Foreground" Value="Black" />
+                            <Setter Property="FontWeight" Value="Bold" />
+                        </Trigger>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Background" Value="DarkGray" />
+                            <Setter Property="Foreground" Value="Black" />
+                            <Setter Property="FontWeight" Value="Bold" />
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </DataGrid.RowStyle>
+            <DataGrid.Columns>
+                <DataGridTextColumn Binding="{Binding Code}" Header="Code" SortDirection="Ascending" />
+                <DataGridTextColumn Binding="{Binding Vendor}" Header="Vendor"/>
+                <DataGridTextColumn Binding="{Binding Description}" Header="Description"/>
+                <DataGridTextColumn Binding="{Binding Stock}" Header="Stock"/>
+                <DataGridTextColumn Binding="{Binding Cost}" Header="Cost"/>
+                <DataGridTextColumn Binding="{Binding BasePrice}" Header="Base Price" />
+                <DataGridTemplateColumn Header="Delete">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button>Click Me</Button>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+        </DataGrid>
     </Grid>
 </UserControl>
