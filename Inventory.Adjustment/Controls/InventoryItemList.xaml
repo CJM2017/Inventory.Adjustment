@@ -4,9 +4,100 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Inventory.Adjustment.UI.Controls"
+             xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <Grid>
-            
+
+    <UserControl.Resources>
+        <Style x:Key="NormalListBoxStyle" TargetType="{x:Type ListBox}">
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="BorderBrush" Value="DarkGray"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+        </Style>
+
+        <Style x:Key="NormalListItemStyle" TargetType="{x:Type ListBoxItem}">
+            <Style.Resources>
+                <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="Transparent"/>
+            </Style.Resources>
+            <Setter Property="BorderBrush" Value="LightGray"/>
+            <Setter Property="BorderThickness" Value="1"/>
+        </Style>
+
+        <DataTemplate x:Key="NormalListItemDataTemplate">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <StackPanel Grid.Column="0" Orientation="Horizontal" Margin="5">
+                    <Rectangle Width="20" Height="20">
+                        <Rectangle.Fill>
+                            <SolidColorBrush Color="Blue" />
+                        </Rectangle.Fill>
+                    </Rectangle>
+                    <TextBlock Text="{Binding Path=Code}" Margin="5" FontSize="14"/>
+                </StackPanel>
+                <StackPanel Grid.Column="2">
+                    <Button 
+                        Name="DeleteInventoryItemButton"
+                        Margin="3"
+                        Height="25" 
+                        Width="25"
+                        Visibility="Visible"
+                        HorizontalAlignment="Right"
+                        VerticalAlignment="Top">
+                        <Button.Style>
+                            <Style TargetType="{x:Type Button}">
+                                <Setter Property="Background" Value="DarkGray"/>
+                                <Setter Property="Template">
+                                    <Setter.Value>
+                                        <ControlTemplate TargetType="{x:Type Button}">
+                                            <StackPanel Height="50" Margin="5" >
+                                                <iconPacks:PackIconMaterial 
+                                                                        Kind="Delete" 
+                                                                        Padding="1"
+                                                                        HorizontalAlignment="Center" 
+                                                                        Foreground="{TemplateBinding Background}"/>
+                                            </StackPanel>
+                                        </ControlTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                                <Style.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter Property="Background" Value="DodgerBlue"/>
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Button.Style>
+                    </Button>
+                </StackPanel>
+            </Grid>
+        </DataTemplate>
+
+        <local:InventoryDataTemplateSelector x:Key="InventoryDataTemplateSelector" />
+        
+    </UserControl.Resources>
+
+    <Grid Name="RootGrid">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <ScrollViewer Name="InventoryScroller" 
+                            Grid.Row="0" 
+                            VerticalScrollBarVisibility="Hidden">
+            <ListBox x:Name="listBoxOne" 
+                        IsEnabled="True"
+                        ItemsSource="{Binding Items}"
+                        Style="{StaticResource NormalListBoxStyle}"
+                        ItemTemplateSelector="{StaticResource InventoryDataTemplateSelector}"
+                        ItemContainerStyle="{StaticResource NormalListItemStyle}"
+                        ScrollViewer.VerticalScrollBarVisibility="Hidden"
+                        ScrollViewer.CanContentScroll="False"
+                        Margin="5" Width="{Binding Path=ActualWidth, ElementName=RootGrid}" Height="{Binding Path=ActualHeight, ElementName=RootGrid}"/>
+        </ScrollViewer>
     </Grid>
 </UserControl>

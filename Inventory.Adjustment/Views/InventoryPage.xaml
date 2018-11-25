@@ -12,14 +12,13 @@
       d:DesignHeight="400"
       d:DesignWidth="600"
       mc:Ignorable="d"
-      KeepAlive="False"
-      Dialog:DialogParticipation.Register="{Binding}">
+      KeepAlive="False">
     
     <Page.Resources>
         <BooleanToVisibilityConverter x:Key="b2v"/>
     </Page.Resources>
     
-    <Grid>
+    <Grid Name="RootGrid">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>

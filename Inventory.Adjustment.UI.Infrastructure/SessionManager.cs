@@ -91,7 +91,7 @@ namespace Inventory.Adjustment.UI.Infrastructure
                 {
                     Code = $"Item-{i}",
                     Cost = i,
-                    Price = 2 * i
+                    BasePrice = 2 * i
                 });
             }
         }
