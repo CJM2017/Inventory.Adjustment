@@ -6,7 +6,6 @@
 
 namespace Inventory.Adjustment.UI.ViewModels
 {
-    using System;
     using Prism.Mvvm;
     using Prism.Commands;
     using System.Collections.ObjectModel;
@@ -16,9 +15,10 @@ namespace Inventory.Adjustment.UI.ViewModels
     /// <summary>
     /// View model class for the inventory item list.
     /// </summary>
-    class InventoryItemListViewModel : BindableBase
+    public class InventoryItemListViewModel : BindableBase
     {
         private ObservableCollection<InventoryItem> _items;
+        private InventoryItem _selectedItem;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="InventoryItemListViewModel"/> class
@@ -26,7 +26,12 @@ namespace Inventory.Adjustment.UI.ViewModels
         public InventoryItemListViewModel()
         {
             Items = SessionManager.Instance.Items;
+            DeleteItemCommand = new DelegateCommand(ExecuteDelete, () => SelectedItem != null);
         }
+
+        public DelegateCommand AddItemCommand => new DelegateCommand(ExecuteAdd);
+
+        public DelegateCommand DeleteItemCommand { get; }
 
         public ObservableCollection<InventoryItem> Items
         {
@@ -36,6 +41,30 @@ namespace Inventory.Adjustment.UI.ViewModels
                 _items = value;
                 RaisePropertyChanged();
             }
+        }
+
+        /// <summary>
+        /// Gets or sets the selected inventory item in the data grid.
+        /// </summary>
+        public InventoryItem SelectedItem
+        {
+            get => _selectedItem;
+            set
+            {
+                _selectedItem = value;
+                RaisePropertyChanged();
+                DeleteItemCommand.RaiseCanExecuteChanged();
+            }
+        }
+
+        private void ExecuteAdd()
+        {
+            // TODO
+        }
+
+        private void ExecuteDelete()
+        {
+            // TODO
         }
     }
 }

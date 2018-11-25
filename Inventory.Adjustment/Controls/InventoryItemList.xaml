@@ -9,7 +9,6 @@
              d:DesignHeight="450" d:DesignWidth="800">
 
     <UserControl.Resources>
-
         <Style x:Key="DeleteButton" TargetType="{x:Type Button}">
             <Setter Property="Background" Value="DimGray"/>
             <Setter Property="Template">
@@ -31,9 +30,6 @@
                 </Trigger>
             </Style.Triggers>
         </Style>
-        
-        <local:InventoryDataTemplateSelector x:Key="InventoryDataTemplateSelector" />
-        
     </UserControl.Resources>
 
     <Grid x:Name="RootGrid" Margin="10">
@@ -65,7 +61,8 @@
                     Width="90"
                     Visibility="Visible"
                     HorizontalAlignment="Center"
-                    VerticalAlignment="Top">
+                    VerticalAlignment="Top"
+                    Command="{Binding AddItemCommand}">
                 <Button.Style>
                     <Style TargetType="{x:Type Button}">
                         <Setter Property="Background" Value="DodgerBlue"/>
@@ -78,7 +75,7 @@
 
         <DataGrid x:Name="InventoryDG" Grid.Row="1"
                           SelectionUnit="FullRow" Margin="10,10,10,10" AutoGenerateColumns="False" 
-                          ItemsSource="{Binding Items}" CanUserAddRows="False" CanUserDeleteRows="False" 
+                          ItemsSource="{Binding Items}" SelectedItem="{Binding SelectedItem}" CanUserAddRows="False" CanUserDeleteRows="False" 
                           CanUserReorderColumns="True" CanUserResizeColumns="True" CanUserResizeRows="False" CanUserSortColumns="True"
                           ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Auto" 
                           ScrollViewer.CanContentScroll="False" IsReadOnly="True">
@@ -130,6 +127,9 @@
                                             Height="28" 
                                             Width="28"
                                             Visibility="Visible"
+                                            Command="{Binding Path=DataContext.DeleteItemCommand,       
+                                                      RelativeSource={RelativeSource FindAncestor,
+                                                      AncestorType={x:Type DataGrid}}}"
                                             Style="{StaticResource DeleteButton}"
                                             HorizontalAlignment="Center"
                                             VerticalAlignment="Center">
