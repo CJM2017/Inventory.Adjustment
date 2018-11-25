@@ -10,6 +10,7 @@ namespace Inventory.Adjustment
     using System.Windows;
     using System.Windows.Controls;
     using System.Windows.Navigation;
+    using Inventory.Adjustment.Utilities;
     using Inventory.Adjustment.UI.Infrastructure;
 
     /// <summary>
@@ -27,6 +28,7 @@ namespace Inventory.Adjustment
         {
             Application.Current.MainWindow = new MainWindow();
             Application.Current.MainWindow.Show();
+            Navigation.Navigate(new Uri("Views/InventoryPage.xaml", UriKind.RelativeOrAbsolute));
 
             _manager = SessionManager.Instance;
             if (_manager.Container == null)

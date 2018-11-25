@@ -17,7 +17,7 @@
         GlowBrush="DodgerBlue">
     
     <controls:MetroWindow.WindowTitleBrush>
-        <SolidColorBrush Color="Black" Opacity="0.95"/>
+        <SolidColorBrush Color="Black" Opacity="0.85"/>
     </controls:MetroWindow.WindowTitleBrush>
 
     <controls:MetroWindow.IconTemplate>

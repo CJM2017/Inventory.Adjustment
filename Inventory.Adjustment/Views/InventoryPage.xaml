@@ -9,6 +9,7 @@
       xmlns:views="clr-namespace:Inventory.Adjustment.UI.Views"
       xmlns:bases="clr-namespace:Inventory.Adjustment.UI.Infrastructure.Bases;assembly=Inventory.Adjustment.UI.Infrastructure"
       Title="Inventory"
+      Background="Transparent"
       d:DesignHeight="400"
       d:DesignWidth="600"
       mc:Ignorable="d"
