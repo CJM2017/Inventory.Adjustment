@@ -6,13 +6,31 @@
 
 namespace Inventory.Adjustment.UI.Infrastructure.Interfaces
 {
+    using System;
+    using System.Collections.ObjectModel;
     using System.ComponentModel.Composition.Hosting;
+    using Inventory.Adjustment.Data.Serializable;
+    using Inventory.Adjustment.Client.QuickBooksClient;
+
 
     /// <summary>
     /// Interface for session data for the application
     /// </summary>
-    public interface ISessionManager
+    public interface ISessionManager : IDisposable
     {
+        /// <summary>
+        /// Gets the container.
+        /// </summary>
         CompositionContainer Container { get; }
+
+        /// <summary>
+        /// Gets the the quickbooks client for the session.
+        /// </summary>
+        QuickBooksClient QBClient { get; }
+
+        /// <summary>
+        /// Gets or sets the collection of inventory items.
+        /// </summary>
+        ObservableCollection<InventoryItem> Items { get; set; }
     }
 }

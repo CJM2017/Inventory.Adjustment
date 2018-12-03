@@ -8,8 +8,6 @@ namespace Inventory.Adjustment
 {
     using System;
     using System.Windows;
-    using System.Windows.Controls;
-    using System.Windows.Navigation;
     using Inventory.Adjustment.Utilities;
     using Inventory.Adjustment.UI.Infrastructure;
 
@@ -26,6 +24,8 @@ namespace Inventory.Adjustment
         /// </summary>
         public void Run()
         {
+            log4net.Config.XmlConfigurator.Configure();
+
             Application.Current.MainWindow = new MainWindow();
             Application.Current.MainWindow.Show();
             Navigation.Navigate(new Uri("Views/InventoryPage.xaml", UriKind.RelativeOrAbsolute));

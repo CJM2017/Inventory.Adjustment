@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("Inventory.Adjustment.UI.Infrastructure")]
+[assembly: AssemblyTitle("Inventory.Adjustment.Client.QuickBooksClient")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("Inventory.Adjustment.UI.Infrastructure")]
+[assembly: AssemblyProduct("Inventory.Adjustment.Client.QuickBooksClient")]
 [assembly: AssemblyCopyright("Copyright ©  2018")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("70b103d5-7e78-4d63-b7c0-f480517d06ec")]
+[assembly: Guid("e6593514-c43d-4577-a6f2-d36bc176f317")]
 
 // Version information for an assembly consists of the following four values:
 //

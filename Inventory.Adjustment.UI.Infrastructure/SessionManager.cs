@@ -12,13 +12,18 @@ namespace Inventory.Adjustment.UI.Infrastructure
     using System.ComponentModel.Composition.Hosting;
     using Inventory.Adjustment.Data.Serializable;
     using Inventory.Adjustment.UI.Infrastructure.Interfaces;
+    using Inventory.Adjustment.Client.QuickBooksClient;
+    using log4net;
 
     /// <summary>
     /// Singleton class for holding session data for the application.
     /// </summary>
-    public class SessionManager : IDisposable, ISessionManager
+    public class SessionManager : ISessionManager
     {
+        private readonly ILog _log;
         private static SessionManager _instance;
+        private QuickBooksClient _qbClient;
+
         private readonly CompositionContainer _container;
         private bool _disposedValue = false; // To detect redundant calls
 
@@ -27,6 +32,7 @@ namespace Inventory.Adjustment.UI.Infrastructure
         /// </summary>
         private SessionManager()
         {
+            _log = LogManager.GetLogger(typeof(SessionManager));
             AggregateCatalog catalog = new AggregateCatalog();
 
             // 1. this adds the executables of the current executable folder to the catalog
@@ -47,11 +53,13 @@ namespace Inventory.Adjustment.UI.Infrastructure
         /// </summary>
         public static SessionManager Instance => _instance ?? (_instance = new SessionManager());
 
-        /// <summary>
-        /// Gets the container.
-        /// </summary>
+        /// <inheritdoc/>
+        public QuickBooksClient QBClient => _qbClient ?? (_qbClient = QuickBooksClient.Instance);
+
+        /// <inheritdoc/>
         public CompositionContainer Container => _container;
 
+        /// <inheritdoc/>
         public ObservableCollection<InventoryItem> Items { get; set; }
 
         public void Dispose()
@@ -94,6 +102,9 @@ namespace Inventory.Adjustment.UI.Infrastructure
                     BasePrice = 2 * i
                 });
             }
+
+            QBClient.Dispose();
+            _log.Debug("Mock session has been created");
         }
     }
 }
