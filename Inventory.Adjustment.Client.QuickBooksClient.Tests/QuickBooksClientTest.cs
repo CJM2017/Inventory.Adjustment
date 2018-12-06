@@ -1,4 +1,4 @@
-// Project      : Inventory Adjusment
+﻿// Project      : Inventory Adjusment
 // Author       : Connor McCann
 // Start Date   : 15 Nov 2018
 // Description  : Desktop application for modifying inventory
@@ -21,6 +21,7 @@ namespace Inventory.Adjustment.Client.QuickBooksClient.Tests
         {
             try
             {
+
                 _client = QuickBooksClient.Instance;
             }
             catch (Exception ex)

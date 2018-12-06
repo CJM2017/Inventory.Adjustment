@@ -14,11 +14,6 @@ namespace Inventory.Adjustment.Client.QuickBooksClient
     interface IQuickBooksClient : IDisposable
     {
         /// <summary>
-        /// Gets the quickbooks session manager.
-        /// </summary>
-        QBSessionManager Manager { get; }
-
-        /// <summary>
         /// reads list of inventory items from local quickbooks.
         /// </summary>
         /// <returns>Inventory item list</returns>

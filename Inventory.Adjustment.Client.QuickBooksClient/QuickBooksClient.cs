@@ -23,15 +23,13 @@ namespace Inventory.Adjustment.Client.QuickBooksClient
 
         private QuickBooksClient()
         {
+            _manager = new QBSessionManager();
         }
 
         /// <summary>
         /// Gets a singleton instance of this class.
         /// </summary>
         public static QuickBooksClient Instance => _instance ?? (_instance = new QuickBooksClient());
-
-        /// <inheritdoc/>
-        public QBSessionManager Manager => _manager ?? (_manager = new QBSessionManager());
 
         /// <inheritdoc/>
         public ObservableCollection<InventoryItem> GetInventory()
@@ -84,11 +82,20 @@ namespace Inventory.Adjustment.Client.QuickBooksClient
             }
         }
 
+        /// <summary>
+        /// Wrapper for test thread.
+        /// </summary>
+        /// <returns></returns>
         public async Task<bool> TestConnectionAsync()
         {
             return await RunTestsAsync().ConfigureAwait(false);
         }
 
+        /// <summary>
+        /// Async test to determine if we can communicate
+        /// with the quickbooks client.
+        /// </summary>
+        /// <returns></returns>
         private async Task<bool> RunTestsAsync()
         {
             bool result = true;
@@ -97,10 +104,10 @@ namespace Inventory.Adjustment.Client.QuickBooksClient
             {
                 try
                 {
-                    Manager.OpenConnection("", "Test Connection");
-                    Manager.BeginSession("", ENOpenMode.omDontCare);
-                    Manager.EndSession();
-                    Manager.CloseConnection();
+                    _manager.OpenConnection("", "Inventory Adjustment");
+                    _manager.BeginSession("", ENOpenMode.omDontCare);
+                    _manager.EndSession();
+                    _manager.CloseConnection();
                 }
                 catch (Exception ex)
                 {
