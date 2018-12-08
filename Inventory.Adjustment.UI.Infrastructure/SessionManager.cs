@@ -22,7 +22,6 @@ namespace Inventory.Adjustment.UI.Infrastructure
     {
         private readonly ILog _log;
         private static SessionManager _instance;
-        private QuickBooksClient _qbClient;
 
         private readonly CompositionContainer _container;
         private bool _disposedValue = false; // To detect redundant calls
@@ -44,6 +43,12 @@ namespace Inventory.Adjustment.UI.Infrastructure
             // 2. this creates the container that is passed to map view and beyond
             _container = new CompositionContainer(catalog);
 
+            // Get information on the application 
+            AppName = Assembly.GetExecutingAssembly().GetName().Name.ToString().Replace(".", " ").Replace("UI", "");
+            AppVersion = Assembly.GetExecutingAssembly().GetName().Version.ToString();
+            QBClient = new QuickBooksClient(string.Empty, $"{AppName} v{AppVersion}", "US");
+
+            // Build the mock session
             Items = new ObservableCollection<InventoryItem>();
             BuildMockSession();
         }
@@ -54,10 +59,16 @@ namespace Inventory.Adjustment.UI.Infrastructure
         public static SessionManager Instance => _instance ?? (_instance = new SessionManager());
 
         /// <inheritdoc/>
-        public QuickBooksClient QBClient => _qbClient ?? (_qbClient = QuickBooksClient.Instance);
+        public string AppName { get; private set; }
+
+        /// <inheritdoc/>
+        public string AppVersion { get; private set; }
 
         /// <inheritdoc/>
         public CompositionContainer Container => _container;
+
+        /// <inheritdoc/>
+        public QuickBooksClient QBClient { get; private set; }
 
         /// <inheritdoc/>
         public ObservableCollection<InventoryItem> Items { get; set; }

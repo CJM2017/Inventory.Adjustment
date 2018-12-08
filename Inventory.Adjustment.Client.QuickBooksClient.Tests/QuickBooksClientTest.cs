@@ -19,17 +19,7 @@ namespace Inventory.Adjustment.Client.QuickBooksClient.Tests
         [TestInitialize]
         public void Initialize()
         {
-            try
-            {
-
-                _client = QuickBooksClient.Instance;
-            }
-            catch (Exception ex)
-            {
-                Assert.Fail(ex.ToString());
-                return;
-            }
-
+            _client = new QuickBooksClient(string.Empty, "Inventory Adjustment v1.0.0", "US");
             Assert.IsNotNull(_client);
         }
 
@@ -40,5 +30,12 @@ namespace Inventory.Adjustment.Client.QuickBooksClient.Tests
             Assert.IsNotNull(success);
             Assert.IsTrue(success);
         }
+
+        //[TestMethod]
+        //public async Task TestGetInventory()
+        //{
+        //    var inventory = await _client.GetInventory();
+        //    Assert.IsNotNull(inventory);
+        //}
     }
 }

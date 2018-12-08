@@ -11,25 +11,33 @@ namespace Inventory.Adjustment.Client.QuickBooksClient
     using System.Collections.ObjectModel;
     using Inventory.Adjustment.Data.Serializable;
     using Interop.QBFC13;
+    using System.Collections;
 
     public class QuickBooksClient : IQuickBooksClient
     {
-        private static QuickBooksClient _instance;
         private QBSessionManager _manager;
-        private bool _disposedValue = false; // To detect redundant calls
+        private bool _disposedValue; // To detect redundant calls
+        private bool _connectionOpen;
+        private bool _sessionInProgress;
 
         private string _appName;
         private string _appId;
+        private string _country;
+        private double _qbsdkVersion;
 
-        private QuickBooksClient()
+        public QuickBooksClient(string appId, string appName, string country)
         {
+            _disposedValue = false;
+            _connectionOpen = false;
+            _sessionInProgress = false;
+
+            _appId = appId;
+            _appName = appName;
+            _country = country;
+            _qbsdkVersion = 0.0;
+
             _manager = new QBSessionManager();
         }
-
-        /// <summary>
-        /// Gets a singleton instance of this class.
-        /// </summary>
-        public static QuickBooksClient Instance => _instance ?? (_instance = new QuickBooksClient());
 
         /// <inheritdoc/>
         public ObservableCollection<InventoryItem> GetInventory()
@@ -59,6 +67,15 @@ namespace Inventory.Adjustment.Client.QuickBooksClient
             return null;
         }
 
+        /// <summary>
+        /// Wrapper for test thread.
+        /// </summary>
+        /// <returns></returns>
+        public async Task<bool> TestConnectionAsync()
+        {
+            return await RunTestsAsync().ConfigureAwait(false);
+        }
+
         public void Dispose()
         {
             Dispose(true);
@@ -73,6 +90,8 @@ namespace Inventory.Adjustment.Client.QuickBooksClient
                 if (disposing)
                 {
                     // TODO: dispose managed state (managed objects).
+                    EndSession();
+                    CloseConnection();
                 }
 
                 // TODO: free unmanaged resources (unmanaged objects) and override a finalizer below.
@@ -83,31 +102,146 @@ namespace Inventory.Adjustment.Client.QuickBooksClient
         }
 
         /// <summary>
-        /// Wrapper for test thread.
+        /// Starts a session with the quickbooks service.
         /// </summary>
-        /// <returns></returns>
-        public async Task<bool> TestConnectionAsync()
+        private void BeginSession()
         {
-            return await RunTestsAsync().ConfigureAwait(false);
+            if (!_sessionInProgress)
+            {
+                _manager.BeginSession("", ENOpenMode.omDontCare);
+                _sessionInProgress = true;
+            }
         }
 
         /// <summary>
-        /// Async test to determine if we can communicate
-        /// with the quickbooks client.
+        /// Ends the session with the quickbooks service.
         /// </summary>
-        /// <returns></returns>
-        private async Task<bool> RunTestsAsync()
+        private void EndSession()
         {
-            bool result = true;
+            if (_sessionInProgress)
+            {
+                _manager.EndSession();
+                _sessionInProgress = false;
+            }
+        }
+
+        /// <summary>
+        /// Opens the connection to the quickbooks service.
+        /// </summary>
+        private async Task OpenConnection()
+        {
+            if (!_connectionOpen)
+            {
+                _manager.OpenConnection(_appId, _appName);
+                _connectionOpen = true;
+
+                await GetSDKVersionAsync().ConfigureAwait(false);
+            }
+        }
+
+        /// <summary>
+        /// Closes the connection to the quickbooks service.
+        /// </summary>
+        private void CloseConnection()
+        {
+            if (_connectionOpen)
+            {
+                _manager.CloseConnection();
+                _connectionOpen = false;
+            }
+        }
+
+        /// <summary>
+        /// Determines the most recent version supported by 
+        /// the quickbooks instance to which we are connecting.
+        /// We should always use the latest version supported
+        /// by the target instance.
+        /// </summary>
+        private async Task GetSDKVersionAsync()
+        {
+            IMsgSetRequest request = _manager.CreateMsgSetRequest(_country, 1, 0);
+            request.AppendHostQueryRq();
+
+            IMsgSetResponse queryResponse = await MakeRequestAsync(request).ConfigureAwait(false);
+
+            IResponse response = queryResponse.ResponseList.GetAt(0);
+            IHostRet HostResponse = (IHostRet)response.Detail;
+
+            IBSTRList supportedVersions = HostResponse.SupportedQBXMLVersionList;
+
+            string svers = string.Empty;
+            double version;
+
+            for (int i = 0; i < supportedVersions.Count; i++)
+            {
+                svers = supportedVersions.GetAt(i);
+                version = Convert.ToDouble(svers);
+                _qbsdkVersion = (version > _qbsdkVersion) ? version : _qbsdkVersion;
+            }
+        }
+
+        /// <summary>
+        /// Wrapper around the execution thread.
+        /// </summary>
+        /// <param name="request">Request message</param>
+        /// <returns>Reponse Message</returns>
+        private async Task<IMsgSetResponse> MakeRequestAsync(IMsgSetRequest request)
+        {
+            return await ExecuteRequestAsync(request);
+        }
+
+        /// <summary>
+        /// Execute the request to the quickbooks client asynchronously.
+        /// </summary>
+        /// <param name="request">Request message</param>
+        /// <returns>Response message</returns>
+        private async Task<IMsgSetResponse> ExecuteRequestAsync(IMsgSetRequest request)
+        {
+            IMsgSetResponse response = null;
+            QuickBooksClientException exception = null;
 
             Task.Run(() =>
             {
                 try
                 {
-                    _manager.OpenConnection("", "Inventory Adjustment");
-                    _manager.BeginSession("", ENOpenMode.omDontCare);
-                    _manager.EndSession();
-                    _manager.CloseConnection();
+                    BeginSession();
+                    response = _manager.DoRequests(request);
+                }
+                catch (Exception ex)
+                {
+                    exception = new QuickBooksClientException(ex.ToString());
+                }
+                finally
+                {
+                    EndSession();
+                }
+            }).GetAwaiter().GetResult();
+
+            if (exception != null)
+            {
+                throw exception;
+            }
+
+            return response;
+        }
+ 
+        /// <summary>
+        /// Async test to determine if we can communicate
+        /// with the quickbooks client.
+        /// </summary>
+        /// <returns>True if the connection was successful</returns>
+        private async Task<bool> RunTestsAsync()
+        {
+            bool result = true;
+
+            Task.Run(async () =>
+            {
+                try
+                {
+                    await OpenConnection();
+                    BeginSession();
+                    EndSession();
+                    CloseConnection();
                 }
                 catch (Exception ex)
                 {

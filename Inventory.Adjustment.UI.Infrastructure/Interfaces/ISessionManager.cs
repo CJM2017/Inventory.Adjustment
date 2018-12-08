@@ -19,6 +19,16 @@ namespace Inventory.Adjustment.UI.Infrastructure.Interfaces
     public interface ISessionManager : IDisposable
     {
         /// <summary>
+        /// Gets the application name.
+        /// </summary>
+        string AppName { get; }
+
+        /// <summary>
+        /// Gets the application version number.
+        /// </summary>
+        string AppVersion { get; }
+
+        /// <summary>
         /// Gets the container.
         /// </summary>
         CompositionContainer Container { get; }
