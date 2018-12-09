@@ -14,6 +14,7 @@ namespace Inventory.Adjustment.Data.Serializable
     /// </summary>
     public class InventoryItem : BindableBase
     {
+        private string _name;
         private string _code;
         private string _vendor;
         private string _description;
@@ -27,6 +28,19 @@ namespace Inventory.Adjustment.Data.Serializable
 
         private DateTime _creationTime;
         private DateTime _lastModifiedTime;
+
+        /// <summary>
+        /// Gets or sets the name for the item.
+        /// </summary>
+        public string Name
+        {
+            get => _name;
+            set
+            {
+                _name = value;
+                RaisePropertyChanged();
+            }
+        }
 
         /// <summary>
         /// Gets or sets the code / identifier for the item.

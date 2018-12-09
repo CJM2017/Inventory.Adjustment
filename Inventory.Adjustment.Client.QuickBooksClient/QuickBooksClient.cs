@@ -46,13 +46,10 @@ namespace Inventory.Adjustment.Client.QuickBooksClient
         {
             // TODO
             IMsgSetRequest request = CreateRequest();
-            request.Attributes.OnError = ENRqOnError.roeContinue;
             request.AppendItemQueryRq();
-
             IMsgSetResponse queryResponse = await MakeRequestAsync(request).ConfigureAwait(false);
-            ProcessItemQuery(queryResponse);
 
-            return null;
+            return await ProcessItemQuery(queryResponse);
         }
 
         /// <inheritdoc/>
@@ -166,7 +163,9 @@ namespace Inventory.Adjustment.Client.QuickBooksClient
         /// <returns>The generated request</returns>
         private IMsgSetRequest CreateRequest()
         {
-            return _manager.CreateMsgSetRequest(_country, _qbsdkMajor, _qbsdkMinor);
+            IMsgSetRequest request = _manager.CreateMsgSetRequest(_country, _qbsdkMajor, _qbsdkMinor);
+            request.Attributes.OnError = ENRqOnError.roeContinue;
+            return request;
         }
          
         /// <summary>
@@ -229,8 +228,13 @@ namespace Inventory.Adjustment.Client.QuickBooksClient
             return response;
         }
         
-        private void ProcessItemQuery(IMsgSetResponse queryResponse)
+        /// <summary>
+        /// Processes the returned query response.
+        /// </summary>
+        /// <param name="queryResponse"></param>
+        private async Task<ObservableCollection<InventoryItem>> ProcessItemQuery(IMsgSetResponse queryResponse)
         {
+            ObservableCollection<InventoryItem> inventoryItems = null;
             IResponse response = queryResponse.ResponseList.GetAt(0);
             int statusCode = response.StatusCode;
 
@@ -242,9 +246,84 @@ namespace Inventory.Adjustment.Client.QuickBooksClient
                     if (resopnseType == ENResponseType.rtItemQueryRs)
                     {
                         IORItemRetList itemList = response.Detail as IORItemRetList;
+                        inventoryItems = await ParseItemList(itemList);
                     }
                 }
             }
+
+            return inventoryItems;
+        }
+
+        /// <summary>
+        /// Parses the returned item list for inventory items.
+        /// </summary>
+        /// <param name="itemList"></param>
+        private async Task<ObservableCollection<InventoryItem>> ParseItemList(IORItemRetList itemList)
+        {
+            ObservableCollection<InventoryItem> items = new ObservableCollection<InventoryItem>();
+            int itemCount = await GetCount("ItemQueryRq");
+
+            for (int i = 0; i < itemCount; i++)
+            {
+                var item = itemList.GetAt(i);
+
+                if (item.ItemInventoryRet != null)
+                {
+                    items.Add(ExtractInventoryItem(item.ItemInventoryRet));
+                }
+            }
+
+            return items;
+        }
+
+        public InventoryItem ExtractInventoryItem(IItemInventoryRet item)
+        {
+            InventoryItem inventoryItem = new InventoryItem();
+
+            if (item.FullName != null)
+            {
+                inventoryItem.Name = item.FullName.GetValue();
+            }
+
+            if (item.SalesPrice != null)
+            {
+                inventoryItem.BasePrice = item.SalesPrice.GetValue();
+            }
+
+            return inventoryItem;
+        }
+
+        /// <summary>
+        /// Creates the request to count the number of items in the response list.
+        /// </summary>
+        /// <param name="requestType"></param>
+        /// <returns></returns>
+        private async Task<int> GetCount(string requestType)
+        {
+            IMsgSetRequest request = CreateRequest();
+            
+            switch (requestType)
+            {
+                case "ItemQueryRq":
+                    IItemQuery itemQuery =  request.AppendItemQueryRq();
+                    itemQuery.metaData.SetValue(ENmetaData.mdMetaDataOnly);
+                    break;
+            }
+
+            IMsgSetResponse queryResponse = await MakeRequestAsync(request).ConfigureAwait(false);
+
+            return ParseRsForCount(queryResponse);
+        }
+
+        /// <summary>
+        /// Gets the number of items in the meta response.
+        /// </summary>
+        /// <param name="queryResponse"></param>
+        /// <returns>Int</returns>
+        private int ParseRsForCount(IMsgSetResponse queryResponse)
+        {
+            IResponse response = queryResponse.ResponseList.GetAt(0);
+            return response.retCount;
         }
 
         /// <summary>

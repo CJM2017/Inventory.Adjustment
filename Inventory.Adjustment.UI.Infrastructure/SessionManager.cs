@@ -51,7 +51,7 @@ namespace Inventory.Adjustment.UI.Infrastructure
 
             // Build the mock session
             Items = new ObservableCollection<InventoryItem>();
-            BuildMockSession().GetAwaiter();
+            LoadSession().GetAwaiter();
         }
 
         /// <summary>
@@ -103,19 +103,19 @@ namespace Inventory.Adjustment.UI.Infrastructure
         //   Dispose(false);
         // }
 
-        private async Task BuildMockSession()
+        private async Task LoadSession()
         {
-            for (int i = 0; i < 20; i++)
-            {
-                Items.Add(new InventoryItem
-                {
-                    Code = $"Item-{i}",
-                    Cost = i,
-                    BasePrice = 2 * i
-                });
-            }
+            //for (int i = 0; i < 20; i++)
+            //{
+            //    Items.Add(new InventoryItem
+            //    {
+            //        Code = $"Item-{i}",
+            //        Cost = i,
+            //        BasePrice = 2 * i
+            //    });
+            //}
             await QBClient.OpenConnection();
-            await QBClient.GetInventory();
+            Items = await QBClient.GetInventory();
             _log.Debug("Mock session has been created");
         }
     }
