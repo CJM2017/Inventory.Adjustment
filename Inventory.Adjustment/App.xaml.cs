@@ -7,7 +7,8 @@
 namespace Inventory.Adjustment
 {
     using System.Windows;
-
+    using Inventory.Adjustment.UI.Infrastructure;
+    
     /// <summary>
     /// Interaction logic for App.xaml.
     /// </summary>
@@ -32,7 +33,7 @@ namespace Inventory.Adjustment
 
         private void OnExit(object sender, ExitEventArgs exitEventArgs)
         {
-            // TODO
+            SessionManager.Instance.QBClient.Dispose();
         }
     }
 }
