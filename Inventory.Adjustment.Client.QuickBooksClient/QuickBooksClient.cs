@@ -42,10 +42,16 @@ namespace Inventory.Adjustment.Client.QuickBooksClient
         }
 
         /// <inheritdoc/>
-        public ObservableCollection<InventoryItem> GetInventory()
+        public async Task<ObservableCollection<InventoryItem>> GetInventory()
         {
             // TODO
             IMsgSetRequest request = CreateRequest();
+            request.Attributes.OnError = ENRqOnError.roeContinue;
+            request.AppendItemQueryRq();
+
+            IMsgSetResponse queryResponse = await MakeRequestAsync(request).ConfigureAwait(false);
+            ProcessItemQuery(queryResponse);
+
             return null;
         }
 
@@ -175,25 +181,7 @@ namespace Inventory.Adjustment.Client.QuickBooksClient
             request.AppendHostQueryRq();
 
             IMsgSetResponse queryResponse = await MakeRequestAsync(request).ConfigureAwait(false);
-
-            IResponse response = queryResponse.ResponseList.GetAt(0);
-            IHostRet HostResponse = (IHostRet)response.Detail;
-
-            IBSTRList supportedVersions = HostResponse.SupportedQBXMLVersionList;
-
-            string svers = string.Empty;
-            double version = 0.0;
-            double latestVersion = 0.0;
-
-            for (int i = 0; i < supportedVersions.Count; i++)
-            {
-                svers = supportedVersions.GetAt(i);
-                version = Convert.ToDouble(svers);
-                latestVersion = (version > latestVersion) ? version : latestVersion;
-            }
-
-            _qbsdkMajor = (short)Math.Floor(latestVersion);
-            _qbsdkMinor = (short)(Math.Ceiling(latestVersion * 100) - (latestVersion * 100));
+            ProcessSDkQuery(queryResponse);
         }
 
         /// <summary>
@@ -240,7 +228,51 @@ namespace Inventory.Adjustment.Client.QuickBooksClient
 
             return response;
         }
- 
+        
+        private void ProcessItemQuery(IMsgSetResponse queryResponse)
+        {
+            IResponse response = queryResponse.ResponseList.GetAt(0);
+            int statusCode = response.StatusCode;
+
+            if (statusCode == 0)
+            {
+                if (response.Detail != null)
+                {
+                    ENResponseType resopnseType = (ENResponseType)response.Type.GetValue();
+                    if (resopnseType == ENResponseType.rtItemQueryRs)
+                    {
+                        IORItemRetList itemList = response.Detail as IORItemRetList;
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// Parses the reponse for the latest sdk version number.
+        /// </summary>
+        /// <param name="queryResponse"></param>
+        private void ProcessSDkQuery(IMsgSetResponse queryResponse)
+        {
+            IResponse response = queryResponse.ResponseList.GetAt(0);
+            IHostRet HostResponse = (IHostRet)response.Detail;
+
+            IBSTRList supportedVersions = HostResponse.SupportedQBXMLVersionList;
+
+            string svers = string.Empty;
+            double version = 0.0;
+            double latestVersion = 0.0;
+
+            for (int i = 0; i < supportedVersions.Count; i++)
+            {
+                svers = supportedVersions.GetAt(i);
+                version = Convert.ToDouble(svers);
+                latestVersion = (version > latestVersion) ? version : latestVersion;
+            }
+
+            _qbsdkMajor = (short)Math.Floor(latestVersion);
+            _qbsdkMinor = (short)(Math.Ceiling(latestVersion * 100) - (latestVersion * 100));
+        }
+
         /// <summary>
         /// Async test to determine if we can communicate
         /// with the quickbooks client.

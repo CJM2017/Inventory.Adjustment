@@ -27,11 +27,10 @@ namespace Inventory.Adjustment
         public async Task Run()
         {
             log4net.Config.XmlConfigurator.Configure();
-            _manager = SessionManager.Instance;
-
+            
             try
             {
-                await _manager.QBClient.OpenConnection();
+                _manager = SessionManager.Instance;
             }
             catch (QuickBooksClientException ex)
             {

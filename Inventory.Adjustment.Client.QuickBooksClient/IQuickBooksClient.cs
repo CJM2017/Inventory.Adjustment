@@ -7,9 +7,9 @@
 namespace Inventory.Adjustment.Client.QuickBooksClient
 {
     using System;
+    using System.Threading.Tasks;
     using System.Collections.ObjectModel;
     using Inventory.Adjustment.Data.Serializable;
-    using Interop.QBFC13;
 
     interface IQuickBooksClient : IDisposable
     {
@@ -17,7 +17,7 @@ namespace Inventory.Adjustment.Client.QuickBooksClient
         /// reads list of inventory items from local quickbooks.
         /// </summary>
         /// <returns>Inventory item list</returns>
-        ObservableCollection<InventoryItem> GetInventory();
+        Task<ObservableCollection<InventoryItem>> GetInventory();
 
         /// <summary>
         /// Create a new inventory item in quickbooks.

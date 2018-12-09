@@ -14,6 +14,7 @@ namespace Inventory.Adjustment.UI.Infrastructure
     using Inventory.Adjustment.UI.Infrastructure.Interfaces;
     using Inventory.Adjustment.Client.QuickBooksClient;
     using log4net;
+    using System.Threading.Tasks;
 
     /// <summary>
     /// Singleton class for holding session data for the application.
@@ -50,7 +51,7 @@ namespace Inventory.Adjustment.UI.Infrastructure
 
             // Build the mock session
             Items = new ObservableCollection<InventoryItem>();
-            BuildMockSession();
+            BuildMockSession().GetAwaiter();
         }
 
         /// <summary>
@@ -102,7 +103,7 @@ namespace Inventory.Adjustment.UI.Infrastructure
         //   Dispose(false);
         // }
 
-        private void BuildMockSession()
+        private async Task BuildMockSession()
         {
             for (int i = 0; i < 20; i++)
             {
@@ -113,7 +114,8 @@ namespace Inventory.Adjustment.UI.Infrastructure
                     BasePrice = 2 * i
                 });
             }
-
+            await QBClient.OpenConnection();
+            await QBClient.GetInventory();
             _log.Debug("Mock session has been created");
         }
     }
