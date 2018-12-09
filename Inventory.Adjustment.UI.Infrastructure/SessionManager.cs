@@ -114,7 +114,6 @@ namespace Inventory.Adjustment.UI.Infrastructure
                 });
             }
 
-            QBClient.Dispose();
             _log.Debug("Mock session has been created");
         }
     }

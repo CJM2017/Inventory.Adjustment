@@ -8,8 +8,10 @@ namespace Inventory.Adjustment
 {
     using System;
     using System.Windows;
+    using System.Threading.Tasks;
     using Inventory.Adjustment.Utilities;
     using Inventory.Adjustment.UI.Infrastructure;
+    using Inventory.Adjustment.Client.QuickBooksClient;
 
     /// <summary>
     /// Creates and initializes global services and
@@ -22,19 +24,28 @@ namespace Inventory.Adjustment
         /// <summary>
         /// Run the application.
         /// </summary>
-        public void Run()
+        public async Task Run()
         {
             log4net.Config.XmlConfigurator.Configure();
-
-            Application.Current.MainWindow = new MainWindow();
-            Application.Current.MainWindow.Show();
-            Navigation.Navigate(new Uri("Views/InventoryPage.xaml", UriKind.RelativeOrAbsolute));
-
             _manager = SessionManager.Instance;
+
+            try
+            {
+                await _manager.QBClient.OpenConnection();
+            }
+            catch (QuickBooksClientException ex)
+            {
+                // Display error message and close application
+            }
+
             if (_manager.Container == null)
             {
                 throw new InvalidOperationException("Composition Container for application was not created.");
             }
+
+            Application.Current.MainWindow = new MainWindow();
+            Application.Current.MainWindow.Show();
+            Navigation.Navigate(new Uri("Views/InventoryPage.xaml", UriKind.RelativeOrAbsolute));
         }
     }
 }

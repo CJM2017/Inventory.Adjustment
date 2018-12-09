@@ -23,7 +23,8 @@ namespace Inventory.Adjustment.Client.QuickBooksClient
         private string _appName;
         private string _appId;
         private string _country;
-        private double _qbsdkVersion;
+        private short _qbsdkMajor;
+        private short _qbsdkMinor;
 
         public QuickBooksClient(string appId, string appName, string country)
         {
@@ -34,7 +35,8 @@ namespace Inventory.Adjustment.Client.QuickBooksClient
             _appId = appId;
             _appName = appName;
             _country = country;
-            _qbsdkVersion = 0.0;
+            _qbsdkMajor = 0;
+            _qbsdkMinor = 0;
 
             _manager = new QBSessionManager();
         }
@@ -43,6 +45,7 @@ namespace Inventory.Adjustment.Client.QuickBooksClient
         public ObservableCollection<InventoryItem> GetInventory()
         {
             // TODO
+            IMsgSetRequest request = CreateRequest();
             return null;
         }
 
@@ -68,12 +71,17 @@ namespace Inventory.Adjustment.Client.QuickBooksClient
         }
 
         /// <summary>
-        /// Wrapper for test thread.
+        /// Opens the connection to the quickbooks service.
         /// </summary>
-        /// <returns></returns>
-        public async Task<bool> TestConnectionAsync()
+        public async Task OpenConnection()
         {
-            return await RunTestsAsync().ConfigureAwait(false);
+            if (!_connectionOpen)
+            {
+                _manager.OpenConnection(_appId, _appName);
+                _connectionOpen = true;
+
+                await GetSDKVersionAsync().ConfigureAwait(false);
+            }
         }
 
         public void Dispose()
@@ -102,6 +110,15 @@ namespace Inventory.Adjustment.Client.QuickBooksClient
         }
 
         /// <summary>
+        /// Wrapper for test thread.
+        /// </summary>
+        /// <returns></returns>
+        public async Task<bool> TestConnectionAsync()
+        {
+            return await RunTestsAsync().ConfigureAwait(false);
+        }
+
+        /// <summary>
         /// Starts a session with the quickbooks service.
         /// </summary>
         private void BeginSession()
@@ -126,20 +143,6 @@ namespace Inventory.Adjustment.Client.QuickBooksClient
         }
 
         /// <summary>
-        /// Opens the connection to the quickbooks service.
-        /// </summary>
-        private async Task OpenConnection()
-        {
-            if (!_connectionOpen)
-            {
-                _manager.OpenConnection(_appId, _appName);
-                _connectionOpen = true;
-
-                await GetSDKVersionAsync().ConfigureAwait(false);
-            }
-        }
-
-        /// <summary>
         /// Closes the connection to the quickbooks service.
         /// </summary>
         private void CloseConnection()
@@ -150,7 +153,16 @@ namespace Inventory.Adjustment.Client.QuickBooksClient
                 _connectionOpen = false;
             }
         }
-
+        
+        /// <summary>
+        /// Creates the request body to send to the service.
+        /// </summary>
+        /// <returns>The generated request</returns>
+        private IMsgSetRequest CreateRequest()
+        {
+            return _manager.CreateMsgSetRequest(_country, _qbsdkMajor, _qbsdkMinor);
+        }
+         
         /// <summary>
         /// Determines the most recent version supported by 
         /// the quickbooks instance to which we are connecting.
@@ -170,14 +182,18 @@ namespace Inventory.Adjustment.Client.QuickBooksClient
             IBSTRList supportedVersions = HostResponse.SupportedQBXMLVersionList;
 
             string svers = string.Empty;
-            double version;
+            double version = 0.0;
+            double latestVersion = 0.0;
 
             for (int i = 0; i < supportedVersions.Count; i++)
             {
                 svers = supportedVersions.GetAt(i);
                 version = Convert.ToDouble(svers);
-                _qbsdkVersion = (version > _qbsdkVersion) ? version : _qbsdkVersion;
+                latestVersion = (version > latestVersion) ? version : latestVersion;
             }
+
+            _qbsdkMajor = (short)Math.Floor(latestVersion);
+            _qbsdkMinor = (short)(Math.Ceiling(latestVersion * 100) - (latestVersion * 100));
         }
 
         /// <summary>

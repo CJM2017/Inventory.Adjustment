@@ -8,7 +8,7 @@ namespace Inventory.Adjustment.Client.QuickBooksClient
 {
     using System;
 
-    class QuickBooksClientException : Exception
+    public class QuickBooksClientException : Exception
     {
         public QuickBooksClientException()
         {
