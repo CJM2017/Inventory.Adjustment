@@ -8,13 +8,13 @@ namespace Inventory.Adjustment.UI.Infrastructure
 {
     using System;
     using System.Reflection;
+    using System.Threading.Tasks;
     using System.Collections.ObjectModel;
     using System.ComponentModel.Composition.Hosting;
     using Inventory.Adjustment.Data.Serializable;
     using Inventory.Adjustment.UI.Infrastructure.Interfaces;
     using Inventory.Adjustment.Client.QuickBooksClient;
     using log4net;
-    using System.Threading.Tasks;
 
     /// <summary>
     /// Singleton class for holding session data for the application.
@@ -49,9 +49,7 @@ namespace Inventory.Adjustment.UI.Infrastructure
             AppVersion = Assembly.GetExecutingAssembly().GetName().Version.ToString();
             QBClient = new QuickBooksClient(string.Empty, $"{AppName} v{AppVersion}", "US");
 
-            // Build the mock session
             Items = new ObservableCollection<InventoryItem>();
-            LoadSession().GetAwaiter();
         }
 
         /// <summary>
@@ -74,6 +72,17 @@ namespace Inventory.Adjustment.UI.Infrastructure
         /// <inheritdoc/>
         public ObservableCollection<InventoryItem> Items { get; set; }
 
+        /// <summary>
+        /// Load the inbentory items from quickbooks into this session.
+        /// </summary>
+        /// <returns>Task</returns>
+        public async Task LoadInventorySessionData()
+        {
+            await QBClient.OpenConnection();
+            Items = await QBClient.GetInventory();
+            _log.Debug("Inventory session data has been loaded");
+        }
+
         public void Dispose()
         {
             Dispose(true);
@@ -87,7 +96,7 @@ namespace Inventory.Adjustment.UI.Infrastructure
             {
                 if (disposing)
                 {
-                    // TODO: dispose managed state (managed objects).
+                    QBClient.Dispose();
                 }
 
                 // TODO: free unmanaged resources (unmanaged objects) and override a finalizer below.
@@ -95,28 +104,6 @@ namespace Inventory.Adjustment.UI.Infrastructure
 
                 _disposedValue = true;
             }
-        }
-
-        // TODO: override a finalizer only if Dispose(bool disposing) above has code to free unmanaged resources.
-        // ~SessionManager() {
-        //   // Do not change this code. Put cleanup code in Dispose(bool disposing) above.
-        //   Dispose(false);
-        // }
-
-        private async Task LoadSession()
-        {
-            //for (int i = 0; i < 20; i++)
-            //{
-            //    Items.Add(new InventoryItem
-            //    {
-            //        Code = $"Item-{i}",
-            //        Cost = i,
-            //        BasePrice = 2 * i
-            //    });
-            //}
-            await QBClient.OpenConnection();
-            Items = await QBClient.GetInventory();
-            _log.Debug("Mock session has been created");
         }
     }
 }

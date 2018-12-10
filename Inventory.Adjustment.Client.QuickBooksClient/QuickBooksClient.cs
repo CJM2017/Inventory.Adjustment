@@ -276,13 +276,23 @@ namespace Inventory.Adjustment.Client.QuickBooksClient
             return items;
         }
 
-        public InventoryItem ExtractInventoryItem(IItemInventoryRet item)
+        private InventoryItem ExtractInventoryItem(IItemInventoryRet item)
         {
             InventoryItem inventoryItem = new InventoryItem();
 
             if (item.FullName != null)
             {
                 inventoryItem.Name = item.FullName.GetValue();
+            }
+
+            if (item.ManufacturerPartNumber != null)
+            {
+                inventoryItem.Code = item.ManufacturerPartNumber.GetValue();
+            }
+
+            if (item.QuantityOnHand != null)
+            {
+                inventoryItem.Stock = (int)item.QuantityOnHand.GetValue();
             }
 
             if (item.SalesPrice != null)
@@ -327,7 +337,7 @@ namespace Inventory.Adjustment.Client.QuickBooksClient
         }
 
         /// <summary>
-        /// Parses the reponse for the latest sdk version number.
+        /// Requests and sets the latest quickbooks sdk version.
         /// </summary>
         /// <param name="queryResponse"></param>
         private void ProcessSDkQuery(IMsgSetResponse queryResponse)
@@ -336,7 +346,15 @@ namespace Inventory.Adjustment.Client.QuickBooksClient
             IHostRet HostResponse = (IHostRet)response.Detail;
 
             IBSTRList supportedVersions = HostResponse.SupportedQBXMLVersionList;
+            ParseSDK(supportedVersions);
+        }
 
+        /// <summary>
+        /// Parses the reponse for the latest sdk version number.
+        /// </summary>
+        /// <param name="supportedVersions"></param>
+        private void ParseSDK(IBSTRList supportedVersions)
+        {
             string svers = string.Empty;
             double version = 0.0;
             double latestVersion = 0.0;
@@ -349,7 +367,7 @@ namespace Inventory.Adjustment.Client.QuickBooksClient
             }
 
             _qbsdkMajor = (short)Math.Floor(latestVersion);
-            _qbsdkMinor = (short)(Math.Ceiling(latestVersion * 100) - (latestVersion * 100));
+            _qbsdkMinor = (short)((latestVersion * 100) - (_qbsdkMajor * 100));
         }
 
         /// <summary>

@@ -8,7 +8,6 @@ namespace Inventory.Adjustment
 {
     using System;
     using System.Windows;
-    using System.Threading.Tasks;
     using Inventory.Adjustment.Utilities;
     using Inventory.Adjustment.UI.Infrastructure;
     using Inventory.Adjustment.Client.QuickBooksClient;
@@ -24,7 +23,7 @@ namespace Inventory.Adjustment
         /// <summary>
         /// Run the application.
         /// </summary>
-        public async Task Run()
+        public void Run()
         {
             log4net.Config.XmlConfigurator.Configure();
             

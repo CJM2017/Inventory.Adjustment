@@ -33,7 +33,7 @@ namespace Inventory.Adjustment
 
         private void OnExit(object sender, ExitEventArgs exitEventArgs)
         {
-            SessionManager.Instance.QBClient.Dispose();
+            SessionManager.Instance.Dispose();
         }
     }
 }
