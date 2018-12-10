@@ -6,7 +6,6 @@
 
 namespace Inventory.Adjustment.UI.Controls
 {
-    using System.Windows;
     using System.Windows.Controls;
     using Inventory.Adjustment.UI.ViewModels;
 
@@ -22,9 +21,10 @@ namespace Inventory.Adjustment.UI.Controls
         /// </summary>
         public InventoryItemList()
         {
-            InitializeComponent();
             _viewModel = new InventoryItemListViewModel();
             this.DataContext = _viewModel;
+
+            InitializeComponent();
         }
     }
 }

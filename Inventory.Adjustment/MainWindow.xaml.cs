@@ -28,8 +28,6 @@ namespace Inventory.Adjustment
 
         public MainWindow()
         {
-            InitializeComponent();
-
             _viewModel = new ShellViewModel();
             DataContext = _viewModel;
             this.SizeChanged += WindowResizedHandler;
@@ -39,6 +37,8 @@ namespace Inventory.Adjustment
             Navigation.Frame.Navigated += FrameOnNavigated;
 
             Application.Current.MainWindow.FontSize = 15;
+    
+            InitializeComponent();
         }
 
         private void CenterWindowOnScreen()

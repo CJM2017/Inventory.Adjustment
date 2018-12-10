@@ -50,6 +50,11 @@ namespace Inventory.Adjustment.UI.Infrastructure
             QBClient = new QuickBooksClient(string.Empty, $"{AppName} v{AppVersion}", "US");
 
             Items = new ObservableCollection<InventoryItem>();
+
+            Task.Run(async () =>
+            {
+                await LoadInventorySessionData();
+            }).GetAwaiter().GetResult();
         }
 
         /// <summary>
