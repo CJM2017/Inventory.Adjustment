@@ -11,7 +11,6 @@ namespace Inventory.Adjustment.Client.QuickBooksClient
     using System.Collections.ObjectModel;
     using Inventory.Adjustment.Data.Serializable;
     using Interop.QBFC13;
-    using System.Collections;
 
     public class QuickBooksClient : IQuickBooksClient
     {

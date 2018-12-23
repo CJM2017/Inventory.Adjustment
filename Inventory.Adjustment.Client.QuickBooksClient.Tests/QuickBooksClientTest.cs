@@ -6,7 +6,6 @@
 
 namespace Inventory.Adjustment.Client.QuickBooksClient.Tests
 {
-    using System;
     using System.Threading.Tasks;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
     using Inventory.Adjustment.Client.QuickBooksClient;
@@ -31,11 +30,12 @@ namespace Inventory.Adjustment.Client.QuickBooksClient.Tests
             Assert.IsTrue(success);
         }
 
-        //[TestMethod]
-        //public async Task TestGetInventory()
-        //{
-        //    var inventory = await _client.GetInventory();
-        //    Assert.IsNotNull(inventory);
-        //}
+        [TestMethod]
+        public async Task TestGetInventory()
+        {
+            await _client.OpenConnection();
+            var inventory = await _client.GetInventory();
+            Assert.IsNotNull(inventory);
+        }
     }
 }

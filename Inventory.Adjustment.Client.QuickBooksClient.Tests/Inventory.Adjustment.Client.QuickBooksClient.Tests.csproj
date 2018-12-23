@@ -61,6 +61,10 @@
       <Project>{e6593514-c43d-4577-a6f2-d36bc176f317}</Project>
       <Name>Inventory.Adjustment.Client.QuickBooksClient</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Inventory.Adjustment.Data\Inventory.Adjustment.Data.csproj">
+      <Project>{0f71d242-d4a0-4e24-a907-fddefa72d41c}</Project>
+      <Name>Inventory.Adjustment.Data</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

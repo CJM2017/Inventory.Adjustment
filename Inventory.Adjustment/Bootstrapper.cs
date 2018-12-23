@@ -33,7 +33,7 @@ namespace Inventory.Adjustment
             }
             catch (QuickBooksClientException ex)
             {
-                // Display error message and close application
+                // TODO - Display error message and close application
             }
 
             if (_manager.Container == null)
