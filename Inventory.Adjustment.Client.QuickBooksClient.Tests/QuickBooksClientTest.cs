@@ -25,7 +25,7 @@ namespace Inventory.Adjustment.Client.QuickBooksClient.Tests
         [TestMethod]
         public async Task TestInitialization()
         {
-            var success = await _client.TestConnectionAsync();
+            var success = await _client.TestConnectionAsync().ConfigureAwait(false);
             Assert.IsNotNull(success);
             Assert.IsTrue(success);
         }

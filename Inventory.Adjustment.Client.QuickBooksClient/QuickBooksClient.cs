@@ -189,7 +189,7 @@ namespace Inventory.Adjustment.Client.QuickBooksClient
         /// <returns>Reponse Message</returns>
         private async Task<IMsgSetResponse> MakeRequestAsync(IMsgSetRequest request)
         {
-            return await ExecuteRequestAsync(request);
+            return await ExecuteRequestAsync(request).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -199,11 +199,10 @@ namespace Inventory.Adjustment.Client.QuickBooksClient
         /// <returns>Response message</returns>
         private async Task<IMsgSetResponse> ExecuteRequestAsync(IMsgSetRequest request)
         {
-            IMsgSetResponse response = null;
-            QuickBooksClientException exception = null;
-
-            Task.Run(() =>
+            return await Task.Run(() =>
             {
+                IMsgSetResponse response = null;
+
                 try
                 {
                     BeginSession();
@@ -211,20 +210,15 @@ namespace Inventory.Adjustment.Client.QuickBooksClient
                 }
                 catch (Exception ex)
                 {
-                    exception = new QuickBooksClientException(ex.ToString());
+                    throw new QuickBooksClientException(ex.ToString());
                 }
                 finally
                 {
                     EndSession();
                 }
-            }).GetAwaiter().GetResult();
 
-            if (exception != null)
-            {
-                throw exception;
-            }
-
-            return response;
+                return response;
+            });
         }
         
         /// <summary>
@@ -376,24 +370,28 @@ namespace Inventory.Adjustment.Client.QuickBooksClient
         /// <returns>True if the connection was successful</returns>
         private async Task<bool> RunTestsAsync()
         {
-            bool result = true;
-
-            Task.Run(async () =>
+            return await Task.Run(async () =>
             {
+                bool result = false;
+
                 try
                 {
                     await OpenConnection();
                     BeginSession();
-                    EndSession();
-                    CloseConnection();
+                    result = true;
                 }
                 catch (Exception ex)
                 {
-                    result = false;
-                } 
-            }).GetAwaiter().GetResult();
+                    throw new QuickBooksClientException(ex.ToString());
+                }
+                finally
+                {
+                    EndSession();
+                    CloseConnection();
+                }
 
-            return result;
+                return result;
+            });
         }
     }
 }

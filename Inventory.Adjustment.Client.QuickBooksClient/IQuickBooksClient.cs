@@ -11,7 +11,7 @@ namespace Inventory.Adjustment.Client.QuickBooksClient
     using System.Collections.ObjectModel;
     using Inventory.Adjustment.Data.Serializable;
 
-    interface IQuickBooksClient : IDisposable
+    public interface IQuickBooksClient : IDisposable
     {
         /// <summary>
         /// reads list of inventory items from local quickbooks.
@@ -39,5 +39,11 @@ namespace Inventory.Adjustment.Client.QuickBooksClient
         /// <param name="itemToDelete">Item in the service to be deleted</param>
         /// <returns>The returned item</returns>
         InventoryItem DeleteInventoryItem(InventoryItem itemToDelete);
+
+        /// <summary>
+        /// Establishes a connection with the quickbooks client.
+        /// </summary>
+        /// <returns>Task</returns>
+        Task OpenConnection();
     }
 }

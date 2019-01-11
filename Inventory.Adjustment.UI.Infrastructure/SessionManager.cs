@@ -51,10 +51,7 @@ namespace Inventory.Adjustment.UI.Infrastructure
 
             Items = new ObservableCollection<InventoryItem>();
 
-            Task.Run(async () =>
-            {
-                await LoadInventorySessionData();
-            }).GetAwaiter().GetResult();
+            LoadInventorySessionData();
         }
 
         /// <summary>
@@ -72,7 +69,7 @@ namespace Inventory.Adjustment.UI.Infrastructure
         public CompositionContainer Container => _container;
 
         /// <inheritdoc/>
-        public QuickBooksClient QBClient { get; private set; }
+        public IQuickBooksClient QBClient { get; private set; }
 
         /// <inheritdoc/>
         public ObservableCollection<InventoryItem> Items { get; set; }

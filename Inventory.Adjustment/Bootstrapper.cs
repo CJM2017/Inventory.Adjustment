@@ -33,7 +33,11 @@ namespace Inventory.Adjustment
             }
             catch (QuickBooksClientException ex)
             {
-                // TODO - Display error message and close application
+                string errorLabel = "QuickBooks Client Error";
+                string errorMessage = "Error occurred while attempting to connect to " +
+                                      "the QuickBooks Desktop Application";
+
+                MessageBox.Show(errorMessage, errorLabel, MessageBoxButton.OK, MessageBoxImage.Error);
             }
 
             if (_manager.Container == null)

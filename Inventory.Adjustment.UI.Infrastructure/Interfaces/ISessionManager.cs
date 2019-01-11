@@ -36,7 +36,7 @@ namespace Inventory.Adjustment.UI.Infrastructure.Interfaces
         /// <summary>
         /// Gets the the quickbooks client for the session.
         /// </summary>
-        QuickBooksClient QBClient { get; }
+        IQuickBooksClient QBClient { get; }
 
         /// <summary>
         /// Gets or sets the collection of inventory items.
