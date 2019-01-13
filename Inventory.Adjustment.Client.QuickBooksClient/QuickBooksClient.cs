@@ -260,7 +260,7 @@ namespace Inventory.Adjustment.Client.QuickBooksClient
             {
                 var item = itemList.GetAt(i);
 
-                if (item.ItemInventoryRet != null)
+                if (item.ItemInventoryRet != null && item.ItemInventoryRet.IsActive.GetValue())
                 {
                     items.Add(ExtractInventoryItem(item.ItemInventoryRet));
                 }

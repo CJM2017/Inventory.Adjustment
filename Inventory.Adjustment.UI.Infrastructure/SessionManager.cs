@@ -51,7 +51,10 @@ namespace Inventory.Adjustment.UI.Infrastructure
 
             Items = new ObservableCollection<InventoryItem>();
 
-            LoadInventorySessionData();
+            Task.Run(async () =>
+            {
+                await LoadInventorySessionData();
+            }).GetAwaiter().GetResult();
         }
 
         /// <summary>
