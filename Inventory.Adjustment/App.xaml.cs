@@ -8,6 +8,7 @@ namespace Inventory.Adjustment
 {
     using System;
     using System.Windows;
+    using Inventory.Adjustment.Client.QuickBooksClient;
     using Inventory.Adjustment.UI.Infrastructure;
     
     /// <summary>
@@ -29,8 +30,13 @@ namespace Inventory.Adjustment
 
             this.bootstrapper = new Bootstrapper();
 
-            if (!this.bootstrapper.Run())
+            try
             {
+                this.bootstrapper.Run();
+            }
+            catch (QuickBooksClientException ex)
+            {
+                // Log
                 Application.Current.Shutdown();
             }
         }

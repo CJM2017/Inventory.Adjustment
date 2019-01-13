@@ -23,7 +23,7 @@ namespace Inventory.Adjustment
         /// <summary>
         /// Run the application.
         /// </summary>
-        public bool Run()
+        public void Run()
         {
             log4net.Config.XmlConfigurator.Configure();
             
@@ -44,14 +44,12 @@ namespace Inventory.Adjustment
                                       "Please verify that QuickBooks is also running";
 
                 MessageBox.Show(errorMessage, errorLabel, MessageBoxButton.OK, MessageBoxImage.Error);
-                return false;
+                throw ex;
             }
 
             Application.Current.MainWindow = new MainWindow();
             Application.Current.MainWindow.Show();
             Navigation.Navigate(new Uri("Views/InventoryPage.xaml", UriKind.RelativeOrAbsolute));
-
-            return true;
         }
     }
 }
