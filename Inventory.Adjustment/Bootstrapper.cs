@@ -23,31 +23,35 @@ namespace Inventory.Adjustment
         /// <summary>
         /// Run the application.
         /// </summary>
-        public void Run()
+        public bool Run()
         {
             log4net.Config.XmlConfigurator.Configure();
             
             try
             {
                 _manager = SessionManager.Instance;
+
+                if (_manager.Container == null)
+                {
+                    throw new InvalidOperationException("Composition Container for application was not created.");
+                }
             }
             catch (QuickBooksClientException ex)
             {
                 string errorLabel = "QuickBooks Client Error";
-                string errorMessage = "Error occurred while attempting to connect to " +
-                                      "the QuickBooks Desktop Application";
+                string errorMessage = "Error occurred: Unable to connect to " +
+                                      "the QuickBooks Desktop Application - " +
+                                      "Please verify that QuickBooks is also running";
 
                 MessageBox.Show(errorMessage, errorLabel, MessageBoxButton.OK, MessageBoxImage.Error);
-            }
-
-            if (_manager.Container == null)
-            {
-                throw new InvalidOperationException("Composition Container for application was not created.");
+                return false;
             }
 
             Application.Current.MainWindow = new MainWindow();
             Application.Current.MainWindow.Show();
             Navigation.Navigate(new Uri("Views/InventoryPage.xaml", UriKind.RelativeOrAbsolute));
+
+            return true;
         }
     }
 }

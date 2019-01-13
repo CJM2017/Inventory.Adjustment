@@ -6,6 +6,7 @@
 
 namespace Inventory.Adjustment
 {
+    using System;
     using System.Windows;
     using Inventory.Adjustment.UI.Infrastructure;
     
@@ -23,17 +24,27 @@ namespace Inventory.Adjustment
         protected override void OnStartup(StartupEventArgs e)
         {
             base.OnStartup(e);
+            this.ShutdownMode = ShutdownMode.OnMainWindowClose;
+            this.Exit += this.OnExit;
 
             this.bootstrapper = new Bootstrapper();
-            this.bootstrapper.Run();
 
-            this.Exit += this.OnExit;
-            this.ShutdownMode = ShutdownMode.OnMainWindowClose;
+            if (!this.bootstrapper.Run())
+            {
+                Application.Current.Shutdown();
+            }
         }
 
         private void OnExit(object sender, ExitEventArgs exitEventArgs)
         {
-            SessionManager.Instance.Dispose();
+            try
+            {
+                SessionManager.Instance.Dispose();
+            }
+            catch (Exception ex)
+            {
+                // LOG the error 
+            }
         }
     }
 }

@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Inventory.Adjustment.Client
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Inventory.Adjustment.Client.QuickBooksClient.Tests", "Inventory.Adjustment.Client.QuickBooksClient.Tests\Inventory.Adjustment.Client.QuickBooksClient.Tests.csproj", "{642319FF-9FD4-41C5-A477-88134A68B0A4}"
 EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "Inventory.Adjustment.Installer", "Inventory.Adjustment.Installer\Inventory.Adjustment.Installer.vdproj", "{D4E624AC-81C4-4FB6-9C15-A733920E4318}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,9 @@ Global
 		{642319FF-9FD4-41C5-A477-88134A68B0A4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{642319FF-9FD4-41C5-A477-88134A68B0A4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{642319FF-9FD4-41C5-A477-88134A68B0A4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D4E624AC-81C4-4FB6-9C15-A733920E4318}.Debug|Any CPU.ActiveCfg = Debug
+		{D4E624AC-81C4-4FB6-9C15-A733920E4318}.Debug|Any CPU.Build.0 = Debug
+		{D4E624AC-81C4-4FB6-9C15-A733920E4318}.Release|Any CPU.ActiveCfg = Release
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
