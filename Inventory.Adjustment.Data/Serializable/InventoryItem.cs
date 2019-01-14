@@ -17,10 +17,9 @@ namespace Inventory.Adjustment.Data.Serializable
     {
         private string _name;
         private string _code;
-        private string _vendor;
         private string _description;
 
-        private int _stock;
+        private double _stock;
         private double _cost;
 
         private double _basePrice;
@@ -132,7 +131,7 @@ namespace Inventory.Adjustment.Data.Serializable
         /// Gets or sets the item count / inventory.
         /// </summary>
         [XmlElement("QuantityOnHand")]
-        public int Stock
+        public double Stock
         {
             get => _stock;
             set

@@ -273,6 +273,10 @@ namespace Inventory.Adjustment.Client.QuickBooksClient
 
             try
             {
+                using (TextReader r = new StringReader(queryResponse.ToXMLString()))
+                {
+
+                }
                 using (XmlReader reader = XmlReader.Create(new StringReader(queryResponse.ToXMLString())))
                 {
                     reader.MoveToContent();
