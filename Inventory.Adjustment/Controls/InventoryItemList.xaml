@@ -114,7 +114,6 @@
             </DataGrid.RowStyle>
             <DataGrid.Columns>
                 <DataGridTextColumn Binding="{Binding Code}" Header="Code" SortDirection="Ascending" />
-                <DataGridTextColumn Binding="{Binding Vendor}" Header="Vendor"/>
                 <DataGridTextColumn Binding="{Binding Description}" Header="Description"/>
                 <DataGridTextColumn Binding="{Binding Stock}" Header="Stock"/>
                 <DataGridTextColumn Binding="{Binding Cost}" Header="Cost"/>

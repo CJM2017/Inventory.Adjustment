@@ -41,6 +41,6 @@ namespace Inventory.Adjustment.UI.Infrastructure.Interfaces
         /// <summary>
         /// Gets or sets the collection of inventory items.
         /// </summary>
-        ObservableCollection<InventoryItem> Items { get; set; }
+        QuickBooksCollection<InventoryItem> Items { get; set; }
     }
 }

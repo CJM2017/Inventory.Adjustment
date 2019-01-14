@@ -49,7 +49,7 @@ namespace Inventory.Adjustment.UI.Infrastructure
             AppVersion = Assembly.GetExecutingAssembly().GetName().Version.ToString();
             QBClient = new QuickBooksClient(string.Empty, $"{AppName} v{AppVersion}", "US");
 
-            Items = new ObservableCollection<InventoryItem>();
+            Items = new QuickBooksCollection<InventoryItem>();
 
             Task.Run(async () =>
             {
@@ -75,7 +75,7 @@ namespace Inventory.Adjustment.UI.Infrastructure
         public IQuickBooksClient QBClient { get; private set; }
 
         /// <inheritdoc/>
-        public ObservableCollection<InventoryItem> Items { get; set; }
+        public QuickBooksCollection<InventoryItem> Items { get; set; }
 
         /// <summary>
         /// Load the inbentory items from quickbooks into this session.
@@ -84,7 +84,7 @@ namespace Inventory.Adjustment.UI.Infrastructure
         public async Task LoadInventorySessionData()
         {
             await QBClient.OpenConnection();
-            Items = await QBClient.GetInventory();
+            Items = await QBClient.GetDataFromXML<InventoryItem>();
             _log.Debug("Inventory session data has been loaded");
         }
 

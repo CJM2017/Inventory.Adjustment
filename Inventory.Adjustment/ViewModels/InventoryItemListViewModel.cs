@@ -25,7 +25,7 @@ namespace Inventory.Adjustment.UI.ViewModels
         /// </summary>
         public InventoryItemListViewModel()
         {
-            Items = SessionManager.Instance.Items;
+            Items = SessionManager.Instance.Items.InventoryItems;
             DeleteItemCommand = new DelegateCommand(ExecuteDelete, () => SelectedItem != null);
         }
 

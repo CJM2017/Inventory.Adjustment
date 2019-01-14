@@ -9,8 +9,12 @@ namespace Inventory.Adjustment.Client.QuickBooksClient
     using System;
     using System.Threading.Tasks;
     using System.Collections.ObjectModel;
+    using System.Collections.Generic;
     using Inventory.Adjustment.Data.Serializable;
     using Interop.QBFC13;
+    using System.Xml.Serialization;
+    using System.IO;
+    using System.Xml;
 
     public class QuickBooksClient : IQuickBooksClient
     {
@@ -43,12 +47,27 @@ namespace Inventory.Adjustment.Client.QuickBooksClient
         /// <inheritdoc/>
         public async Task<ObservableCollection<InventoryItem>> GetInventory()
         {
-            // TODO
             IMsgSetRequest request = CreateRequest();
             request.AppendItemQueryRq();
             IMsgSetResponse queryResponse = await MakeRequestAsync(request).ConfigureAwait(false);
 
             return await ProcessItemQuery(queryResponse);
+        }
+
+        /// <inheritdoc/>
+        public async Task<QuickBooksCollection<T>> GetDataFromXML<T>()
+        {
+            IMsgSetRequest request = CreateRequest();
+
+            switch (typeof(T))
+            {
+                case Type InventoryItem:
+                    request.AppendItemQueryRq();
+                    break;
+            }
+
+            IMsgSetResponse queryResponse = await MakeRequestAsync(request).ConfigureAwait(false);
+            return ProcessQueryAsXML<T>(queryResponse);
         }
 
         /// <inheritdoc/>
@@ -245,6 +264,28 @@ namespace Inventory.Adjustment.Client.QuickBooksClient
             }
 
             return inventoryItems;
+        }
+
+        private QuickBooksCollection<T> ProcessQueryAsXML<T>(IMsgSetResponse queryResponse)
+        {
+            XmlSerializer serializer = new XmlSerializer(typeof(QuickBooksCollection<T>));
+            QuickBooksCollection<T> result = default(QuickBooksCollection<T>);
+
+            try
+            {
+                using (XmlReader reader = XmlReader.Create(new StringReader(queryResponse.ToXMLString())))
+                {
+                    reader.MoveToContent();
+                    reader.ReadToDescendant("ItemQueryRs");
+                    result = (QuickBooksCollection<T>)serializer.Deserialize(reader);
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new QuickBooksClientException(ex.ToString());
+            }
+
+            return result;
         }
 
         /// <summary>

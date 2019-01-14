@@ -8,6 +8,7 @@ namespace Inventory.Adjustment.Data.Serializable
 {
     using Prism.Mvvm;
     using System;
+    using System.Xml.Serialization;
 
     /// <summary>
     /// Data model class for an inventory item.
@@ -32,6 +33,7 @@ namespace Inventory.Adjustment.Data.Serializable
         /// <summary>
         /// Gets or sets the name for the item.
         /// </summary>
+        [XmlAttribute("FullName")]
         public string Name
         {
             get => _name;
@@ -45,6 +47,7 @@ namespace Inventory.Adjustment.Data.Serializable
         /// <summary>
         /// Gets or sets the code / identifier for the item.
         /// </summary>
+        [XmlAttribute("ManufacturerPartNumber")]
         public string Code
         {
             get => _code;
@@ -56,21 +59,9 @@ namespace Inventory.Adjustment.Data.Serializable
         }
 
         /// <summary>
-        /// Gets or sets the item vendor.
-        /// </summary>
-        public string Vendor
-        {
-            get => _vendor;
-            set
-            {
-                _vendor = value;
-                RaisePropertyChanged();
-            }
-        }
-
-        /// <summary>
         /// Gets or sets the description for the item.
         /// </summary>
+        [XmlAttribute("Description")]
         public string Description
         {
             get => _description;
@@ -84,6 +75,7 @@ namespace Inventory.Adjustment.Data.Serializable
         /// <summary>
         /// Gets or sets the cost of the item.
         /// </summary>
+        [XmlAttribute("Cost")]
         public double Cost
         {
             get => _cost;
@@ -97,6 +89,7 @@ namespace Inventory.Adjustment.Data.Serializable
         /// <summary>
         /// Gets or sets the base price for the item.
         /// </summary>
+        [XmlAttribute("SalesPrice")]
         public double BasePrice
         {
             get => _basePrice;
@@ -110,6 +103,7 @@ namespace Inventory.Adjustment.Data.Serializable
         /// <summary>
         /// Gets or sets the contractor's price for the item;
         /// </summary>
+        [XmlAttribute("ContractorPrice")]
         public double ContractorPrice
         {
             get => _contractorPrice;
@@ -123,6 +117,7 @@ namespace Inventory.Adjustment.Data.Serializable
         /// <summary>
         /// Gets or sets the electrician's price for the item.
         /// </summary>
+        [XmlAttribute("ElectricianPrice")]
         public double ElectricianPrice
         {
             get => _electricianPrice;
@@ -136,6 +131,7 @@ namespace Inventory.Adjustment.Data.Serializable
         /// <summary>
         /// Gets or sets the item count / inventory.
         /// </summary>
+        [XmlAttribute("QuantityOnHand")]
         public int Stock
         {
             get => _stock;

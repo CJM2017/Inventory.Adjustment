@@ -49,6 +49,7 @@
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Serializable\InventoryItem.cs" />
+    <Compile Include="Serializable\QuickBooksCollection.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
