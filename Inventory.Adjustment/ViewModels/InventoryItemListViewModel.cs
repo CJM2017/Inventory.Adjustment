@@ -8,6 +8,7 @@ namespace Inventory.Adjustment.UI.ViewModels
 {
     using Prism.Mvvm;
     using Prism.Commands;
+    using System.Linq;
     using System.Collections.ObjectModel;
     using Inventory.Adjustment.UI.Infrastructure;
     using Inventory.Adjustment.Data.Serializable;

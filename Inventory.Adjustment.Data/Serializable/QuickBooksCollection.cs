@@ -15,7 +15,7 @@ namespace Inventory.Adjustment.Data.Serializable
     {
         private ObservableCollection<T> _inventoryItems;
 
-        [XmlElement("ItemServiceRet")]
+        [XmlElement("ItemInventoryRet")]
         public ObservableCollection<T> InventoryItems
         {
             get => _inventoryItems;
