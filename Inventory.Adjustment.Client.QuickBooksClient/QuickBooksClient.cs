@@ -131,15 +131,6 @@ namespace Inventory.Adjustment.Client.QuickBooksClient
         }
 
         /// <summary>
-        /// Wrapper for test thread.
-        /// </summary>
-        /// <returns></returns>
-        public async Task<bool> TestConnectionAsync()
-        {
-            return await RunTestsAsync().ConfigureAwait(false);
-        }
-
-        /// <summary>
         /// Starts a session with the quickbooks service.
         /// </summary>
         private void BeginSession()
@@ -406,37 +397,6 @@ namespace Inventory.Adjustment.Client.QuickBooksClient
 
             _qbsdkMajor = (short)Math.Floor(latestVersion);
             _qbsdkMinor = (short)((latestVersion * 100) - (_qbsdkMajor * 100));
-        }
-
-        /// <summary>
-        /// Async test to determine if we can communicate
-        /// with the quickbooks client.
-        /// </summary>
-        /// <returns>True if the connection was successful</returns>
-        private async Task<bool> RunTestsAsync()
-        {
-            return await Task.Run(async () =>
-            {
-                bool result = false;
-
-                try
-                {
-                    await OpenConnection();
-                    BeginSession();
-                    result = true;
-                }
-                catch (Exception ex)
-                {
-                    throw new QuickBooksClientException(ex.ToString());
-                }
-                finally
-                {
-                    EndSession();
-                    CloseConnection();
-                }
-
-                return result;
-            });
         }
     }
 }

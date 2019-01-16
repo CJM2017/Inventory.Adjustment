@@ -9,11 +9,12 @@ namespace Inventory.Adjustment.Client.QuickBooksClient.Tests
     using System.Threading.Tasks;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
     using Inventory.Adjustment.Client.QuickBooksClient;
+    using Inventory.Adjustment.Data.Serializable;
 
     [TestClass]
     public class QuickBooksClientTest
     {
-        private QuickBooksClient _client;
+        private IQuickBooksClient _client;
 
         [TestInitialize]
         public void Initialize()
@@ -23,18 +24,10 @@ namespace Inventory.Adjustment.Client.QuickBooksClient.Tests
         }
 
         [TestMethod]
-        public async Task TestInitialization()
-        {
-            var success = await _client.TestConnectionAsync().ConfigureAwait(false);
-            Assert.IsNotNull(success);
-            Assert.IsTrue(success);
-        }
-
-        [TestMethod]
         public async Task TestGetInventory()
         {
             await _client.OpenConnection();
-            var inventory = await _client.GetInventory();
+            var inventory = await _client.GetDataFromXML<InventoryItem>();
             Assert.IsNotNull(inventory);
         }
     }
