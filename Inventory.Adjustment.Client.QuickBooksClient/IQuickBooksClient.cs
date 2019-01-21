@@ -54,5 +54,10 @@ namespace Inventory.Adjustment.Client.QuickBooksClient
         /// </summary>
         /// <returns>Task</returns>
         Task OpenConnection();
+
+        /// <summary>
+        /// Closes the connection to the quickbooks service.
+        /// </summary>
+        void CloseConnection();
     }
 }

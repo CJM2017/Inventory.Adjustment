@@ -13,15 +13,15 @@ namespace Inventory.Adjustment.Data.Serializable
     [XmlRoot("ItemQueryRs")]
     public class QuickBooksCollection<T> : BindableBase
     {
-        private ObservableCollection<T> _inventoryItems;
+        private ObservableCollection<T> _items;
 
         [XmlElement("ItemInventoryRet")]
-        public ObservableCollection<T> InventoryItems
+        public ObservableCollection<T> Items
         {
-            get => _inventoryItems;
+            get => _items;
             set
             {
-                _inventoryItems = value;
+                _items = value;
                 RaisePropertyChanged();
             }
         }

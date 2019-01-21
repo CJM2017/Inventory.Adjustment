@@ -7,6 +7,7 @@
 namespace Inventory.Adjustment.UI.Controls
 {
     using System.Windows.Controls;
+    using Inventory.Adjustment.UI.Infrastructure;
     using Inventory.Adjustment.UI.ViewModels;
 
     /// <summary>
@@ -21,7 +22,7 @@ namespace Inventory.Adjustment.UI.Controls
         /// </summary>
         public InventoryItemList()
         {
-            _viewModel = new InventoryItemListViewModel();
+            _viewModel = new InventoryItemListViewModel(SessionManager.Instance);
             this.DataContext = _viewModel;
 
             InitializeComponent();

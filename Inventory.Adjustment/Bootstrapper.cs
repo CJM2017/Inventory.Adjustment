@@ -11,6 +11,7 @@ namespace Inventory.Adjustment
     using Inventory.Adjustment.Utilities;
     using Inventory.Adjustment.UI.Infrastructure;
     using Inventory.Adjustment.Client.QuickBooksClient;
+    using Inventory.Adjustment.UI.Infrastructure.Interfaces;
 
     /// <summary>
     /// Creates and initializes global services and
@@ -18,7 +19,7 @@ namespace Inventory.Adjustment
     /// </summary>
     class Bootstrapper
     {
-        private SessionManager _manager;
+        private ISessionManager _manager;
 
         /// <summary>
         /// Run the application.

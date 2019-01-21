@@ -10,23 +10,25 @@ namespace Inventory.Adjustment.UI.ViewModels
     using Prism.Commands;
     using System.Linq;
     using System.Collections.ObjectModel;
-    using Inventory.Adjustment.UI.Infrastructure;
     using Inventory.Adjustment.Data.Serializable;
+    using Inventory.Adjustment.UI.Infrastructure.Interfaces;
 
     /// <summary>
     /// View model class for the inventory item list.
     /// </summary>
     public class InventoryItemListViewModel : BindableBase
     {
+        private readonly ISessionManager _sessionManager;
         private ObservableCollection<InventoryItem> _items;
         private InventoryItem _selectedItem;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="InventoryItemListViewModel"/> class
         /// </summary>
-        public InventoryItemListViewModel()
+        public InventoryItemListViewModel(ISessionManager sessionManager)
         {
-            Items = SessionManager.Instance.Items.InventoryItems;
+            _sessionManager = sessionManager;
+            Items = _sessionManager.Inventory.Items;
             DeleteItemCommand = new DelegateCommand(ExecuteDelete, () => SelectedItem != null);
         }
 

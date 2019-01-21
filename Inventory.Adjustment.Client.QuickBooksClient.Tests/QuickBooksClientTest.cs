@@ -28,7 +28,10 @@ namespace Inventory.Adjustment.Client.QuickBooksClient.Tests
         {
             await _client.OpenConnection();
             var inventory = await _client.GetDataFromXML<InventoryItem>();
+            _client.CloseConnection();
+
             Assert.IsNotNull(inventory);
+            Assert.IsTrue(inventory.Items.Count > 0);
         }
     }
 }

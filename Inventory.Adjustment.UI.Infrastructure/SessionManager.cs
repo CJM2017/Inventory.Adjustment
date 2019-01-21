@@ -49,7 +49,7 @@ namespace Inventory.Adjustment.UI.Infrastructure
             AppVersion = Assembly.GetExecutingAssembly().GetName().Version.ToString();
             QBClient = new QuickBooksClient(string.Empty, $"{AppName} v{AppVersion}", "US");
 
-            Items = new QuickBooksCollection<InventoryItem>();
+            Inventory = new QuickBooksCollection<InventoryItem>();
 
             Task.Run(async () =>
             {
@@ -60,7 +60,7 @@ namespace Inventory.Adjustment.UI.Infrastructure
         /// <summary>
         /// Gets a singleton instance of this class.
         /// </summary>
-        public static SessionManager Instance => _instance ?? (_instance = new SessionManager());
+        public static ISessionManager Instance => _instance ?? (_instance = new SessionManager());
 
         /// <inheritdoc/>
         public string AppName { get; private set; }
@@ -75,7 +75,7 @@ namespace Inventory.Adjustment.UI.Infrastructure
         public IQuickBooksClient QBClient { get; private set; }
 
         /// <inheritdoc/>
-        public QuickBooksCollection<InventoryItem> Items { get; set; }
+        public QuickBooksCollection<InventoryItem> Inventory { get; set; }
 
         /// <summary>
         /// Load the inbentory items from quickbooks into this session.
@@ -84,7 +84,7 @@ namespace Inventory.Adjustment.UI.Infrastructure
         public async Task LoadInventorySessionData()
         {
             await QBClient.OpenConnection();
-            Items = await QBClient.GetDataFromXML<InventoryItem>();
+            Inventory = await QBClient.GetDataFromXML<InventoryItem>();
             _log.Debug("Inventory session data has been loaded");
         }
 

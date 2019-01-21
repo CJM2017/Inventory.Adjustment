@@ -9,7 +9,6 @@ namespace Inventory.Adjustment.Client.QuickBooksClient
     using System;
     using System.Threading.Tasks;
     using System.Collections.ObjectModel;
-    using System.Collections.Generic;
     using Inventory.Adjustment.Data.Serializable;
     using Interop.QBFC13;
     using System.Xml.Serialization;
@@ -91,9 +90,7 @@ namespace Inventory.Adjustment.Client.QuickBooksClient
             return null;
         }
 
-        /// <summary>
-        /// Opens the connection to the quickbooks service.
-        /// </summary>
+        /// <inheritdoc/>
         public async Task OpenConnection()
         {
             if (!_connectionOpen)
@@ -102,6 +99,18 @@ namespace Inventory.Adjustment.Client.QuickBooksClient
                 _connectionOpen = true;
 
                 await GetSDKVersionAsync().ConfigureAwait(false);
+            }
+        }
+
+        /// <inheritdoc/>
+        public void CloseConnection()
+        {
+            this.EndSession();
+
+            if (_connectionOpen)
+            {
+                _manager.CloseConnection();
+                _connectionOpen = false;
             }
         }
 
@@ -119,8 +128,8 @@ namespace Inventory.Adjustment.Client.QuickBooksClient
                 if (disposing)
                 {
                     // TODO: dispose managed state (managed objects).
-                    EndSession();
-                    CloseConnection();
+                    this.EndSession();
+                    this.CloseConnection();
                 }
 
                 // TODO: free unmanaged resources (unmanaged objects) and override a finalizer below.
@@ -151,18 +160,6 @@ namespace Inventory.Adjustment.Client.QuickBooksClient
             {
                 _manager.EndSession();
                 _sessionInProgress = false;
-            }
-        }
-
-        /// <summary>
-        /// Closes the connection to the quickbooks service.
-        /// </summary>
-        private void CloseConnection()
-        {
-            if (_connectionOpen)
-            {
-                _manager.CloseConnection();
-                _connectionOpen = false;
             }
         }
         
