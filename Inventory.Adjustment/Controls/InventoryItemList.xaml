@@ -78,7 +78,7 @@
                           ItemsSource="{Binding Items}" SelectedItem="{Binding SelectedItem}" CanUserAddRows="False" CanUserDeleteRows="False" 
                           CanUserReorderColumns="False" CanUserResizeColumns="True" CanUserResizeRows="False" CanUserSortColumns="True"
                           ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Auto" 
-                          ScrollViewer.CanContentScroll="False" IsReadOnly="True" EnableRowVirtualization="True">
+                          IsReadOnly="True" EnableRowVirtualization="True">
             <DataGrid.Resources>
                 <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="DarkGray" />
                 <SolidColorBrush x:Key="{x:Static SystemColors.ControlBrushKey}" Color="DarkGray" />
