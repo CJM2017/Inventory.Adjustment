@@ -194,11 +194,10 @@
             </Style>
 
 
-            <Style TargetType="{x:Type TextBox}">
-                <Setter Property="Height" Value="26" />
+            <!--<Style TargetType="{x:Type TextBox}">
+                <Setter Property="Height" Value="32" />
                 <Setter Property="Padding" Value="4,1,4,1" />
                 <Setter Property="FontSize" Value="12pt" />
-                <Setter Property="Background" Value="{StaticResource AltMediumLowColorBrush}" />
                 <Setter Property="BorderBrush" Value="{StaticResource ChromeDisabledLowColorBrush}" />
                 <Setter Property="Foreground" Value="{StaticResource BaseHighColorBrush}" />
 
@@ -213,7 +212,7 @@
                     </Trigger>
                 </Style.Triggers>
 
-            </Style>
+            </Style>-->
 
             <Style TargetType="{x:Type ComboBoxItem}">
                 <Setter Property="MinHeight" Value="26"/>
@@ -446,6 +445,7 @@
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Fonts.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Colors.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/Blue.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/BaseLight.xaml" />
             </ResourceDictionary.MergedDictionaries>
 

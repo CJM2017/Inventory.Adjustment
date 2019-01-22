@@ -14,6 +14,7 @@ namespace Inventory.Adjustment.Client.QuickBooksClient
     using System.Xml.Serialization;
     using System.IO;
     using System.Xml;
+    using System.Text;
 
     public class QuickBooksClient : IQuickBooksClient
     {
@@ -21,6 +22,7 @@ namespace Inventory.Adjustment.Client.QuickBooksClient
         private bool _disposedValue; // To detect redundant calls
         private bool _connectionOpen;
         private bool _sessionInProgress;
+        private bool _debug;
 
         private string _appName;
         private string _appId;
@@ -33,6 +35,7 @@ namespace Inventory.Adjustment.Client.QuickBooksClient
             _disposedValue = false;
             _connectionOpen = false;
             _sessionInProgress = false;
+            _debug = false;
 
             _appId = appId;
             _appName = appName;
@@ -261,10 +264,15 @@ namespace Inventory.Adjustment.Client.QuickBooksClient
 
             try
             {
-                using (TextReader r = new StringReader(queryResponse.ToXMLString()))
+                if (_debug)
                 {
-
+                    using (FileStream fs = new FileStream(@"C:\Users\Computron\Documents\xml_response.txt", FileMode.OpenOrCreate))
+                    {
+                        byte[] info = new UTF8Encoding(true).GetBytes(queryResponse.ToXMLString());
+                        fs.Write(info, 0, info.Length);
+                    }
                 }
+
                 using (XmlReader reader = XmlReader.Create(new StringReader(queryResponse.ToXMLString())))
                 {
                     reader.MoveToContent();

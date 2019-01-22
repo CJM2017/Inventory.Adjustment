@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Inventory.Adjustment.UI.Controls"
+             xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
              xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
@@ -50,11 +51,30 @@
             </Grid.ColumnDefinitions>
 
             <StackPanel Grid.Column="0" Orientation="Horizontal">
-                <TextBox Height="32" Width="120" Margin="5,5,5,5"></TextBox>
-                <TextBox Height="32" Width="120" Margin="5,5,5,5"></TextBox>
+                <TextBox Height="32" Width="120" FontSize="15" Padding="0,2,0,0"
+                         Controls:TextBoxHelper.Watermark="Search" 
+                         Controls:TextBoxHelper.ClearTextButton="True"
+                         TextChanged="TextChangedEventHandler"/>
+                <TextBox Height="32" Width="120" Margin="5,5,5,5"/>
+                <Button x:Name="SearchButton"
+                    Margin="3"
+                    Height="32"
+                    Width="90"
+                    Visibility="Visible"
+                    HorizontalAlignment="Center"
+                    Command="{Binding SearchCommand}"
+                    IsDefault="True">
+                    <Button.Style>
+                        <Style TargetType="{x:Type Button}">
+                            <Setter Property="Background" Value="DodgerBlue"/>
+                            <Setter Property="Opacity" Value="1.0"/>
+                        </Style>
+                    </Button.Style>
+                    <TextBlock Foreground="White">Search</TextBlock>
+                </Button>
             </StackPanel>
 
-            <Button x:Name="AddInventoryItemButton"       
+            <Button x:Name="EditInventoryItemButton"       
                     Grid.Column="2"
                     Margin="3"
                     Height="32"
@@ -62,23 +82,24 @@
                     Visibility="Visible"
                     HorizontalAlignment="Center"
                     VerticalAlignment="Top"
-                    Command="{Binding AddItemCommand}">
+                    Command="{Binding EditItemCommand}">
                 <Button.Style>
                     <Style TargetType="{x:Type Button}">
-                        <Setter Property="Background" Value="DodgerBlue"/>
+                        <Setter Property="Background" Value="LightGreen"/>
                         <Setter Property="Opacity" Value="1.0"/>
                     </Style>
                 </Button.Style>
-                <TextBlock Foreground="White">Add</TextBlock>
+                <TextBlock Foreground="White">Edit</TextBlock>
             </Button>
         </Grid>
 
-        <DataGrid x:Name="InventoryDG" Grid.Row="1"
+        <DataGrid x:Name="InventoryDataGrid" Grid.Row="1"
                           SelectionUnit="FullRow" Margin="10,10,10,10" AutoGenerateColumns="False" 
-                          ItemsSource="{Binding Items}" SelectedItem="{Binding SelectedItem}" CanUserAddRows="False" CanUserDeleteRows="False" 
+                          ItemsSource="{Binding Items}" SelectionChanged="Handle_Selection" CanUserAddRows="False" CanUserDeleteRows="False" 
                           CanUserReorderColumns="False" CanUserResizeColumns="True" CanUserResizeRows="False" CanUserSortColumns="True"
                           ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Auto" 
-                          IsReadOnly="True" EnableRowVirtualization="True">
+                          IsReadOnly="True" EnableRowVirtualization="True"
+                          MouseDown="DataGrid_MouseLeftButtonDown">
             <DataGrid.Resources>
                 <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="DarkGray" />
                 <SolidColorBrush x:Key="{x:Static SystemColors.ControlBrushKey}" Color="DarkGray" />

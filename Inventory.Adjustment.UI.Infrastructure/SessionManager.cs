@@ -9,7 +9,6 @@ namespace Inventory.Adjustment.UI.Infrastructure
     using System;
     using System.Reflection;
     using System.Threading.Tasks;
-    using System.Collections.ObjectModel;
     using System.ComponentModel.Composition.Hosting;
     using Inventory.Adjustment.Data.Serializable;
     using Inventory.Adjustment.UI.Infrastructure.Interfaces;

@@ -12,6 +12,8 @@ namespace Inventory.Adjustment.UI.ViewModels
     using System.Collections.ObjectModel;
     using Inventory.Adjustment.Data.Serializable;
     using Inventory.Adjustment.UI.Infrastructure.Interfaces;
+    using System.Collections.Generic;
+    using System.Collections;
 
     /// <summary>
     /// View model class for the inventory item list.
@@ -20,7 +22,8 @@ namespace Inventory.Adjustment.UI.ViewModels
     {
         private readonly ISessionManager _sessionManager;
         private ObservableCollection<InventoryItem> _items;
-        private InventoryItem _selectedItem;
+        private List<InventoryItem> _selectedItems;
+        private string _searchString;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="InventoryItemListViewModel"/> class
@@ -28,13 +31,21 @@ namespace Inventory.Adjustment.UI.ViewModels
         public InventoryItemListViewModel(ISessionManager sessionManager)
         {
             _sessionManager = sessionManager;
+
+            EditItemCommand = new DelegateCommand(ExecuteEdit, () => SelectedItems.Count > 0);
+            SearchCommand = new DelegateCommand(ExecuteSearch, () => SearchString != null && SearchString != string.Empty);
+            DeleteItemCommand = new DelegateCommand(ExecuteDelete, () => SelectedItems.Count > 0);
+
+            SelectedItems = new List<InventoryItem>();
             Items = _sessionManager.Inventory.Items;
-            DeleteItemCommand = new DelegateCommand(ExecuteDelete, () => SelectedItem != null);
+            this.CleanItems();
         }
 
-        public DelegateCommand AddItemCommand => new DelegateCommand(ExecuteAdd);
+        public DelegateCommand EditItemCommand { get; private set; }
 
-        public DelegateCommand DeleteItemCommand { get; }
+        public DelegateCommand SearchCommand { get; private set; }
+
+        public DelegateCommand DeleteItemCommand { get; private set; }
 
         public ObservableCollection<InventoryItem> Items
         {
@@ -46,21 +57,56 @@ namespace Inventory.Adjustment.UI.ViewModels
             }
         }
 
-        /// <summary>
-        /// Gets or sets the selected inventory item in the data grid.
-        /// </summary>
-        public InventoryItem SelectedItem
+        public string SearchString
         {
-            get => _selectedItem;
+            get => _searchString;
             set
             {
-                _selectedItem = value;
-                RaisePropertyChanged();
-                DeleteItemCommand.RaiseCanExecuteChanged();
+                _searchString = value;
+
+                // Reset
+                if (_searchString.Equals(string.Empty))
+                {
+                    Items = _sessionManager.Inventory.Items;
+                }
+
+                SearchCommand.RaiseCanExecuteChanged();
+                RaisePropertyChanged(); 
             }
         }
 
-        private void ExecuteAdd()
+        public List<InventoryItem> SelectedItems
+        {
+            get => _selectedItems;
+            set
+            {
+                _selectedItems = value;
+
+                EditItemCommand.RaiseCanExecuteChanged();
+                DeleteItemCommand.RaiseCanExecuteChanged();
+                RaisePropertyChanged();
+            }
+        }
+
+        public void UpdateSelection(IList items)
+        {
+            SelectedItems.Clear();
+            var tempList = new List<InventoryItem>();
+
+            foreach (object item in items)
+            {
+                tempList.Add(item as InventoryItem);
+            }
+
+            SelectedItems = tempList;
+        }
+
+        private void ExecuteSearch()
+        {
+            Items = new ObservableCollection<InventoryItem>(_sessionManager.Inventory.Items.Where(item => item.Code.ToLower().Contains(SearchString.ToLower())));
+        }
+
+        private void ExecuteEdit()
         {
             // TODO
         }
@@ -68,6 +114,16 @@ namespace Inventory.Adjustment.UI.ViewModels
         private void ExecuteDelete()
         {
             // TODO
+        }
+
+        private void CleanItems()
+        {
+            var itemsToDelete = Items.Where(item => item.Code == null).ToList();
+
+            foreach (var item in itemsToDelete)
+            {
+                Items.Remove(item);
+            }
         }
     }
 }
