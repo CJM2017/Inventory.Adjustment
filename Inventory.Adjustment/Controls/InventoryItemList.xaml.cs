@@ -31,15 +31,6 @@ namespace Inventory.Adjustment.UI.Controls
             InitializeComponent();
         }
 
-        private void TextChangedEventHandler(object sender, TextChangedEventArgs args)
-        {
-            TextBox searchTextBox = sender as TextBox;
-            if (searchTextBox != null)
-            {
-                this._viewModel.SearchString = searchTextBox.Text;
-            }
-        }
-
         private void Handle_Selection(object sender, SelectionChangedEventArgs args)
         {
             if (args.OriginalSource != null)
@@ -62,8 +53,16 @@ namespace Inventory.Adjustment.UI.Controls
                 {
                     while (grid.SelectedItems.Count > 0)
                     {
-                        DataGridRow dgr = grid.ItemContainerGenerator.ContainerFromItem(grid.SelectedItems[0]) as DataGridRow;
-                        (dgr as DataGridRow).IsSelected = false;
+                        try
+                        {
+                            DataGridRow dgr = grid.ItemContainerGenerator.ContainerFromItem(grid.SelectedItems[0]) as DataGridRow;
+                            (dgr as DataGridRow).IsSelected = false;
+                        }
+                        catch (Exception ex)
+                        {
+                            // Log and handle silently
+                            // User did not click in a great spot
+                        }
                     }
                 }
             }

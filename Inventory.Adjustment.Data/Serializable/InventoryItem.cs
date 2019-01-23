@@ -15,6 +15,8 @@ namespace Inventory.Adjustment.Data.Serializable
     /// </summary>
     public class InventoryItem : BindableBase
     {
+        private bool _isActive;
+
         private string _name;
         private string _code;
         private string _description;
@@ -26,8 +28,23 @@ namespace Inventory.Adjustment.Data.Serializable
         private double _contractorPrice;
         private double _electricianPrice;
 
+        private Vendor _vendor;
         private DateTime _creationTime;
         private DateTime _lastModifiedTime;
+
+        /// <summary>
+        /// Gets or sets the name for the item.
+        /// </summary>
+        [XmlElement("IsActive")]
+        public bool IsActive
+        {
+            get => _isActive;
+            set
+            {
+                _isActive = value;
+                RaisePropertyChanged();
+            }
+        }
 
         /// <summary>
         /// Gets or sets the name for the item.
@@ -58,9 +75,23 @@ namespace Inventory.Adjustment.Data.Serializable
         }
 
         /// <summary>
+        /// Gets or sets the vendor.
+        /// </summary>
+        [XmlElement("PrefVendorRef")]
+        public Vendor Vendor
+        {
+            get => _vendor;
+            set
+            {
+                _vendor = value;
+                RaisePropertyChanged();
+            }
+        }
+
+        /// <summary>
         /// Gets or sets the description for the item.
         /// </summary>
-        [XmlElement("Description")]
+        [XmlElement("PurchaseDesc")]
         public string Description
         {
             get => _description;

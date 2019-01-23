@@ -80,6 +80,7 @@
     <Compile Include="Controls\WorkflowToolbar.xaml.cs">
       <DependentUpon>WorkflowToolbar.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Utilities\BindingProxy.cs" />
     <Compile Include="Utilities\Navigation.cs" />
     <Compile Include="ViewModels\InventoryItemListViewModel.cs" />
     <Compile Include="ViewModels\InventoryViewModel.cs" />

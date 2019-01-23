@@ -21,8 +21,12 @@ namespace Inventory.Adjustment.UI.ViewModels
     public class InventoryItemListViewModel : BindableBase
     {
         private readonly ISessionManager _sessionManager;
+
         private ObservableCollection<InventoryItem> _items;
         private List<InventoryItem> _selectedItems;
+
+        private readonly List<string> _gridHeaders;
+        private string _selectedField;
         private string _searchString;
 
         /// <summary>
@@ -31,6 +35,8 @@ namespace Inventory.Adjustment.UI.ViewModels
         public InventoryItemListViewModel(ISessionManager sessionManager)
         {
             _sessionManager = sessionManager;
+            _gridHeaders = new List<string>() { "Code", "Description", "Vendor", "Quantity", "Cost",
+                                                "Price", "Contractor Price", "Electrician Price" };
 
             EditItemCommand = new DelegateCommand(ExecuteEdit, () => SelectedItems.Count > 0);
             SearchCommand = new DelegateCommand(ExecuteSearch, () => SearchString != null && SearchString != string.Empty);
@@ -47,6 +53,27 @@ namespace Inventory.Adjustment.UI.ViewModels
 
         public DelegateCommand DeleteItemCommand { get; private set; }
 
+        /// <summary>
+        /// Gets the list of gird headers.
+        /// </summary>
+        public List<string> GridHeaders => _gridHeaders;
+
+        /// <summary>
+        /// Gets or sets the selected search field.
+        /// </summary>
+        public string SelectedField
+        {
+            get => _selectedField;
+            set
+            {
+                _selectedField = value;
+                RaisePropertyChanged();
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the collection of inventory items.
+        /// </summary>
         public ObservableCollection<InventoryItem> Items
         {
             get => _items;
@@ -56,7 +83,10 @@ namespace Inventory.Adjustment.UI.ViewModels
                 RaisePropertyChanged();
             }
         }
-
+        
+        /// <summary>
+        /// Gets or sets the search string.
+        /// </summary>
         public string SearchString
         {
             get => _searchString;
@@ -75,6 +105,9 @@ namespace Inventory.Adjustment.UI.ViewModels
             }
         }
 
+        /// <summary>
+        /// Gets or sets the selected items.
+        /// </summary>
         public List<InventoryItem> SelectedItems
         {
             get => _selectedItems;
@@ -88,6 +121,10 @@ namespace Inventory.Adjustment.UI.ViewModels
             }
         }
 
+        /// <summary>
+        /// Updates the collection of selected items.
+        /// </summary>
+        /// <param name="items">List from data grid</param>
         public void UpdateSelection(IList items)
         {
             SelectedItems.Clear();
@@ -118,7 +155,7 @@ namespace Inventory.Adjustment.UI.ViewModels
 
         private void CleanItems()
         {
-            var itemsToDelete = Items.Where(item => item.Code == null).ToList();
+            var itemsToDelete = Items.Where(item => item.Code == null || !item.IsActive).ToList();
 
             foreach (var item in itemsToDelete)
             {

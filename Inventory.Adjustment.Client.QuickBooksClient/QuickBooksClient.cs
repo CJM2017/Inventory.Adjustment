@@ -266,7 +266,7 @@ namespace Inventory.Adjustment.Client.QuickBooksClient
             {
                 if (_debug)
                 {
-                    using (FileStream fs = new FileStream(@"C:\Users\Computron\Documents\xml_response.txt", FileMode.OpenOrCreate))
+                    using (FileStream fs = new FileStream(@"C:\Users\Computron\Documents\xml_response.xml", FileMode.OpenOrCreate))
                     {
                         byte[] info = new UTF8Encoding(true).GetBytes(queryResponse.ToXMLString());
                         fs.Write(info, 0, info.Length);

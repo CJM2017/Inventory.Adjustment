@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Inventory.Adjustment.UI.Controls"
+             xmlns:utils="clr-namespace:Inventory.Adjustment.UI.Utilities"
              xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
              xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
              mc:Ignorable="d" 
@@ -54,8 +55,13 @@
                 <TextBox Height="32" Width="120" FontSize="15" Padding="0,2,0,0"
                          Controls:TextBoxHelper.Watermark="Search" 
                          Controls:TextBoxHelper.ClearTextButton="True"
-                         TextChanged="TextChangedEventHandler"/>
-                <TextBox Height="32" Width="120" Margin="5,5,5,5"/>
+                         Text="{Binding SearchString}"/>
+
+                <ComboBox Height="32" Width="120" Margin="5,5,5,5"
+                          ItemsSource="{Binding GridHeaders}"
+                          SelectedItem="{Binding SelectedField}"
+                          Foreground="Black"/>
+
                 <Button x:Name="SearchButton"
                     Margin="3"
                     Height="32"
@@ -101,6 +107,7 @@
                           IsReadOnly="True" EnableRowVirtualization="True"
                           MouseDown="DataGrid_MouseLeftButtonDown">
             <DataGrid.Resources>
+                <utils:BindingProxy x:Key="proxy" Data="{Binding}" />
                 <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="DarkGray" />
                 <SolidColorBrush x:Key="{x:Static SystemColors.ControlBrushKey}" Color="DarkGray" />
                 <Style BasedOn="{StaticResource MetroDataGridColumnHeader}" TargetType="{x:Type DataGridColumnHeader}">
@@ -134,11 +141,14 @@
                 </Style>
             </DataGrid.RowStyle>
             <DataGrid.Columns>
-                <DataGridTextColumn Binding="{Binding Code}" Header="Code" SortDirection="Ascending" />
-                <DataGridTextColumn Binding="{Binding Description}" Header="Description"/>
-                <DataGridTextColumn Binding="{Binding Stock}" Header="Stock"/>
-                <DataGridTextColumn Binding="{Binding Cost}" Header="Cost"/>
-                <DataGridTextColumn Binding="{Binding BasePrice}" Header="Base Price"/>
+                <DataGridTextColumn Binding="{Binding Code}" Header="{Binding Data.GridHeaders[0], Source={StaticResource proxy}}" SortDirection="Ascending" />
+                <DataGridTextColumn Binding="{Binding Description}" Header="{Binding Data.GridHeaders[1], Source={StaticResource proxy}}"/>
+                <DataGridTextColumn Binding="{Binding Vendor.Name}" Header="{Binding Data.GridHeaders[2], Source={StaticResource proxy}}"/>
+                <DataGridTextColumn Binding="{Binding Stock}" Header="{Binding Data.GridHeaders[3], Source={StaticResource proxy}}"/>
+                <DataGridTextColumn Binding="{Binding Cost}" Header="{Binding Data.GridHeaders[4], Source={StaticResource proxy}}"/>
+                <DataGridTextColumn Binding="{Binding BasePrice}" Header="{Binding Data.GridHeaders[5], Source={StaticResource proxy}}"/>
+                <DataGridTextColumn Binding="{Binding BasePrice}" Header="{Binding Data.GridHeaders[6], Source={StaticResource proxy}}"/>
+                <DataGridTextColumn Binding="{Binding BasePrice}" Header="{Binding Data.GridHeaders[7], Source={StaticResource proxy}}"/>
                 <DataGridTemplateColumn Header="Delete">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>

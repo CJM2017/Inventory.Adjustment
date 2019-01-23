@@ -216,7 +216,7 @@
 
             <Style TargetType="{x:Type ComboBoxItem}">
                 <Setter Property="MinHeight" Value="26"/>
-                <Setter Property="Foreground" Value="{StaticResource BaseMediumHighColorBrush}" />
+                <Setter Property="Foreground" Value="Black" />
                 <Setter Property="FontSize" Value="12pt" />
                 <Setter Property="Margin" Value="0" />
                 <Setter Property="Template">
