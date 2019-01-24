@@ -250,7 +250,7 @@
                         Background="{StaticResource AltMediumLowColorBrush}"
                         BorderBrush="{StaticResource BaseMediumLowColorBrush}"
                         Grid.Column="0"
-                        Height="26"
+                        Height="32"
                         BorderThickness="1" />
                     <Path 
                         x:Name="Arrow"

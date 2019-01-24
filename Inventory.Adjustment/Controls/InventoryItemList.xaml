@@ -55,10 +55,10 @@
                 <TextBox Height="32" Width="120" FontSize="15" Padding="0,2,0,0"
                          Controls:TextBoxHelper.Watermark="Search" 
                          Controls:TextBoxHelper.ClearTextButton="True"
-                         Text="{Binding SearchString}"/>
+                         Text="{Binding SearchString, UpdateSourceTrigger=PropertyChanged}"/>
 
                 <ComboBox Height="32" Width="120" Margin="5,5,5,5"
-                          ItemsSource="{Binding GridHeaders}"
+                          ItemsSource="{Binding DropDownOptions}"
                           SelectedItem="{Binding SelectedField}"
                           Foreground="Black"/>
 
@@ -104,6 +104,7 @@
                           ItemsSource="{Binding Items}" SelectionChanged="Handle_Selection" CanUserAddRows="False" CanUserDeleteRows="False" 
                           CanUserReorderColumns="False" CanUserResizeColumns="True" CanUserResizeRows="False" CanUserSortColumns="True"
                           ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Auto" 
+                          ScrollViewer.CanContentScroll="True"
                           IsReadOnly="True" EnableRowVirtualization="True"
                           MouseDown="DataGrid_MouseLeftButtonDown">
             <DataGrid.Resources>

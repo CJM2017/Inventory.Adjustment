@@ -33,6 +33,17 @@ namespace Inventory.Adjustment.Data.Serializable
         private DateTime _lastModifiedTime;
 
         /// <summary>
+        /// Gets any property of the class
+        /// </summary>
+        /// <param name="propertyName">Property name</param>
+        /// <returns>Object</returns>
+        [XmlIgnore]
+        public object this[string propertyName]
+        {
+            get { return this.GetType().GetProperty(propertyName).GetValue(this, null); }
+        }
+
+        /// <summary>
         /// Gets or sets the name for the item.
         /// </summary>
         [XmlElement("IsActive")]
@@ -162,7 +173,7 @@ namespace Inventory.Adjustment.Data.Serializable
         /// Gets or sets the item count / inventory.
         /// </summary>
         [XmlElement("QuantityOnHand")]
-        public double Stock
+        public double Quantity
         {
             get => _stock;
             set

@@ -14,6 +14,8 @@ namespace Inventory.Adjustment.UI.ViewModels
     using Inventory.Adjustment.UI.Infrastructure.Interfaces;
     using System.Collections.Generic;
     using System.Collections;
+    using System;
+    using System.Reflection;
 
     /// <summary>
     /// View model class for the inventory item list.
@@ -25,7 +27,6 @@ namespace Inventory.Adjustment.UI.ViewModels
         private ObservableCollection<InventoryItem> _items;
         private List<InventoryItem> _selectedItems;
 
-        private readonly List<string> _gridHeaders;
         private string _selectedField;
         private string _searchString;
 
@@ -35,16 +36,20 @@ namespace Inventory.Adjustment.UI.ViewModels
         public InventoryItemListViewModel(ISessionManager sessionManager)
         {
             _sessionManager = sessionManager;
-            _gridHeaders = new List<string>() { "Code", "Description", "Vendor", "Quantity", "Cost",
-                                                "Price", "Contractor Price", "Electrician Price" };
 
             EditItemCommand = new DelegateCommand(ExecuteEdit, () => SelectedItems.Count > 0);
             SearchCommand = new DelegateCommand(ExecuteSearch, () => SearchString != null && SearchString != string.Empty);
             DeleteItemCommand = new DelegateCommand(ExecuteDelete, () => SelectedItems.Count > 0);
 
+            GridHeaders = new List<string>() { "Code", "Description", "Vendor", "Quantity", "Cost",
+                                                "Price", "Contractor Price", "Electrician Price" };
+
+            DropDownOptions = GetDropDownOptions().OrderBy(item => item).ToList();
+            SelectedField = DropDownOptions.First();
+
             SelectedItems = new List<InventoryItem>();
             Items = _sessionManager.Inventory.Items;
-            this.CleanItems();
+            this.CleanItems();  
         }
 
         public DelegateCommand EditItemCommand { get; private set; }
@@ -56,7 +61,12 @@ namespace Inventory.Adjustment.UI.ViewModels
         /// <summary>
         /// Gets the list of gird headers.
         /// </summary>
-        public List<string> GridHeaders => _gridHeaders;
+        public List<string> GridHeaders { get; private set; }
+
+        /// <summary>
+        /// Gets or sets the drop down search options.
+        /// </summary>
+        public List<string> DropDownOptions { get; private set; }
 
         /// <summary>
         /// Gets or sets the selected search field.
@@ -95,7 +105,7 @@ namespace Inventory.Adjustment.UI.ViewModels
                 _searchString = value;
 
                 // Reset
-                if (_searchString.Equals(string.Empty))
+                if (string.IsNullOrEmpty(value))
                 {
                     Items = _sessionManager.Inventory.Items;
                 }
@@ -138,9 +148,20 @@ namespace Inventory.Adjustment.UI.ViewModels
             SelectedItems = tempList;
         }
 
+        private IEnumerable<string> GetDropDownOptions()
+        {
+            Type itemType = typeof(InventoryItem);
+            List<PropertyInfo> itemProperties = itemType.GetProperties().ToList();
+
+            return itemProperties.Where(prop => prop.PropertyType.Name.Equals("String")).Select(prop => prop.Name);
+        }
+
         private void ExecuteSearch()
         {
-            Items = new ObservableCollection<InventoryItem>(_sessionManager.Inventory.Items.Where(item => item.Code.ToLower().Contains(SearchString.ToLower())));
+            Items = new ObservableCollection<InventoryItem>(
+                                                            _sessionManager.Inventory.Items.Where(
+                                                            item => item[SelectedField].ToString().ToLower().Contains(
+                                                            SearchString.ToLower())));
         }
 
         private void ExecuteEdit()
@@ -155,6 +176,14 @@ namespace Inventory.Adjustment.UI.ViewModels
 
         private void CleanItems()
         {
+            foreach (var item in Items)
+            {
+                if (string.IsNullOrWhiteSpace(item.Description))
+                {
+                    item.Description = string.Empty;
+                }
+            }
+
             var itemsToDelete = Items.Where(item => item.Code == null || !item.IsActive).ToList();
 
             foreach (var item in itemsToDelete)

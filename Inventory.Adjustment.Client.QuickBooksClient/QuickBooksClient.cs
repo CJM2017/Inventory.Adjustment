@@ -326,7 +326,7 @@ namespace Inventory.Adjustment.Client.QuickBooksClient
 
             if (item.QuantityOnHand != null)
             {
-                inventoryItem.Stock = (int)item.QuantityOnHand.GetValue();
+                inventoryItem.Quantity = (int)item.QuantityOnHand.GetValue();
             }
 
             if (item.SalesPrice != null)
