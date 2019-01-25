@@ -23,8 +23,7 @@ namespace Inventory.Adjustment.Data.Serializable
         /// <summary>
         /// Gets or sets the data extension's name.
         /// </summary>
-        //[XmlAnyElement ("DataExtName")]
-        [XmlIgnore]
+        [XmlElement("DataExtName")]
         public string Name
         {
             get => _name;
@@ -38,8 +37,7 @@ namespace Inventory.Adjustment.Data.Serializable
         /// <summary>
         /// Gets or sets the data extension's value.
         /// </summary>
-        //[XmlAnyElement("DataExtValue")]
-        [XmlIgnore]
+        [XmlElement("DataExtValue")]
         public string StringValue
         {
             get => _value;

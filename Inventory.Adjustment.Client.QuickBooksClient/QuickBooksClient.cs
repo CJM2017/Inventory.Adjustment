@@ -112,6 +112,8 @@ namespace Inventory.Adjustment.Client.QuickBooksClient
         /// <inheritdoc/>
         public void CloseConnection()
         {
+            this.EndSession();
+
             if (_connectionOpen)
             {
                 _manager.CloseConnection();

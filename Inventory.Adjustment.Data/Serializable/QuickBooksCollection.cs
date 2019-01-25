@@ -7,16 +7,16 @@
 namespace Inventory.Adjustment.Data.Serializable
 {
     using Prism.Mvvm;
-    using System.Collections.Generic;
+    using System.Collections.ObjectModel;
     using System.Xml.Serialization;
 
     [XmlRoot("ItemQueryRs")]
     public class QuickBooksCollection<T> : BindableBase
     {
-        private IEnumerable<T> _items;
+        private ObservableCollection<T> _items;
 
         [XmlElement("ItemInventoryRet")]
-        public IEnumerable<T> Items
+        public ObservableCollection<T> Items
         {
             get => _items;
             set

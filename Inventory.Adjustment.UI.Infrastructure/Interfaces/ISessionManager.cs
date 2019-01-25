@@ -7,7 +7,6 @@
 namespace Inventory.Adjustment.UI.Infrastructure.Interfaces
 {
     using System;
-    using System.Collections.ObjectModel;
     using System.ComponentModel.Composition.Hosting;
     using Inventory.Adjustment.Data.Serializable;
     using Inventory.Adjustment.Client.QuickBooksClient;
