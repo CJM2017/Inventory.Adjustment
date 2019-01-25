@@ -12,6 +12,11 @@ namespace Inventory.Adjustment.Data.Serializable
     {
         private string _name;
 
+        public Vendor()
+        {
+            _name = string.Empty;
+        }
+
         /// <summary>
         /// Gets or sets the name for the item.
         /// </summary>

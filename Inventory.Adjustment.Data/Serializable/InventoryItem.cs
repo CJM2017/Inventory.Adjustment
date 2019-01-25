@@ -8,6 +8,7 @@ namespace Inventory.Adjustment.Data.Serializable
 {
     using Prism.Mvvm;
     using System;
+    using System.Collections.Generic;
     using System.Xml.Serialization;
 
     /// <summary>
@@ -21,7 +22,7 @@ namespace Inventory.Adjustment.Data.Serializable
         private string _code;
         private string _description;
 
-        private double _stock;
+        private double _quantity;
         private double _cost;
 
         private double _basePrice;
@@ -29,8 +30,28 @@ namespace Inventory.Adjustment.Data.Serializable
         private double _electricianPrice;
 
         private Vendor _vendor;
+        private DataExtension _customDataItems;
         private DateTime _creationTime;
         private DateTime _lastModifiedTime;
+
+        public InventoryItem()
+        {
+            _name = string.Empty;
+            _code = string.Empty;
+            _description = string.Empty;
+
+            _quantity = 0.0;
+            _cost = 0.0;
+
+            _basePrice = 0.0;
+            _contractorPrice = 0.0;
+            _electricianPrice = 0.0;
+
+            _vendor = new Vendor();
+            _customDataItems = new DataExtension();
+            _creationTime = new DateTime();
+            _lastModifiedTime = new DateTime();
+        }
 
         /// <summary>
         /// Gets any property of the class
@@ -44,6 +65,34 @@ namespace Inventory.Adjustment.Data.Serializable
         }
 
         /// <summary>
+        /// Gets or sets the time the item was created.
+        /// </summary>
+        [XmlElement("TimeCreated")]
+        public DateTime CreationTime
+        {
+            get => _creationTime;
+            set
+            {
+                _creationTime = value;
+                RaisePropertyChanged();
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the time the item was last modified.
+        /// </summary>
+        [XmlElement("TimeModified")]
+        public DateTime LastModified
+        {
+            get => _lastModifiedTime;
+            set
+            {
+                _lastModifiedTime = value;
+                RaisePropertyChanged();
+            }
+        }
+
+        /// <summary>
         /// Gets or sets the name for the item.
         /// </summary>
         [XmlElement("IsActive")]
@@ -53,20 +102,6 @@ namespace Inventory.Adjustment.Data.Serializable
             set
             {
                 _isActive = value;
-                RaisePropertyChanged();
-            }
-        }
-
-        /// <summary>
-        /// Gets or sets the name for the item.
-        /// </summary>
-        [XmlElement("FullName")]
-        public string Name
-        {
-            get => _name;
-            set
-            {
-                _name = value;
                 RaisePropertyChanged();
             }
         }
@@ -175,10 +210,22 @@ namespace Inventory.Adjustment.Data.Serializable
         [XmlElement("QuantityOnHand")]
         public double Quantity
         {
-            get => _stock;
+            get => _quantity;
             set
             {
-                _stock = value;
+                _quantity = value;
+                RaisePropertyChanged();
+            }
+        }
+
+        //[XmlElement("DataExtRet")]
+        [XmlIgnore]
+        public DataExtension CustomDataItems
+        {
+            get => _customDataItems;
+            set
+            {
+                _customDataItems = value;
                 RaisePropertyChanged();
             }
         }

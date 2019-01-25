@@ -48,6 +48,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Serializable\DataExtension.cs" />
     <Compile Include="Serializable\InventoryItem.cs" />
     <Compile Include="Serializable\QuickBooksCollection.cs" />
     <Compile Include="Serializable\Vendor.cs" />

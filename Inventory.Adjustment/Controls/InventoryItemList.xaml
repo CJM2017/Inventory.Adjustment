@@ -32,6 +32,18 @@
                 </Trigger>
             </Style.Triggers>
         </Style>
+
+        <Style x:Key="CenterCellStyle" TargetType="{x:Type DataGridCell}">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type DataGridCell}">
+                        <Grid Background="{TemplateBinding Background}">
+                            <ContentPresenter HorizontalAlignment="Center"/>
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
     </UserControl.Resources>
 
     <Grid x:Name="RootGrid" Margin="10">
@@ -52,17 +64,19 @@
             </Grid.ColumnDefinitions>
 
             <StackPanel Grid.Column="0" Orientation="Horizontal">
-                <TextBox Height="32" Width="120" FontSize="15" Padding="0,2,0,0"
+                <Label Content="Look for" FontSize="13" Foreground="Black" 
+                       VerticalAlignment="Center" Margin="10,5,10,5"/>
+                <TextBox Height="32" Width="150" FontSize="15" Padding="0,2,0,0"
                          Controls:TextBoxHelper.Watermark="Search" 
                          Controls:TextBoxHelper.ClearTextButton="True"
                          Text="{Binding SearchString, UpdateSourceTrigger=PropertyChanged}"/>
-
-                <ComboBox Height="32" Width="120" Margin="5,5,5,5"
+                <Label Content="in" FontSize="13" Foreground="Black"
+                       VerticalAlignment="Center" Margin="10,5,6,5"/>
+                <ComboBox Height="32" Width="150" Margin="5,15,15,15"
                           ItemsSource="{Binding DropDownOptions}"
                           SelectedItem="{Binding SelectedField}"
                           Foreground="Black"/>
-
-                <Button x:Name="SearchButton"
+                    <Button x:Name="SearchButton"
                     Margin="3"
                     Height="32"
                     Width="90"
@@ -79,15 +93,15 @@
                     <TextBlock Foreground="White">Search</TextBlock>
                 </Button>
             </StackPanel>
-
+            
             <Button x:Name="EditInventoryItemButton"       
                     Grid.Column="2"
-                    Margin="3"
+                    Margin="15"
                     Height="32"
                     Width="90"
                     Visibility="Visible"
                     HorizontalAlignment="Center"
-                    VerticalAlignment="Top"
+                    VerticalAlignment="Center"
                     Command="{Binding EditItemCommand}">
                 <Button.Style>
                     <Style TargetType="{x:Type Button}">
@@ -145,11 +159,16 @@
                 <DataGridTextColumn Binding="{Binding Code}" Header="{Binding Data.GridHeaders[0], Source={StaticResource proxy}}" SortDirection="Ascending" />
                 <DataGridTextColumn Binding="{Binding Description}" Header="{Binding Data.GridHeaders[1], Source={StaticResource proxy}}"/>
                 <DataGridTextColumn Binding="{Binding Vendor.Name}" Header="{Binding Data.GridHeaders[2], Source={StaticResource proxy}}"/>
-                <DataGridTextColumn Binding="{Binding Stock}" Header="{Binding Data.GridHeaders[3], Source={StaticResource proxy}}"/>
-                <DataGridTextColumn Binding="{Binding Cost}" Header="{Binding Data.GridHeaders[4], Source={StaticResource proxy}}"/>
-                <DataGridTextColumn Binding="{Binding BasePrice}" Header="{Binding Data.GridHeaders[5], Source={StaticResource proxy}}"/>
-                <DataGridTextColumn Binding="{Binding BasePrice}" Header="{Binding Data.GridHeaders[6], Source={StaticResource proxy}}"/>
-                <DataGridTextColumn Binding="{Binding BasePrice}" Header="{Binding Data.GridHeaders[7], Source={StaticResource proxy}}"/>
+                <DataGridTextColumn Binding="{Binding Quantity}" Header="{Binding Data.GridHeaders[3], Source={StaticResource proxy}}"
+                                    CellStyle="{StaticResource CenterCellStyle}"/>
+                <DataGridTextColumn Binding="{Binding Cost}" Header="{Binding Data.GridHeaders[4], Source={StaticResource proxy}}"
+                                    CellStyle="{StaticResource CenterCellStyle}"/>
+                <DataGridTextColumn Binding="{Binding BasePrice}" Header="{Binding Data.GridHeaders[5], Source={StaticResource proxy}}"
+                                    CellStyle="{StaticResource CenterCellStyle}"/>
+                <DataGridTextColumn Binding="{Binding ContractorPrice}" Header="{Binding Data.GridHeaders[6], Source={StaticResource proxy}}"
+                                    CellStyle="{StaticResource CenterCellStyle}"/>
+                <DataGridTextColumn Binding="{Binding ElectricianPrice}" Header="{Binding Data.GridHeaders[7], Source={StaticResource proxy}}"
+                                    CellStyle="{StaticResource CenterCellStyle}"/>
                 <DataGridTemplateColumn Header="Delete">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>

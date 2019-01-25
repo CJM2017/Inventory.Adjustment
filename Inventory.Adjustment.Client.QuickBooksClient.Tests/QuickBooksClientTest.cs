@@ -10,6 +10,7 @@ namespace Inventory.Adjustment.Client.QuickBooksClient.Tests
     using Microsoft.VisualStudio.TestTools.UnitTesting;
     using Inventory.Adjustment.Client.QuickBooksClient;
     using Inventory.Adjustment.Data.Serializable;
+    using System.Linq;
 
     [TestClass]
     public class QuickBooksClientTest
@@ -31,7 +32,7 @@ namespace Inventory.Adjustment.Client.QuickBooksClient.Tests
             _client.CloseConnection();
 
             Assert.IsNotNull(inventory);
-            Assert.IsTrue(inventory.Items.Count > 0);
+            Assert.IsTrue(inventory.Items.ToList().Count > 0);
         }
     }
 }

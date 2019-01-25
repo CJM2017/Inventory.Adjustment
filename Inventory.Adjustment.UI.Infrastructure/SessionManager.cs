@@ -82,9 +82,16 @@ namespace Inventory.Adjustment.UI.Infrastructure
         /// <returns>Task</returns>
         public async Task LoadInventorySessionData()
         {
-            await QBClient.OpenConnection();
-            Inventory = await QBClient.GetDataFromXML<InventoryItem>();
-            _log.Debug("Inventory session data has been loaded");
+            try
+            {
+                Inventory = await QBClient.GetDataFromXML<InventoryItem>();
+                _log.Debug("Inventory session data has been loaded");
+            }
+            catch (Exception ex)
+            {
+                throw new QuickBooksClientException(ex.ToString());
+            }
+            
         }
 
         public void Dispose()

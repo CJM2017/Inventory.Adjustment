@@ -59,16 +59,20 @@ namespace Inventory.Adjustment.Client.QuickBooksClient
         /// <inheritdoc/>
         public async Task<QuickBooksCollection<T>> GetDataFromXML<T>()
         {
+            await OpenConnection();
             IMsgSetRequest request = CreateRequest();
 
             switch (typeof(T))
             {
                 case Type InventoryItem:
-                    request.AppendItemQueryRq();
+                    IItemQuery itemRequest = request.AppendItemQueryRq();
+                    itemRequest.OwnerIDList.Add("0");
                     break;
             }
 
             IMsgSetResponse queryResponse = await MakeRequestAsync(request).ConfigureAwait(false);
+            CloseConnection();
+
             return ProcessQueryAsXML<T>(queryResponse);
         }
 
@@ -108,8 +112,6 @@ namespace Inventory.Adjustment.Client.QuickBooksClient
         /// <inheritdoc/>
         public void CloseConnection()
         {
-            this.EndSession();
-
             if (_connectionOpen)
             {
                 _manager.CloseConnection();
@@ -174,6 +176,7 @@ namespace Inventory.Adjustment.Client.QuickBooksClient
         {
             IMsgSetRequest request = _manager.CreateMsgSetRequest(_country, _qbsdkMajor, _qbsdkMinor);
             request.Attributes.OnError = ENRqOnError.roeContinue;
+
             return request;
         }
          
@@ -313,11 +316,6 @@ namespace Inventory.Adjustment.Client.QuickBooksClient
         private InventoryItem ExtractInventoryItem(IItemInventoryRet item)
         {
             InventoryItem inventoryItem = new InventoryItem();
-
-            if (item.FullName != null)
-            {
-                inventoryItem.Name = item.FullName.GetValue();
-            }
 
             if (item.ManufacturerPartNumber != null)
             {

@@ -48,7 +48,7 @@ namespace Inventory.Adjustment.UI.ViewModels
             SelectedField = DropDownOptions.First();
 
             SelectedItems = new List<InventoryItem>();
-            Items = _sessionManager.Inventory.Items;
+            Items =  new ObservableCollection<InventoryItem>(_sessionManager.Inventory.Items);
             this.CleanItems();  
         }
 
@@ -107,7 +107,7 @@ namespace Inventory.Adjustment.UI.ViewModels
                 // Reset
                 if (string.IsNullOrEmpty(value))
                 {
-                    Items = _sessionManager.Inventory.Items;
+                    Items = new ObservableCollection<InventoryItem>(_sessionManager.Inventory.Items);
                 }
 
                 SearchCommand.RaiseCanExecuteChanged();
@@ -151,17 +151,28 @@ namespace Inventory.Adjustment.UI.ViewModels
         private IEnumerable<string> GetDropDownOptions()
         {
             Type itemType = typeof(InventoryItem);
-            List<PropertyInfo> itemProperties = itemType.GetProperties().ToList();
+            IEnumerable<PropertyInfo> itemProperties = itemType.GetProperties().ToList();
 
-            return itemProperties.Where(prop => prop.PropertyType.Name.Equals("String")).Select(prop => prop.Name);
+            var options = itemProperties.Where(prop => prop.PropertyType.Name.Equals("String")).Select(prop => prop.Name).ToList();
+            options.Add("Vendor");
+
+            return options;
         }
 
         private void ExecuteSearch()
         {
-            Items = new ObservableCollection<InventoryItem>(
-                                                            _sessionManager.Inventory.Items.Where(
+            if (SelectedField.ToLower().Equals("vendor"))
+            {
+                Items = new ObservableCollection<InventoryItem>(_sessionManager.Inventory.Items.Where(
+                                                                item => item.Vendor.Name.ToLower().Contains(
+                                                                 SearchString.ToLower())));
+            }
+            else
+            {
+                Items = new ObservableCollection<InventoryItem>(_sessionManager.Inventory.Items.Where(
                                                             item => item[SelectedField].ToString().ToLower().Contains(
                                                             SearchString.ToLower())));
+            }
         }
 
         private void ExecuteEdit()
@@ -176,16 +187,7 @@ namespace Inventory.Adjustment.UI.ViewModels
 
         private void CleanItems()
         {
-            foreach (var item in Items)
-            {
-                if (string.IsNullOrWhiteSpace(item.Description))
-                {
-                    item.Description = string.Empty;
-                }
-            }
-
             var itemsToDelete = Items.Where(item => item.Code == null || !item.IsActive).ToList();
-
             foreach (var item in itemsToDelete)
             {
                 Items.Remove(item);
