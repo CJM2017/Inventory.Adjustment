@@ -38,7 +38,7 @@ namespace Inventory.Adjustment.UI.ViewModels
             _sessionManager = sessionManager;
 
             EditItemCommand = new DelegateCommand(ExecuteEdit, () => SelectedItems.Count > 0);
-            SearchCommand = new DelegateCommand(ExecuteSearch, () => SearchString != null && SearchString != string.Empty);
+            SearchCommand = new DelegateCommand(ExecuteSearch, () => Items != null && Items.Count > 0);
             DeleteItemCommand = new DelegateCommand(ExecuteDelete, () => SelectedItems.Count > 0);
 
             GridHeaders = new List<string>() { "Code", "Description", "Vendor", "Quantity", "Cost",
@@ -89,6 +89,7 @@ namespace Inventory.Adjustment.UI.ViewModels
             set
             {
                 _items = value;
+                DeleteItemCommand.RaiseCanExecuteChanged();
                 RaisePropertyChanged();
             }
         }
@@ -103,10 +104,9 @@ namespace Inventory.Adjustment.UI.ViewModels
             {
                 _searchString = value;
 
-                // Reset
                 if (string.IsNullOrEmpty(value))
                 {
-                    Items = new ObservableCollection<InventoryItem>(_sessionManager.Inventory.Items);
+                    Reset();
                 }
 
                 SearchCommand.RaiseCanExecuteChanged();
@@ -125,7 +125,6 @@ namespace Inventory.Adjustment.UI.ViewModels
                 _selectedItems = value;
 
                 EditItemCommand.RaiseCanExecuteChanged();
-                DeleteItemCommand.RaiseCanExecuteChanged();
                 RaisePropertyChanged();
             }
         }
@@ -183,6 +182,12 @@ namespace Inventory.Adjustment.UI.ViewModels
         private void ExecuteDelete()
         {
             // TODO
-        }   
+        }
+
+        private void Reset()
+        {
+            SelectedItems = new List<InventoryItem>();
+            Items = new ObservableCollection<InventoryItem>(_sessionManager.Inventory.Items);
+        }
     }
 }

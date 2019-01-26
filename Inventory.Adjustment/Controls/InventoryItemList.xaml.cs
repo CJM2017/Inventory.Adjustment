@@ -60,8 +60,7 @@ namespace Inventory.Adjustment.UI.Controls
                         }
                         catch (Exception ex)
                         {
-                            // Log and handle silently
-                            // User did not click in a great spot
+                            break;
                         }
                     }
                 }
