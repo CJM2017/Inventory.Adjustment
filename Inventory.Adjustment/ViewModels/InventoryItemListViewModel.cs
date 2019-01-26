@@ -38,8 +38,8 @@ namespace Inventory.Adjustment.UI.ViewModels
             _sessionManager = sessionManager;
 
             EditItemCommand = new DelegateCommand(ExecuteEdit, () => SelectedItems.Count > 0);
-            SearchCommand = new DelegateCommand(ExecuteSearch, () => Items != null && Items.Count > 0);
-            DeleteItemCommand = new DelegateCommand(ExecuteDelete, () => SelectedItems.Count > 0);
+            SearchCommand = new DelegateCommand(ExecuteSearch, () => SearchString != null && SearchString != string.Empty);
+            DeleteItemCommand = new DelegateCommand(ExecuteDelete, () => Items != null && Items.Count > 0);
 
             GridHeaders = new List<string>() { "Code", "Description", "Vendor", "Quantity", "Cost",
                                                 "Price", "Contractor Price", "Electrician Price" };
