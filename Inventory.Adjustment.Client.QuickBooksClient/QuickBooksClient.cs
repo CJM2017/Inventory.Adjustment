@@ -47,7 +47,7 @@ namespace Inventory.Adjustment.Client.QuickBooksClient
         }
 
         /// <inheritdoc/>
-        public async Task<ObservableCollection<InventoryItem>> GetInventory()
+        public async Task<ObservableCollection<InventoryItem>> GetInventoryFromQBFC()
         {
             IMsgSetRequest request = CreateRequest();
             request.AppendItemQueryRq();
@@ -57,23 +57,31 @@ namespace Inventory.Adjustment.Client.QuickBooksClient
         }
 
         /// <inheritdoc/>
-        public async Task<QuickBooksCollection<T>> GetDataFromXML<T>()
+        public async Task<QBItemCollection<T>> GetInventoryFromXML<T>()
         {
             await OpenConnection();
-            IMsgSetRequest request = CreateRequest();
 
-            switch (typeof(T))
-            {
-                case Type InventoryItem:
-                    IItemQuery itemRequest = request.AppendItemQueryRq();
-                    itemRequest.OwnerIDList.Add("0");
-                    break;
-            }
+            IMsgSetRequest request = CreateRequest();
+            IItemQuery itemRequest = request.AppendItemQueryRq();
 
             IMsgSetResponse queryResponse = await MakeRequestAsync(request).ConfigureAwait(false);
             CloseConnection();
 
-            return ProcessQueryAsXML<T>(queryResponse);
+            return ProcessQueryAsXML<QBItemCollection<T>>(queryResponse, "ItemQueryRs");
+        }
+
+        /// <inheritdoc/>
+        public async Task<QBPriceLevelCollection<T>> GetPriceLevelsFromXML<T>()
+        {
+            await OpenConnection();
+
+            IMsgSetRequest request = CreateRequest();
+            request.AppendPriceLevelQueryRq();
+
+            IMsgSetResponse queryResponse = await MakeRequestAsync(request).ConfigureAwait(false);
+            CloseConnection();
+
+            return ProcessQueryAsXML<QBPriceLevelCollection<T>>(queryResponse, "PriceLevelQueryRs");
         }
 
         /// <inheritdoc/>
@@ -225,7 +233,7 @@ namespace Inventory.Adjustment.Client.QuickBooksClient
                 }
                 catch (Exception ex)
                 {
-                    throw new QuickBooksClientException(ex.ToString());
+                    //throw new QuickBooksClientException(ex.ToString());
                 }
                 finally
                 {
@@ -262,10 +270,10 @@ namespace Inventory.Adjustment.Client.QuickBooksClient
             return inventoryItems;
         }
 
-        private QuickBooksCollection<T> ProcessQueryAsXML<T>(IMsgSetResponse queryResponse)
+        private T ProcessQueryAsXML<T>(IMsgSetResponse queryResponse, string root)
         {
-            XmlSerializer serializer = new XmlSerializer(typeof(QuickBooksCollection<T>));
-            QuickBooksCollection<T> result = default(QuickBooksCollection<T>);
+            XmlSerializer serializer = new XmlSerializer(typeof(T));
+            var result = default(T);
 
             try
             {
@@ -281,8 +289,8 @@ namespace Inventory.Adjustment.Client.QuickBooksClient
                 using (XmlReader reader = XmlReader.Create(new StringReader(queryResponse.ToXMLString())))
                 {
                     reader.MoveToContent();
-                    reader.ReadToDescendant("ItemQueryRs");
-                    result = (QuickBooksCollection<T>)serializer.Deserialize(reader);
+                    reader.ReadToDescendant(root);
+                    result = (T)serializer.Deserialize(reader);
                 }
             }
             catch (Exception ex)

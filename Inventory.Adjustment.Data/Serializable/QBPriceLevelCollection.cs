@@ -10,12 +10,17 @@ namespace Inventory.Adjustment.Data.Serializable
     using System.Collections.ObjectModel;
     using System.Xml.Serialization;
 
-    [XmlRoot("ItemQueryRs")]
-    public class QuickBooksCollection<T> : BindableBase
+    [XmlRoot("PriceLevelQueryRs")]
+    public class QBPriceLevelCollection<T> : BindableBase
     {
         private ObservableCollection<T> _items;
 
-        [XmlElement("ItemInventoryRet")]
+        public QBPriceLevelCollection()
+        {
+            _items = new ObservableCollection<T>();
+        }
+
+        [XmlElement("PriceLevelRet")]
         public ObservableCollection<T> Items
         {
             get => _items;

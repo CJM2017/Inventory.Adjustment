@@ -10,6 +10,7 @@ namespace Inventory.Adjustment.UI.Infrastructure.Interfaces
     using System.ComponentModel.Composition.Hosting;
     using Inventory.Adjustment.Data.Serializable;
     using Inventory.Adjustment.Client.QuickBooksClient;
+    using System.Threading.Tasks;
 
 
     /// <summary>
@@ -40,6 +41,17 @@ namespace Inventory.Adjustment.UI.Infrastructure.Interfaces
         /// <summary>
         /// Gets or sets the collection of inventory items.
         /// </summary>
-        QuickBooksCollection<InventoryItem> Inventory { get; set; }
+        QBItemCollection<InventoryItem> Inventory { get; set; }
+
+        /// <summary>
+        /// Gets or sets the inventory price levels.
+        /// </summary>
+        QBPriceLevelCollection<PriceLevel> PriceLevels { get; set; }
+
+        /// <summary>
+        /// Load the inbentory items from quickbooks into this session.
+        /// </summary>
+        /// <returns>Task</returns>
+        Task LoadSessionData();
     }
 }

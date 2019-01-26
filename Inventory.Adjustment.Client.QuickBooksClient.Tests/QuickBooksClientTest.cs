@@ -27,12 +27,19 @@ namespace Inventory.Adjustment.Client.QuickBooksClient.Tests
         [TestMethod]
         public async Task TestGetInventory()
         {
-            await _client.OpenConnection();
-            var inventory = await _client.GetDataFromXML<InventoryItem>();
-            _client.CloseConnection();
+            var inventory = await _client.GetInventoryFromXML<InventoryItem>();
 
             Assert.IsNotNull(inventory);
             Assert.IsTrue(inventory.Items.ToList().Count > 0);
+        }
+
+        [TestMethod]
+        public async Task TestGetPriceLevel()
+        {
+            var priceLevels = await _client.GetPriceLevelsFromXML<PriceLevel>();
+
+            Assert.IsNotNull(priceLevels);
+            Assert.IsTrue(priceLevels.Items.Count > 0);
         }
     }
 }

@@ -48,8 +48,7 @@ namespace Inventory.Adjustment.UI.ViewModels
             SelectedField = DropDownOptions.First();
 
             SelectedItems = new List<InventoryItem>();
-            Items =  new ObservableCollection<InventoryItem>(_sessionManager.Inventory.Items);
-            this.CleanItems();  
+            Items =  new ObservableCollection<InventoryItem>(_sessionManager.Inventory.Items); 
         }
 
         public DelegateCommand EditItemCommand { get; private set; }
@@ -154,6 +153,7 @@ namespace Inventory.Adjustment.UI.ViewModels
             IEnumerable<PropertyInfo> itemProperties = itemType.GetProperties().ToList();
 
             var options = itemProperties.Where(prop => prop.PropertyType.Name.Equals("String")).Select(prop => prop.Name).ToList();
+            options.Remove("ListId");
             options.Add("Vendor");
 
             return options;
@@ -183,15 +183,6 @@ namespace Inventory.Adjustment.UI.ViewModels
         private void ExecuteDelete()
         {
             // TODO
-        }
-
-        private void CleanItems()
-        {
-            var itemsToDelete = Items.Where(item => item.Code == null || !item.IsActive).ToList();
-            foreach (var item in itemsToDelete)
-            {
-                Items.Remove(item);
-            }
-        }
+        }   
     }
 }

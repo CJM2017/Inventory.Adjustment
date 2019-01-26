@@ -12,12 +12,13 @@ namespace Inventory.Adjustment
     using Inventory.Adjustment.UI.Infrastructure;
     using Inventory.Adjustment.Client.QuickBooksClient;
     using Inventory.Adjustment.UI.Infrastructure.Interfaces;
+    using System.Threading.Tasks;
 
     /// <summary>
     /// Creates and initializes global services and
     /// creates the main window.
     /// </summary>
-    class Bootstrapper
+    public class Bootstrapper
     {
         private ISessionManager _manager;
 
@@ -32,6 +33,11 @@ namespace Inventory.Adjustment
             {
                 _manager = SessionManager.Instance;
 
+                Task.Run(async () =>
+                {
+                    await _manager.LoadSessionData();
+                }).GetAwaiter().GetResult();
+                
                 if (_manager.Container == null)
                 {
                     throw new InvalidOperationException("Composition Container for application was not created.");

@@ -8,8 +8,6 @@ namespace Inventory.Adjustment.Data.Serializable
 {
     using Prism.Mvvm;
     using System;
-    using System.Collections.ObjectModel;
-    using System.Linq;
     using System.Xml.Serialization;
 
     /// <summary>
@@ -19,6 +17,7 @@ namespace Inventory.Adjustment.Data.Serializable
     {
         private bool _isActive;
 
+        private string _listId;
         private string _name;
         private string _code;
         private string _description;
@@ -26,15 +25,16 @@ namespace Inventory.Adjustment.Data.Serializable
         private double _quantity;
         private double _cost;
         private double _basePrice;
+        private double _contractorPrice;
+        private double _electricianPrice;
 
 
         private Vendor _vendor;
-        private ObservableCollection<DataExtension> _customDataItems;
-        private DateTime _creationTime;
         private DateTime _lastModifiedTime;
 
         public InventoryItem()
         {
+            _listId = string.Empty;
             _name = string.Empty;
             _code = string.Empty;
             _description = string.Empty;
@@ -42,11 +42,11 @@ namespace Inventory.Adjustment.Data.Serializable
             _quantity = 0.0;
             _cost = 0.0;
             _basePrice = 0.0;
+            _contractorPrice = 0.0;
+            _electricianPrice = 0.0;
 
             _vendor = new Vendor();
-            _creationTime = new DateTime();
             _lastModifiedTime = new DateTime();
-            _customDataItems = new ObservableCollection<DataExtension>();
         }
 
         /// <summary>
@@ -59,17 +59,17 @@ namespace Inventory.Adjustment.Data.Serializable
         {
             get { return this.GetType().GetProperty(propertyName).GetValue(this, null); }
         }
-
+        
         /// <summary>
-        /// Gets or sets the time the item was created.
+        /// Gets or sets the items list id.
         /// </summary>
-        [XmlElement("TimeCreated")]
-        public DateTime CreationTime
+        [XmlElement("ListID")]
+        public string ListId
         {
-            get => _creationTime;
+            get => _listId;
             set
             {
-                _creationTime = value;
+                _listId = value;
                 RaisePropertyChanged();
             }
         }
@@ -178,17 +178,11 @@ namespace Inventory.Adjustment.Data.Serializable
         [XmlIgnore]
         public double ContractorPrice
         {
-            get
+            get => _contractorPrice;
+            set
             {
-                double price = 0.0;
-
-                if (CustomDataItems != null && CustomDataItems.Count > 0)
-                {
-                    string returnedValue = CustomDataItems.FirstOrDefault(item => item.Name.Equals("Price 2")).StringValue;
-                    double.TryParse(returnedValue, out price);
-                }
-
-                return price;
+                _contractorPrice = value;
+                RaisePropertyChanged();
             }
         }
 
@@ -198,17 +192,11 @@ namespace Inventory.Adjustment.Data.Serializable
         [XmlIgnore]
         public double ElectricianPrice
         {
-            get
+            get => _electricianPrice;
+            set
             {
-                double price = 0.0;
-
-                if (CustomDataItems != null && CustomDataItems.Count > 0)
-                {
-                    string returnedValue = CustomDataItems?.FirstOrDefault(item => item.Name.Equals("Price 3")).StringValue;
-                    double.TryParse(returnedValue, out price);
-                }
-
-                return price;
+                _electricianPrice = value;
+                RaisePropertyChanged();
             }
 
         }
@@ -223,33 +211,6 @@ namespace Inventory.Adjustment.Data.Serializable
             {
                 _quantity = value;
                 RaisePropertyChanged();
-            }
-        }
-
-        [XmlElement("DataExtRet")]
-        public ObservableCollection<DataExtension> CustomDataItems
-        {
-            get => _customDataItems;
-            set
-            {
-                _customDataItems = value;
-                RaisePropertyChanged();
-            }
-        }
-
-        private void ItializeCustomItems()
-        {
-            _customDataItems = new ObservableCollection<DataExtension>();
-
-            for (int i = 2; i <= 3; i++)
-            {
-                var customItem = new DataExtension
-                {
-                    Name = $"Price {i}",
-                    StringValue = "0.0"
-                };
-
-                _customDataItems.Add(customItem);
             }
         }
     }

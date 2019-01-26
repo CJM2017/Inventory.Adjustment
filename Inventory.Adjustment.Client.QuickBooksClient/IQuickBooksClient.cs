@@ -19,14 +19,21 @@ namespace Inventory.Adjustment.Client.QuickBooksClient
         /// instance using QBFC parsing.
         /// </summary>
         /// <returns>Inventory item list</returns>
-        Task<ObservableCollection<InventoryItem>> GetInventory();
+        Task<ObservableCollection<InventoryItem>> GetInventoryFromQBFC();
 
         /// <summary>
         /// Returns a list of data from local quickbooks
         /// instance using XML deserialization.
         /// </summary>
         /// <returns></returns>
-        Task<QuickBooksCollection<T>> GetDataFromXML<T>();
+        Task<QBItemCollection<T>> GetInventoryFromXML<T>();
+
+        /// <summary>
+        /// Gets the price level associated with an inventory item.
+        /// </summary>
+        /// <param name="item">Inventory item</param>
+        /// <returns></returns>
+        Task<QBPriceLevelCollection<T>> GetPriceLevelsFromXML<T>();
 
         /// <summary>
         /// Create a new inventory item in quickbooks.

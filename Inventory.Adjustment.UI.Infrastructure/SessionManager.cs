@@ -14,6 +14,7 @@ namespace Inventory.Adjustment.UI.Infrastructure
     using Inventory.Adjustment.UI.Infrastructure.Interfaces;
     using Inventory.Adjustment.Client.QuickBooksClient;
     using log4net;
+    using System.Linq;
 
     /// <summary>
     /// Singleton class for holding session data for the application.
@@ -48,12 +49,7 @@ namespace Inventory.Adjustment.UI.Infrastructure
             AppVersion = Assembly.GetExecutingAssembly().GetName().Version.ToString();
             QBClient = new QuickBooksClient(string.Empty, $"{AppName} v{AppVersion}", "US");
 
-            Inventory = new QuickBooksCollection<InventoryItem>();
-
-            Task.Run(async () =>
-            {
-                await LoadInventorySessionData();
-            }).GetAwaiter().GetResult();
+            Inventory = new QBItemCollection<InventoryItem>();
         }
 
         /// <summary>
@@ -74,17 +70,39 @@ namespace Inventory.Adjustment.UI.Infrastructure
         public IQuickBooksClient QBClient { get; private set; }
 
         /// <inheritdoc/>
-        public QuickBooksCollection<InventoryItem> Inventory { get; set; }
+        public QBItemCollection<InventoryItem> Inventory { get; set; }
 
-        /// <summary>
-        /// Load the inbentory items from quickbooks into this session.
-        /// </summary>
-        /// <returns>Task</returns>
-        public async Task LoadInventorySessionData()
+        /// <inheritdoc/>
+        public QBPriceLevelCollection<PriceLevel> PriceLevels { get; set; }
+
+        /// <inheritdoc/>
+        public async Task LoadSessionData()
         {
             try
             {
-                Inventory = await QBClient.GetDataFromXML<InventoryItem>();
+                Inventory = await QBClient.GetInventoryFromXML<InventoryItem>();
+                PriceLevels = await QBClient.GetPriceLevelsFromXML<PriceLevel>();
+                CleanItems();
+
+                var electricianMap = PriceLevels.Items.First(item => item.Name.ToLower().Equals("electrician")).PriceLevelItems.Select(
+                                                             item => new { item.ItemRef.Name, item.CustomPrice }).ToDictionary(
+                                                             item => item.Name, item => item.CustomPrice);
+
+                var contractorMap = PriceLevels.Items.First(item => item.Name.ToLower().Equals("contractor")).PriceLevelItems.Select(
+                                                            item => new { item.ItemRef.Name, item.CustomPrice }).ToDictionary(
+                                                            item => item.Name, item => item.CustomPrice);
+
+                foreach (var item in Inventory.Items)
+                {
+                    double price;
+
+                    electricianMap.TryGetValue(item.Code, out price);
+                    item.ElectricianPrice = price;
+
+                    contractorMap.TryGetValue(item.Code, out price);
+                    item.ContractorPrice = price;
+                }
+
                 _log.Debug("Inventory session data has been loaded");
             }
             catch (Exception ex)
@@ -114,6 +132,15 @@ namespace Inventory.Adjustment.UI.Infrastructure
                 // TODO: set large fields to null.
 
                 _disposedValue = true;
+            }
+        }
+
+        private void CleanItems()
+        {
+            var itemsToDelete = Inventory.Items.Where(item => item.Code == null || !item.IsActive).ToList();
+            foreach (var item in itemsToDelete)
+            {
+                Inventory.Items.Remove(item);
             }
         }
     }
