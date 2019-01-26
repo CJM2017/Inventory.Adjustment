@@ -15,6 +15,12 @@
     {
         "Entry"
         {
+        "MsmKey" = "8:_0234C8493AC7496D85EC93CD57523A99"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_0FC56114D9F3F6254A7364538E7D066F"
         "OwnerKey" = "8:_7B0D68A53F453294D60E692A19F58B5D"
         "MsmSig" = "8:_UNDEFINED"
@@ -41,6 +47,12 @@
         {
         "MsmKey" = "8:_4C086CD3B1598A8E90FE6DC014BE0D24"
         "OwnerKey" = "8:_DE784395A5F44AAE85FB9DDA693A3CED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_61C3FA2EF42141468AF8715E4C32970D"
+        "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -111,14 +123,14 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_DE784395A5F44AAE85FB9DDA693A3CED"
+        "MsmKey" = "8:_CEB3A7FF53AC4F5AA0E8A3EE23CFDD99"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_8F65529B271079ED94D6C21A897683BE"
+        "MsmKey" = "8:_DE784395A5F44AAE85FB9DDA693A3CED"
+        "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -169,6 +181,12 @@
         "OwnerKey" = "8:_0FC56114D9F3F6254A7364538E7D066F"
         "MsmSig" = "8:_UNDEFINED"
         }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_8F65529B271079ED94D6C21A897683BE"
+        "MsmSig" = "8:_UNDEFINED"
+        }
     }
     "Configurations"
     {
@@ -187,6 +205,22 @@
         "PrivateKeyFile" = "8:"
         "TimeStampServer" = "8:"
         "InstallerBootstrapper" = "3:2"
+            "BootstrapperCfg:{63ACBE69-63AA-4F98-B2B6-99F9E24495F2}"
+            {
+            "Enabled" = "11:TRUE"
+            "PromptEnabled" = "11:TRUE"
+            "PrerequisitesLocation" = "2:1"
+            "Url" = "8:"
+            "ComponentsUrl" = "8:"
+                "Items"
+                {
+                    "{EDC2488A-8267-493A-A98E-7D9C3B36CDF3}:.NETFramework,Version=v4.7.2"
+                    {
+                    "Name" = "8:Microsoft .NET Framework 4.7.2 (x86 and x64)"
+                    "ProductCode" = "8:.NETFramework,Version=v4.7.2"
+                    }
+                }
+            }
         }
         "Release"
         {
@@ -203,6 +237,14 @@
         "PrivateKeyFile" = "8:"
         "TimeStampServer" = "8:"
         "InstallerBootstrapper" = "3:2"
+            "BootstrapperCfg:{63ACBE69-63AA-4F98-B2B6-99F9E24495F2}"
+            {
+            "Enabled" = "11:TRUE"
+            "PromptEnabled" = "11:TRUE"
+            "PrerequisitesLocation" = "2:1"
+            "Url" = "8:"
+            "ComponentsUrl" = "8:"
+            }
         }
     }
     "Deployable"
@@ -232,6 +274,26 @@
         }
         "File"
         {
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_0234C8493AC7496D85EC93CD57523A99"
+            {
+            "SourcePath" = "8:..\\Inventory.Adjustment\\App.config"
+            "TargetName" = "8:App.config"
+            "Tag" = "8:"
+            "Folder" = "8:_8DAD21D3C488450CB0409FD8EAC4F5AA"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
             "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_0FC56114D9F3F6254A7364538E7D066F"
             {
             "AssemblyRegister" = "3:1"
@@ -292,6 +354,26 @@
             "Register" = "3:1"
             "Exclude" = "11:FALSE"
             "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_61C3FA2EF42141468AF8715E4C32970D"
+            {
+            "SourcePath" = "8:..\\Inventory.Adjustment\\log4net.config"
+            "TargetName" = "8:log4net.config"
+            "Tag" = "8:"
+            "Folder" = "8:_8DAD21D3C488450CB0409FD8EAC4F5AA"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
             "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_7B0D68A53F453294D60E692A19F58B5D"
@@ -480,6 +562,26 @@
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_CEB3A7FF53AC4F5AA0E8A3EE23CFDD99"
+            {
+            "SourcePath" = "8:..\\Inventory.Adjustment\\packages.config"
+            "TargetName" = "8:packages.config"
+            "Tag" = "8:"
+            "Folder" = "8:_8DAD21D3C488450CB0409FD8EAC4F5AA"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
             "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_DE784395A5F44AAE85FB9DDA693A3CED"
             {
             "AssemblyRegister" = "3:1"
@@ -568,7 +670,7 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:Inventory.Adjustment.Installer"
         "ProductCode" = "8:{31DA1114-8DEF-4286-8FBF-DFB7BACC46D3}"
-        "PackageCode" = "8:{E9E9FE6A-46BF-4AEC-8645-4108F3FB7C37}"
+        "PackageCode" = "8:{F5093F88-FBEB-4CEF-8C42-3C675963191A}"
         "UpgradeCode" = "8:{F6EA7621-F026-4AD9-BD7A-0A61C3D92C87}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"

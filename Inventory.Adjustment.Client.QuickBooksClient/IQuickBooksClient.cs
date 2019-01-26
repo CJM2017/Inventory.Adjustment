@@ -25,15 +25,23 @@ namespace Inventory.Adjustment.Client.QuickBooksClient
         /// Returns a list of data from local quickbooks
         /// instance using XML deserialization.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>Inventory item list</returns>
         Task<QBItemCollection<T>> GetInventoryFromXML<T>();
 
         /// <summary>
         /// Gets the price level associated with an inventory item.
         /// </summary>
-        /// <param name="item">Inventory item</param>
-        /// <returns></returns>
+        /// <returns>Price level list</returns>
         Task<QBPriceLevelCollection<T>> GetPriceLevelsFromXML<T>();
+
+        /// <summary>
+        /// Sets the price level associated with an inventory item.
+        /// </summary>
+        /// <param name="itemName">Inventory item name</param>
+        /// /// <param name="priceLevel">Price levvel to modifyparam>
+        /// /// <param name="newPrice">New price to set</param>
+        /// <returns></returns>
+        Task SetPriceLevelWithXML(string itemId, string priceLevelId, string editSequence, double newPrice);
 
         /// <summary>
         /// Create a new inventory item in quickbooks.

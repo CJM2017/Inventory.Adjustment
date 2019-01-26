@@ -41,5 +41,19 @@ namespace Inventory.Adjustment.Client.QuickBooksClient.Tests
             Assert.IsNotNull(priceLevels);
             Assert.IsTrue(priceLevels.Items.Count > 0);
         }
+
+        [TestMethod]
+        public async Task TestSetPriceLevel()
+        {
+            var inventory = await _client.GetInventoryFromXML<InventoryItem>();
+            var priceLevels = await _client.GetPriceLevelsFromXML<PriceLevel>();
+
+            var itemToMod = inventory.Items.First(item => item.Code == "71564a");
+            var priceLevel = priceLevels.Items.First(item => item.Name.ToLower().Equals("contractor"));
+
+            await _client.SetPriceLevelWithXML(itemToMod.ListId, priceLevel.ListId, priceLevel.EditSequence, 12345);
+            // use get on single item
+            Assert.IsTrue(true);
+        }
     }
 }

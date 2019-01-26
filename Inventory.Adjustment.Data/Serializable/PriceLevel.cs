@@ -13,14 +13,49 @@ namespace Inventory.Adjustment.Data.Serializable
     public class PriceLevel : BindableBase
     {
         private bool _isActive;
+        private string _id;
         private string _name;
+        private string _editSequence;
         private ObservableCollection<PriceLevelItem> _priceLevelItems;
 
+        /// <summary>
+        /// Creates new instance.
+        /// </summary>
         public PriceLevel()
         {
             _isActive = true;
             _name = string.Empty;
+            _id = string.Empty;
+            _editSequence = string.Empty;
             _priceLevelItems = new ObservableCollection<PriceLevelItem>();
+        }
+
+        /// <summary>
+        /// Gets or sets the list id.
+        /// </summary>
+        [XmlElement("ListID")]
+        public string ListId
+        {
+            get => _id;
+            set
+            {
+                _id = value;
+                RaisePropertyChanged();
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the list id.
+        /// </summary>
+        [XmlElement("EditSequence")]
+        public string EditSequence
+        {
+            get => _editSequence;
+            set
+            {
+                _editSequence = value;
+                RaisePropertyChanged();
+            }
         }
 
         /// <summary>

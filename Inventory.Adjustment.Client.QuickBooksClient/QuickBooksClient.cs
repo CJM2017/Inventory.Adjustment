@@ -85,6 +85,28 @@ namespace Inventory.Adjustment.Client.QuickBooksClient
         }
 
         /// <inheritdoc/>
+        public async Task SetPriceLevelWithXML(string itemId, string priceLevelId, string editSequence, double newPrice)
+        {
+            await OpenConnection();
+
+            IMsgSetRequest request = CreateRequest();
+
+            IPriceLevelMod priceLevelRequest = request.AppendPriceLevelModRq();
+            priceLevelRequest.ListID.SetValue(priceLevelId);
+            priceLevelRequest.EditSequence.SetValue(editSequence);
+
+            IPriceLevelPerItem itemRefRequest = priceLevelRequest.ORPriceLevel.PriceLevelPerItemCurrency.PriceLevelPerItemList.Append();
+            itemRefRequest.ItemRef.ListID.SetValue(itemId);
+            itemRefRequest.ORPriceLevelPrice.ORCustomPrice.ORORCustomPrice.CustomPrice.SetValue(newPrice);
+
+            IMsgSetResponse queryResponse = await MakeRequestAsync(request).ConfigureAwait(false);
+
+            CloseConnection();
+
+            return;
+        }
+
+        /// <inheritdoc/>
         public InventoryItem CreateInventoryItem(InventoryItem itemToAdd)
         {
             // TODO
