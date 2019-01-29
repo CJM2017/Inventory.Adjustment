@@ -5,23 +5,115 @@
             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
             xmlns:local="clr-namespace:Inventory.Adjustment.UI.Controls"
             xmlns:dialogs="clr-namespace:MahApps.Metro.Controls.Dialogs;assembly=MahApps.Metro"
+            xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
             mc:Ignorable="d"
             dialogs:DialogParticipation.Register="{Binding}"
-            Width="500"
+            Width="380"
             Height="600">
-    <Border Margin="-125,-10,-125,0" BorderBrush="{StaticResource AccentNeutralColorBrush}" BorderThickness="1">
+    <Border Margin="-95,-10,-95, 0" BorderBrush="{StaticResource AccentNeutralColorBrush}" BorderThickness="1">
         <Grid>
             <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
                 <RowDefinition Height="*"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
 
-            <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Bottom">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="2*"/>
+            </Grid.ColumnDefinitions>
+
+            <StackPanel Grid.Row="0" Grid.ColumnSpan="2" Orientation="Vertical" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="20">
+                <TextBlock Text="Edit Item" FontSize="24" Foreground="Black"/>
+                <Separator BorderBrush="Gray" BorderThickness="5" Width="360"/>
+            </StackPanel>
+
+            <StackPanel Grid.Row="1" Grid.Column="0" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10,0,0,0">
+                <TextBlock Foreground="Gray" FontSize="18"
+                           Margin="10"
+                           VerticalAlignment="Bottom">Item #</TextBlock>
+            </StackPanel>
+            <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right">
+                <TextBox Foreground="Black" FontSize="16"
+                            Width="150" Height="32"
+                            BorderBrush="Black" BorderThickness=".75"
+                            Margin="20"
+                            VerticalAlignment="Bottom"
+                            Text="{Binding ItemNumber}">
+                </TextBox>
+            </StackPanel>
+            
+            <StackPanel Grid.Row="2" Grid.Column="0" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10,0,0,0">
+                <TextBlock Foreground="Gray" FontSize="18"
+                           Margin="10"
+                           VerticalAlignment="Bottom">Cost</TextBlock>
+                
+            </StackPanel>
+            <StackPanel Grid.Row="2" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right">
+                <TextBox Foreground="Black" FontSize="16"
+                         Width="150" Height="32"
+                         BorderBrush="Black" BorderThickness=".75"
+                         Margin="20"
+                         VerticalAlignment="Bottom"
+                         Text="{Binding ItemCost}"></TextBox>
+            </StackPanel>
+            
+            <StackPanel Grid.Row="3" Grid.Column="0" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10,0,0,0">
+                <TextBlock Foreground="Gray" FontSize="18"
+                           Margin="10"
+                           VerticalAlignment="Bottom">Price</TextBlock>
+            </StackPanel>
+            <StackPanel Grid.Row="3" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right">
+                <TextBox Foreground="Black" FontSize="16"
+                         Width="150" Height="32"
+                         BorderBrush="Black" BorderThickness=".75"
+                         Margin="20"
+                         VerticalAlignment="Bottom"
+                         Text="{Binding ItemSalesPrice}"></TextBox>
+            </StackPanel>
+
+            <StackPanel Grid.Row="4" Grid.Column="0" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10,0,0,0">
+                <TextBlock Foreground="Gray" FontSize="18"
+                           Margin="10"
+                           VerticalAlignment="Bottom">Price Levels</TextBlock>
+            </StackPanel>
+            
+            <mah:ToggleSwitch x:Name="autoCalc" Header="Auto Calc Levels" Grid.Row="4" Grid.Column="1" Width="120" Margin="30,10,0,10" OnSwitchBrush="RoyalBlue" HorizontalAlignment="Center"/>
+
+            <StackPanel Grid.Row="5" Grid.Column="0" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10,0,0,0">
+                <TextBlock Foreground="Gray" FontSize="18"
+                           Margin="10"
+                           VerticalAlignment="Bottom">Contractor</TextBlock>
+            </StackPanel>
+            <StackPanel Grid.Row="5" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right">
+                <TextBox Foreground="Black" FontSize="16"
+                         Width="150" Height="32"
+                         BorderBrush="Black" BorderThickness=".75"
+                         Margin="0,20,20,20"
+                         VerticalAlignment="Bottom"
+                         Text="{Binding ItemSalesPrice}"></TextBox>
+            </StackPanel>
+
+            <StackPanel Grid.Row="6" Grid.Column="0" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10,0,0,0">
+                <TextBlock Foreground="Gray" FontSize="18"
+                           Margin="10"
+                           VerticalAlignment="Bottom">Electrician</TextBlock>
+            </StackPanel>
+            <StackPanel Grid.Row="6" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right">
+                <TextBox Foreground="Black" FontSize="16"
+                         Width="150" Height="32"
+                         BorderBrush="Black" BorderThickness=".75"
+                         Margin="20"
+                         VerticalAlignment="Bottom"
+                         Text="{Binding ItemSalesPrice}"></TextBox>
+            </StackPanel>
+
+            <StackPanel Grid.Row="7" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Bottom">
                 <Button x:Name="SaveButton"
                     Height="32"
                     Width="90"
@@ -35,7 +127,7 @@
                             <Setter Property="Opacity" Value="1.0"/>
                         </Style>
                     </Button.Style>
-                    <TextBlock Foreground="White">Search</TextBlock>
+                    <TextBlock Foreground="White">Save</TextBlock>
                 </Button>
 
                 <Button x:Name="CancelButton"
