@@ -44,18 +44,18 @@ namespace Inventory.Adjustment.Client.QuickBooksClient
         Task SetPriceLevelWithXML(string itemId, string priceLevelId, string editSequence, double newPrice);
 
         /// <summary>
+        /// Update an existing item in quickbooks.
+        /// </summary>
+        /// <param name="itemToUpdate">Item in the service to be updated</param>
+        /// <returns>The returned item</returns>
+        Task UpdateInventoryItem(string itemId, double cost, double basePrice);
+
+        /// <summary>
         /// Create a new inventory item in quickbooks.
         /// </summary>
         /// <param name="itemToAdd">Item to be sent to the service</param>
         /// <returns>The returned item</returns>
         InventoryItem CreateInventoryItem(InventoryItem itemToAdd);
-
-        /// <summary>
-        /// Update an existing item in quickbooks.
-        /// </summary>
-        /// <param name="itemToUpdate">Item in the service to be updated</param>
-        /// <returns>The returned item</returns>
-        InventoryItem UpdateInventoryItem(InventoryItem itemToUpdate);
 
         /// <summary>
         /// Deletes an existing item from quickbooks.

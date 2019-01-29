@@ -99,6 +99,30 @@ namespace Inventory.Adjustment.Client.QuickBooksClient
             itemRefRequest.ItemRef.ListID.SetValue(itemId);
             itemRefRequest.ORPriceLevelPrice.ORCustomPrice.ORORCustomPrice.CustomPrice.SetValue(newPrice);
 
+            // TODO - parse this to make sure out updates was execute successfully and
+            // if so then we want to merge this with our local instance of the item
+            IMsgSetResponse queryResponse = await MakeRequestAsync(request).ConfigureAwait(false);
+
+            CloseConnection();
+
+            return;
+        }
+
+        /// <inheritdoc/>
+        public async Task UpdateInventoryItem(string itemId, double cost, double basePrice)
+        {
+            await OpenConnection();
+
+            IMsgSetRequest request = CreateRequest();
+            IItemInventoryMod itemModRequest = request.AppendItemInventoryModRq();
+
+            itemModRequest.ListID.SetValue(itemId);
+            // TODO - Edit sequence 
+            itemModRequest.PurchaseCost.SetValue(cost);
+            itemModRequest.SalesPrice.SetValue(basePrice);
+
+            // TODO - parse this to make sure out updates was execute successfully and
+            // if so then we want to merge this with our local instance of the item
             IMsgSetResponse queryResponse = await MakeRequestAsync(request).ConfigureAwait(false);
 
             CloseConnection();
@@ -108,13 +132,6 @@ namespace Inventory.Adjustment.Client.QuickBooksClient
 
         /// <inheritdoc/>
         public InventoryItem CreateInventoryItem(InventoryItem itemToAdd)
-        {
-            // TODO
-            return null;
-        }
-
-        /// <inheritdoc/>
-        public InventoryItem UpdateInventoryItem(InventoryItem itemToUpdate)
         {
             // TODO
             return null;

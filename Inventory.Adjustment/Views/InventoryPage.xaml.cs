@@ -21,8 +21,8 @@ namespace Inventory.Adjustment.UI.Views
         /// </summary>
         public InventoryPage()
         {
-            _viewModel = new InventoryViewModel();
             InitializeComponent();
+            _viewModel = new InventoryViewModel();
         }
 
         /// <inheritdoc />

@@ -109,7 +109,6 @@ namespace Inventory.Adjustment.UI.Infrastructure
             {
                 throw new QuickBooksClientException(ex.ToString());
             }
-            
         }
 
         public void Dispose()

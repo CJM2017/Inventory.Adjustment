@@ -29,8 +29,8 @@ namespace Inventory.Adjustment.UI.Controls
         /// </summary>
         public WorkflowToolbar()
         {
-            this.DataContext = this;
             InitializeComponent();
+            this.DataContext = this;
         }
 
         /// <summary>

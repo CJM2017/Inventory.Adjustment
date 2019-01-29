@@ -16,6 +16,8 @@ namespace Inventory.Adjustment.UI.ViewModels
     using System.Collections;
     using System;
     using System.Reflection;
+    using Inventory.Adjustment.UI.Controls;
+    using MahApps.Metro.Controls.Dialogs;
 
     /// <summary>
     /// View model class for the inventory item list.
@@ -23,6 +25,7 @@ namespace Inventory.Adjustment.UI.ViewModels
     public class InventoryItemListViewModel : BindableBase
     {
         private readonly ISessionManager _sessionManager;
+        private readonly IDialogCoordinator _dialogCoordinator;
 
         private ObservableCollection<InventoryItem> _items;
         private List<InventoryItem> _selectedItems;
@@ -33,9 +36,10 @@ namespace Inventory.Adjustment.UI.ViewModels
         /// <summary>
         /// Initializes a new instance of the <see cref="InventoryItemListViewModel"/> class
         /// </summary>
-        public InventoryItemListViewModel(ISessionManager sessionManager)
+        public InventoryItemListViewModel(ISessionManager sessionManager, IDialogCoordinator coordinator)
         {
-            _sessionManager = sessionManager;
+            this._sessionManager = sessionManager;
+            this._dialogCoordinator = coordinator;
 
             EditItemCommand = new DelegateCommand(ExecuteEdit, () => SelectedItems.Count > 0);
             SearchCommand = new DelegateCommand(ExecuteSearch, () => SearchString != null && SearchString != string.Empty);
@@ -153,6 +157,7 @@ namespace Inventory.Adjustment.UI.ViewModels
 
             var options = itemProperties.Where(prop => prop.PropertyType.Name.Equals("String")).Select(prop => prop.Name).ToList();
             options.Remove("ListId");
+            options.Remove("EditSequence");
             options.Add("Vendor");
 
             return options;
@@ -174,9 +179,10 @@ namespace Inventory.Adjustment.UI.ViewModels
             }
         }
 
-        private void ExecuteEdit()
+        private async void ExecuteEdit()
         {
-            // TODO
+            var editDialog = new EditItem(this);
+            await this._dialogCoordinator.ShowMetroDialogAsync(this, editDialog);
         }
 
         private void ExecuteDelete()

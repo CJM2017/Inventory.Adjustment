@@ -18,6 +18,7 @@ namespace Inventory.Adjustment.Data.Serializable
         private bool _isActive;
 
         private string _listId;
+        private string _editSequence;
         private string _name;
         private string _code;
         private string _description;
@@ -35,6 +36,7 @@ namespace Inventory.Adjustment.Data.Serializable
         public InventoryItem()
         {
             _listId = string.Empty;
+            _editSequence = string.Empty;
             _name = string.Empty;
             _code = string.Empty;
             _description = string.Empty;
@@ -70,6 +72,20 @@ namespace Inventory.Adjustment.Data.Serializable
             set
             {
                 _listId = value;
+                RaisePropertyChanged();
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the list id.
+        /// </summary>
+        [XmlElement("EditSequence")]
+        public string EditSequence
+        {
+            get => _editSequence;
+            set
+            {
+                _editSequence = value;
                 RaisePropertyChanged();
             }
         }
@@ -173,6 +189,20 @@ namespace Inventory.Adjustment.Data.Serializable
         }
 
         /// <summary>
+        /// Gets or sets the item count / inventory.
+        /// </summary>
+        [XmlElement("QuantityOnHand")]
+        public double Quantity
+        {
+            get => _quantity;
+            set
+            {
+                _quantity = value;
+                RaisePropertyChanged();
+            }
+        }
+
+        /// <summary>
         /// Gets or sets the contractor's price for the item;
         /// </summary>
         [XmlIgnore]
@@ -196,20 +226,6 @@ namespace Inventory.Adjustment.Data.Serializable
             set
             {
                 _electricianPrice = value;
-                RaisePropertyChanged();
-            }
-
-        }
-        /// <summary>
-        /// Gets or sets the item count / inventory.
-        /// </summary>
-        [XmlElement("QuantityOnHand")]
-        public double Quantity
-        {
-            get => _quantity;
-            set
-            {
-                _quantity = value;
                 RaisePropertyChanged();
             }
         }

@@ -12,6 +12,7 @@ namespace Inventory.Adjustment.UI.Controls
     using System.Windows.Input;
     using Inventory.Adjustment.UI.Infrastructure;
     using Inventory.Adjustment.UI.ViewModels;
+    using MahApps.Metro.Controls.Dialogs;
 
     /// <summary>
     /// Interaction logic for InventoryItemList.xaml
@@ -25,10 +26,10 @@ namespace Inventory.Adjustment.UI.Controls
         /// </summary>
         public InventoryItemList()
         {
-            _viewModel = new InventoryItemListViewModel(SessionManager.Instance);
-            this.DataContext = _viewModel;
-
             InitializeComponent();
+
+            _viewModel = new InventoryItemListViewModel(SessionManager.Instance, DialogCoordinator.Instance);
+            this.DataContext = _viewModel;
         }
 
         private void Handle_Selection(object sender, SelectionChangedEventArgs args)
