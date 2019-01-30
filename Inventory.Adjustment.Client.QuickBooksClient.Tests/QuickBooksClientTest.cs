@@ -43,15 +43,29 @@ namespace Inventory.Adjustment.Client.QuickBooksClient.Tests
         }
 
         [TestMethod]
+        public async Task TestUpdateInventoryItem()
+        {
+            var inventory = await _client.GetInventoryFromXML<InventoryItem>();
+            var itemToMod = inventory.Items.First(item => item.Code == "71564a");
+            await _client.UpdateInventoryItem(itemToMod.ListId, itemToMod.EditSequence, 1.00, 10.00);
+
+            // use get on single item
+            Assert.IsTrue(true);
+        }
+
+        [TestMethod]
         public async Task TestSetPriceLevel()
         {
             var inventory = await _client.GetInventoryFromXML<InventoryItem>();
             var priceLevels = await _client.GetPriceLevelsFromXML<PriceLevel>();
 
             var itemToMod = inventory.Items.First(item => item.Code == "71564a");
-            var priceLevel = priceLevels.Items.First(item => item.Name.ToLower().Equals("contractor"));
+            var contractorLevel = priceLevels.Items.First(item => item.Name.ToLower().Equals("contractor"));
+            var electricianevel = priceLevels.Items.First(item => item.Name.ToLower().Equals("electrician"));
 
-            await _client.SetPriceLevelWithXML(itemToMod.ListId, priceLevel.ListId, priceLevel.EditSequence, 12345);
+            await _client.SetPriceLevelWithXML(itemToMod.ListId, contractorLevel.ListId, contractorLevel.EditSequence, 100.00);
+            await _client.SetPriceLevelWithXML(itemToMod.ListId, electricianevel.ListId, electricianevel.EditSequence, 200.00);
+
             // use get on single item
             Assert.IsTrue(true);
         }

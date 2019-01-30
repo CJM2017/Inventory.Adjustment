@@ -181,7 +181,7 @@ namespace Inventory.Adjustment.UI.ViewModels
 
         private async void ExecuteEdit()
         {
-            var editDialog = new EditItem(this);
+            var editDialog = new EditItem(this, this._sessionManager, SelectedItems.First());
             await this._dialogCoordinator.ShowMetroDialogAsync(this, editDialog);
         }
 

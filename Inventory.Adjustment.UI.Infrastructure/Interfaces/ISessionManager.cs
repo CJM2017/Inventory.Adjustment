@@ -53,5 +53,12 @@ namespace Inventory.Adjustment.UI.Infrastructure.Interfaces
         /// </summary>
         /// <returns>Task</returns>
         Task LoadSessionData();
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="inventoryItem"></param>
+        /// <param name="priceLevelItem"></param>
+        bool MergeUpdates(InventoryItem inventoryItem, PriceLevelItem priceLevelItem);
     }
 }

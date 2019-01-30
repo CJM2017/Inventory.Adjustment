@@ -109,7 +109,7 @@ namespace Inventory.Adjustment.Client.QuickBooksClient
         }
 
         /// <inheritdoc/>
-        public async Task UpdateInventoryItem(string itemId, double cost, double basePrice)
+        public async Task UpdateInventoryItem(string itemId, string editSequence, double cost, double basePrice)
         {
             await OpenConnection();
 
@@ -117,7 +117,7 @@ namespace Inventory.Adjustment.Client.QuickBooksClient
             IItemInventoryMod itemModRequest = request.AppendItemInventoryModRq();
 
             itemModRequest.ListID.SetValue(itemId);
-            // TODO - Edit sequence 
+            itemModRequest.EditSequence.SetValue(editSequence);
             itemModRequest.PurchaseCost.SetValue(cost);
             itemModRequest.SalesPrice.SetValue(basePrice);
 
@@ -272,7 +272,7 @@ namespace Inventory.Adjustment.Client.QuickBooksClient
                 }
                 catch (Exception ex)
                 {
-                    //throw new QuickBooksClientException(ex.ToString());
+                    throw new QuickBooksClientException(ex.ToString());
                 }
                 finally
                 {

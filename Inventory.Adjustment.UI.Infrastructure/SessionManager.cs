@@ -76,6 +76,12 @@ namespace Inventory.Adjustment.UI.Infrastructure
         public QBPriceLevelCollection<PriceLevel> PriceLevels { get; set; }
 
         /// <inheritdoc/>
+        public bool MergeUpdates(InventoryItem inventoryItem, PriceLevelItem priceLevelItem)
+        {
+            return false;
+        }
+
+        /// <inheritdoc/>
         public async Task LoadSessionData()
         {
             try

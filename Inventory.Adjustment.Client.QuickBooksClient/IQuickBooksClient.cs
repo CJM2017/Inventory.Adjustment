@@ -48,7 +48,7 @@ namespace Inventory.Adjustment.Client.QuickBooksClient
         /// </summary>
         /// <param name="itemToUpdate">Item in the service to be updated</param>
         /// <returns>The returned item</returns>
-        Task UpdateInventoryItem(string itemId, double cost, double basePrice);
+        Task UpdateInventoryItem(string itemId, string editSequence, double cost, double basePrice);
 
         /// <summary>
         /// Create a new inventory item in quickbooks.
