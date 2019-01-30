@@ -8,7 +8,9 @@ namespace Inventory.Adjustment.UI.ViewModels
 {
     using System;
     using System.Linq;
+    using System.Windows;
     using System.Windows.Threading;
+    using Inventory.Adjustment.Client.QuickBooksClient;
     using Inventory.Adjustment.Data.Serializable;
     using Inventory.Adjustment.UI.Infrastructure.Interfaces;
     using MahApps.Metro.Controls.Dialogs;
@@ -174,22 +176,32 @@ namespace Inventory.Adjustment.UI.ViewModels
             // Prevent the user from clicking again
             DisableButtons();
 
-            // Update the item in inventory
-            await this._sessionManger.QBClient.UpdateInventoryItem(this._itemToEdit.ListId, this._itemToEdit.EditSequence, ItemCost, ItemSalesPrice);
+            try
+            {
+                // Update the item in inventory
+                await this._sessionManger.QBClient.UpdateInventoryItem(this._itemToEdit.ListId, this._itemToEdit.EditSequence, ItemCost, ItemSalesPrice);
 
-            // Update the contactor price level for the item
-            var contractorLevel = this._sessionManger.PriceLevels.Items.First(item => item.Name.ToLower().Equals("contractor"));
-            await this._sessionManger.QBClient.SetPriceLevelWithXML(this._itemToEdit.ListId, contractorLevel.ListId, contractorLevel.EditSequence, ContractorPrice);
+                // Update the contactor price level for the item
+                var contractorLevel = this._sessionManger.PriceLevels.Items.First(item => item.Name.ToLower().Equals("contractor"));
+                await this._sessionManger.QBClient.SetPriceLevelWithXML(this._itemToEdit.ListId, contractorLevel.ListId, contractorLevel.EditSequence, ContractorPrice);
 
-            // Update the electrician price level for the item
-            var electricianLevel = this._sessionManger.PriceLevels.Items.First(item => item.Name.ToLower().Equals("electrician"));
-            await this._sessionManger.QBClient.SetPriceLevelWithXML(this._itemToEdit.ListId, electricianLevel.ListId, electricianLevel.EditSequence, ElectricianPrice);
+                // Update the electrician price level for the item
+                var electricianLevel = this._sessionManger.PriceLevels.Items.First(item => item.Name.ToLower().Equals("electrician"));
+                await this._sessionManger.QBClient.SetPriceLevelWithXML(this._itemToEdit.ListId, electricianLevel.ListId, electricianLevel.EditSequence, ElectricianPrice);
 
-            // Merge the returned changes into the session manager
-            this._sessionManger.MergeUpdates(returnedItem, priceLevelItem);
+                // Merge the returned changes into the session manager
+                this._sessionManger.MergeUpdates(returnedItem, priceLevelItem);
+            }
+            catch (QuickBooksClientException ex)
+            {
+                CloseDialog();
 
-            // Close the dialog
-            CloseDialog();
+                this._dispatcher.Invoke(() => ShowErrorMessage());
+            }
+            finally
+            {
+                CloseDialog();
+            }
         }
 
         private void Cancel()
@@ -200,6 +212,15 @@ namespace Inventory.Adjustment.UI.ViewModels
         private void DisableButtons()
         {
             ButtonsEnabled = false;
+        }
+
+        private void ShowErrorMessage()
+        {
+            string errorLabel = "QuickBooks Client Error";
+            string errorMessage = $"Report: Something went wrong while updating Item # {this._itemToEdit.Code}. " +
+                                   "Please check your connection to QuickBooks and try again";
+
+            MessageBox.Show(errorMessage, errorLabel, MessageBoxButton.OK, MessageBoxImage.Error);
         }
 
         private void CloseDialog()

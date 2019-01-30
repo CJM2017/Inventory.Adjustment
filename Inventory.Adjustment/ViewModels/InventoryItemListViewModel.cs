@@ -62,6 +62,11 @@ namespace Inventory.Adjustment.UI.ViewModels
         public DelegateCommand DeleteItemCommand { get; private set; }
 
         /// <summary>
+        /// Gets or sets whether the inventory item modification was made successfully.
+        /// </summary>
+        public bool EditsSuccessful { get; set; }
+
+        /// <summary>
         /// Gets the list of gird headers.
         /// </summary>
         public List<string> GridHeaders { get; private set; }
