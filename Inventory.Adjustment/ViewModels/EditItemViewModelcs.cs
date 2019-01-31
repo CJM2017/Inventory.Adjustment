@@ -185,10 +185,12 @@ namespace Inventory.Adjustment.UI.ViewModels
                     ListId = this._itemToEdit.ListId,
                     EditSequence = this._itemToEdit.EditSequence,
                     Cost = ItemCost,
-                    BasePrice = ItemSalesPrice
+                    BasePrice = ItemSalesPrice,
                 };
 
                 var returnedItem = await this._sessionManger.QBClient.UpdateInventoryItem<InventoryItem>(requestItem);
+                returnedItem.Item.ContractorPrice = this.ContractorPrice;
+                returnedItem.Item.ElectricianPrice = this.ElectricianPrice;
 
                 // Update the contactor price level for the item
                 var contractorLevel = this._sessionManger.PriceLevels.Items.First(item => item.Name.ToLower().Equals("contractor"));

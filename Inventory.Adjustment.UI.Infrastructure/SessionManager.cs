@@ -76,9 +76,24 @@ namespace Inventory.Adjustment.UI.Infrastructure
         public QBPriceLevelCollection<PriceLevel> PriceLevels { get; set; }
 
         /// <inheritdoc/>
-        public bool MergeUpdates(InventoryItem inventoryItem, PriceLevel contractorLevel, PriceLevel electricianLevel)
+        public void MergeUpdates(InventoryItem sourceItem, PriceLevel sourceContractor, PriceLevel sourceElectrician)
         {
-            return false;
+            // Merge the inventory item
+            var target = Inventory.Items.First(item => item.ListId.Equals(sourceItem.ListId));
+
+            target.EditSequence = sourceItem.EditSequence;
+            target.Cost = sourceItem.Cost;
+            target.BasePrice = sourceItem.BasePrice;
+            target.ContractorPrice = sourceItem.ContractorPrice;
+            target.ElectricianPrice = sourceItem.ElectricianPrice;
+
+            // Merge contractor price level
+            var targetContractor = PriceLevels.Items.First(level => level.ListId.Equals(sourceContractor.ListId));
+            targetContractor.EditSequence = sourceContractor.EditSequence;
+
+            // Merge electrician price level
+            var targetElectrician = PriceLevels.Items.First(level => level.ListId.Equals(sourceElectrician.ListId));
+            targetElectrician.EditSequence = sourceElectrician.EditSequence;
         }
 
         /// <inheritdoc/>
