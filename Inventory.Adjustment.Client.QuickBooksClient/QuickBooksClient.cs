@@ -57,7 +57,7 @@ namespace Inventory.Adjustment.Client.QuickBooksClient
         }
 
         /// <inheritdoc/>
-        public async Task<QBItemCollection<T>> GetInventoryFromXML<T>()
+        public async Task<QBItemCollection<T>> GetInventory<T>()
         {
             await OpenConnection();
 
@@ -71,7 +71,7 @@ namespace Inventory.Adjustment.Client.QuickBooksClient
         }
 
         /// <inheritdoc/>
-        public async Task<QBPriceLevelCollection<T>> GetPriceLevelsFromXML<T>()
+        public async Task<QBPriceLevelCollection<T>> GetPriceLevels<T>()
         {
             await OpenConnection();
 
@@ -85,7 +85,7 @@ namespace Inventory.Adjustment.Client.QuickBooksClient
         }
 
         /// <inheritdoc/>
-        public async Task SetPriceLevelWithXML(string itemId, string priceLevelId, string editSequence, double newPrice)
+        public async Task<QBPriceLevelResponse<T>> SetPriceLevel<T>(string itemId, string priceLevelId, string editSequence, double newPrice)
         {
             await OpenConnection();
 
@@ -102,32 +102,30 @@ namespace Inventory.Adjustment.Client.QuickBooksClient
             // TODO - parse this to make sure out updates was execute successfully and
             // if so then we want to merge this with our local instance of the item
             IMsgSetResponse queryResponse = await MakeRequestAsync(request).ConfigureAwait(false);
-
             CloseConnection();
-
-            return;
+            
+            return ProcessQueryAsXML<QBPriceLevelResponse<T>>(queryResponse, "PriceLevelModRs");
         }
 
         /// <inheritdoc/>
-        public async Task UpdateInventoryItem(string itemId, string editSequence, double cost, double basePrice)
+        public async Task<QBItemResponse<T>> UpdateInventoryItem<T>(InventoryItem item)
         {
             await OpenConnection();
 
             IMsgSetRequest request = CreateRequest();
             IItemInventoryMod itemModRequest = request.AppendItemInventoryModRq();
 
-            itemModRequest.ListID.SetValue(itemId);
-            itemModRequest.EditSequence.SetValue(editSequence);
-            itemModRequest.PurchaseCost.SetValue(cost);
-            itemModRequest.SalesPrice.SetValue(basePrice);
+            itemModRequest.ListID.SetValue(item.ListId);
+            itemModRequest.EditSequence.SetValue(item.EditSequence);
+            itemModRequest.PurchaseCost.SetValue(item.Cost);
+            itemModRequest.SalesPrice.SetValue(item.BasePrice);
 
             // TODO - parse this to make sure out updates was execute successfully and
             // if so then we want to merge this with our local instance of the item
             IMsgSetResponse queryResponse = await MakeRequestAsync(request).ConfigureAwait(false);
-
             CloseConnection();
 
-            return;
+            return ProcessQueryAsXML<QBItemResponse<T>>(queryResponse, "ItemInventoryModRs"); ;
         }
 
         /// <inheritdoc/>

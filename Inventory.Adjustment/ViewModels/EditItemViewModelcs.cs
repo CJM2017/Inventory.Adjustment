@@ -170,27 +170,40 @@ namespace Inventory.Adjustment.UI.ViewModels
 
         private async void Save()
         {
-            var returnedItem = default(InventoryItem);
-            var priceLevelItem = default(PriceLevelItem);
-
             // Prevent the user from clicking again
             DisableButtons();
 
             try
             {
                 // Update the item in inventory
-                await this._sessionManger.QBClient.UpdateInventoryItem(this._itemToEdit.ListId, this._itemToEdit.EditSequence, ItemCost, ItemSalesPrice);
+                InventoryItem requestItem = new InventoryItem()
+                {
+                    ListId = this._itemToEdit.ListId,
+                    EditSequence = this._itemToEdit.EditSequence,
+                    Cost = ItemCost,
+                    BasePrice = ItemSalesPrice
+                };
+
+                var returnedItem = await this._sessionManger.QBClient.UpdateInventoryItem<InventoryItem>(requestItem);
 
                 // Update the contactor price level for the item
                 var contractorLevel = this._sessionManger.PriceLevels.Items.First(item => item.Name.ToLower().Equals("contractor"));
-                await this._sessionManger.QBClient.SetPriceLevelWithXML(this._itemToEdit.ListId, contractorLevel.ListId, contractorLevel.EditSequence, ContractorPrice);
+                var responseContractorLevel = await this._sessionManger.QBClient.SetPriceLevel<PriceLevel>(
+                                                                                                           this._itemToEdit.ListId, 
+                                                                                                           contractorLevel.ListId, 
+                                                                                                           contractorLevel.EditSequence, 
+                                                                                                           ContractorPrice);
 
                 // Update the electrician price level for the item
                 var electricianLevel = this._sessionManger.PriceLevels.Items.First(item => item.Name.ToLower().Equals("electrician"));
-                await this._sessionManger.QBClient.SetPriceLevelWithXML(this._itemToEdit.ListId, electricianLevel.ListId, electricianLevel.EditSequence, ElectricianPrice);
+                var responseElectricianLevel = await this._sessionManger.QBClient.SetPriceLevel<PriceLevel>(
+                                                                                                            this._itemToEdit.ListId, 
+                                                                                                            electricianLevel.ListId, 
+                                                                                                            electricianLevel.EditSequence, 
+                                                                                                            ElectricianPrice);
 
-                // Merge the returned changes into the session manager
-                this._sessionManger.MergeUpdates(returnedItem, priceLevelItem);
+                // Merge the returned source changes into the target session manager
+                this._sessionManger.MergeUpdates(returnedItem.Item, responseContractorLevel.Item, responseElectricianLevel.Item);
             }
             catch (QuickBooksClientException ex)
             {

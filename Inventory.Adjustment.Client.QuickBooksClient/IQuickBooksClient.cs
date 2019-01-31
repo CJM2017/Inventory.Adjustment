@@ -26,13 +26,13 @@ namespace Inventory.Adjustment.Client.QuickBooksClient
         /// instance using XML deserialization.
         /// </summary>
         /// <returns>Inventory item list</returns>
-        Task<QBItemCollection<T>> GetInventoryFromXML<T>();
+        Task<QBItemCollection<T>> GetInventory<T>();
 
         /// <summary>
         /// Gets the price level associated with an inventory item.
         /// </summary>
         /// <returns>Price level list</returns>
-        Task<QBPriceLevelCollection<T>> GetPriceLevelsFromXML<T>();
+        Task<QBPriceLevelCollection<T>> GetPriceLevels<T>();
 
         /// <summary>
         /// Sets the price level associated with an inventory item.
@@ -41,15 +41,14 @@ namespace Inventory.Adjustment.Client.QuickBooksClient
         /// /// <param name="priceLevel">Price levvel to modifyparam>
         /// /// <param name="newPrice">New price to set</param>
         /// <returns></returns>
-        Task SetPriceLevelWithXML(string itemId, string priceLevelId, string editSequence, double newPrice);
+        Task<QBPriceLevelResponse<T>> SetPriceLevel<T>(string itemId, string priceLevelId, string editSequence, double newPrice);
 
         /// <summary>
         /// Update an existing item in quickbooks.
         /// </summary>
         /// <param name="itemToUpdate">Item in the service to be updated</param>
         /// <returns>The returned item</returns>
-        Task UpdateInventoryItem(string itemId, string editSequence, double cost, double basePrice);
-
+        Task<QBItemResponse<T>> UpdateInventoryItem<T>(InventoryItem itemToMod);
         /// <summary>
         /// Create a new inventory item in quickbooks.
         /// </summary>

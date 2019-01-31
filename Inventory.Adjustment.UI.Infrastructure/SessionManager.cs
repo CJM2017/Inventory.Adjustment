@@ -76,7 +76,7 @@ namespace Inventory.Adjustment.UI.Infrastructure
         public QBPriceLevelCollection<PriceLevel> PriceLevels { get; set; }
 
         /// <inheritdoc/>
-        public bool MergeUpdates(InventoryItem inventoryItem, PriceLevelItem priceLevelItem)
+        public bool MergeUpdates(InventoryItem inventoryItem, PriceLevel contractorLevel, PriceLevel electricianLevel)
         {
             return false;
         }
@@ -86,8 +86,8 @@ namespace Inventory.Adjustment.UI.Infrastructure
         {
             try
             {
-                Inventory = await QBClient.GetInventoryFromXML<InventoryItem>();
-                PriceLevels = await QBClient.GetPriceLevelsFromXML<PriceLevel>();
+                Inventory = await QBClient.GetInventory<InventoryItem>();
+                PriceLevels = await QBClient.GetPriceLevels<PriceLevel>();
                 CleanItems();
 
                 var electricianMap = PriceLevels.Items.First(item => item.Name.ToLower().Equals("electrician")).PriceLevelItems.Select(

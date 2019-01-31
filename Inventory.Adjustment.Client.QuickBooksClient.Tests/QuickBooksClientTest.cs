@@ -27,7 +27,7 @@ namespace Inventory.Adjustment.Client.QuickBooksClient.Tests
         [TestMethod]
         public async Task TestGetInventory()
         {
-            var inventory = await _client.GetInventoryFromXML<InventoryItem>();
+            var inventory = await _client.GetInventory<InventoryItem>();
 
             Assert.IsNotNull(inventory);
             Assert.IsTrue(inventory.Items.ToList().Count > 0);
@@ -36,7 +36,7 @@ namespace Inventory.Adjustment.Client.QuickBooksClient.Tests
         [TestMethod]
         public async Task TestGetPriceLevel()
         {
-            var priceLevels = await _client.GetPriceLevelsFromXML<PriceLevel>();
+            var priceLevels = await _client.GetPriceLevels<PriceLevel>();
 
             Assert.IsNotNull(priceLevels);
             Assert.IsTrue(priceLevels.Items.Count > 0);
@@ -45,29 +45,28 @@ namespace Inventory.Adjustment.Client.QuickBooksClient.Tests
         [TestMethod]
         public async Task TestUpdateInventoryItem()
         {
-            var inventory = await _client.GetInventoryFromXML<InventoryItem>();
+            var inventory = await _client.GetInventory<InventoryItem>();
             var itemToMod = inventory.Items.First(item => item.Code == "71564a");
-            await _client.UpdateInventoryItem(itemToMod.ListId, itemToMod.EditSequence, 1.00, 10.00);
+            var returnedItem = await _client.UpdateInventoryItem<InventoryItem>(itemToMod);
 
-            // use get on single item
-            Assert.IsTrue(true);
+            Assert.IsNotNull(returnedItem);
         }
 
         [TestMethod]
         public async Task TestSetPriceLevel()
         {
-            var inventory = await _client.GetInventoryFromXML<InventoryItem>();
-            var priceLevels = await _client.GetPriceLevelsFromXML<PriceLevel>();
+            var inventory = await _client.GetInventory<InventoryItem>();
+            var priceLevels = await _client.GetPriceLevels<PriceLevel>();
 
             var itemToMod = inventory.Items.First(item => item.Code == "71564a");
             var contractorLevel = priceLevels.Items.First(item => item.Name.ToLower().Equals("contractor"));
             var electricianevel = priceLevels.Items.First(item => item.Name.ToLower().Equals("electrician"));
 
-            await _client.SetPriceLevelWithXML(itemToMod.ListId, contractorLevel.ListId, contractorLevel.EditSequence, 100.00);
-            await _client.SetPriceLevelWithXML(itemToMod.ListId, electricianevel.ListId, electricianevel.EditSequence, 200.00);
+            var response1 = await _client.SetPriceLevel<PriceLevel>(itemToMod.ListId, contractorLevel.ListId, contractorLevel.EditSequence, 100.00);
+            var response2 = await _client.SetPriceLevel<PriceLevel>(itemToMod.ListId, electricianevel.ListId, electricianevel.EditSequence, 200.00);
 
-            // use get on single item
-            Assert.IsTrue(true);
+            Assert.IsNotNull(response1);
+            Assert.IsNotNull(response2);
         }
     }
 }

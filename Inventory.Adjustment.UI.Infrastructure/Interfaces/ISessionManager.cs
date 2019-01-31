@@ -59,6 +59,6 @@ namespace Inventory.Adjustment.UI.Infrastructure.Interfaces
         /// </summary>
         /// <param name="inventoryItem"></param>
         /// <param name="priceLevelItem"></param>
-        bool MergeUpdates(InventoryItem inventoryItem, PriceLevelItem priceLevelItem);
+        bool MergeUpdates(InventoryItem inventoryItem, PriceLevel contractorLevel, PriceLevel electricianLevel);
     }
 }

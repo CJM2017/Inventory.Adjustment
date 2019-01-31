@@ -51,10 +51,12 @@
     <Compile Include="Serializable\PriceLevel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Serializable\PriceLevelItem.cs" />
+    <Compile Include="Serializable\QBItemResponse.cs" />
     <Compile Include="Serializable\QBPriceLevelCollection.cs" />
     <Compile Include="Serializable\DataExtension.cs" />
     <Compile Include="Serializable\InventoryItem.cs" />
     <Compile Include="Serializable\QBItemCollection.cs" />
+    <Compile Include="Serializable\QBPriceLevelResponse.cs" />
     <Compile Include="Serializable\Vendor.cs" />
   </ItemGroup>
   <ItemGroup>
