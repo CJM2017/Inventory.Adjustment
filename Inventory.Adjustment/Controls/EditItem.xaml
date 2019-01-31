@@ -82,10 +82,25 @@
             <StackPanel Grid.Row="4" Grid.Column="0" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10,0,0,0">
                 <TextBlock Foreground="Gray" FontSize="18" Margin="10" VerticalAlignment="Bottom">Price Levels</TextBlock>
             </StackPanel>
-            
-            <mah:ToggleSwitch x:Name="autoCalc" Header="Auto Calc Levels" Grid.Row="4" Grid.Column="1" 
-                              Width="120" Margin="30,10,0,10" OnSwitchBrush="RoyalBlue" HorizontalAlignment="Center"
-                              IsChecked="{Binding AutoCalc}"/>
+
+            <Button x:Name="AutoCalc"
+                        Grid.Row="4"
+                        Grid.Column="1"
+                        Height="32"
+                        Width="150"
+                    HorizontalAlignment="Right"
+                        Margin="0,20,20,20"
+                        Visibility="Visible"
+                        IsEnabled="true"
+                        Command="{Binding AutoCalcCommand}">
+                <Button.Style>
+                    <Style TargetType="{x:Type Button}">
+                        <Setter Property="Background" Value="LightGray"/>
+                        <Setter Property="Opacity" Value="1.0"/>
+                    </Style>
+                </Button.Style>
+                <TextBlock Foreground="Black">Auto Calculate</TextBlock>
+            </Button>
 
             <StackPanel Grid.Row="5" Grid.Column="0" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10,0,0,0">
                 <TextBlock Foreground="Gray" FontSize="18" Margin="10" VerticalAlignment="Bottom">Contractor</TextBlock>

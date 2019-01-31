@@ -26,7 +26,6 @@ namespace Inventory.Adjustment.UI.ViewModels
         private readonly InventoryItem _itemToEdit;
 
         private string _Code;
-        private bool _autoCalc;
         private bool _buttonsEnabled;
 
         private double _cost;
@@ -49,19 +48,6 @@ namespace Inventory.Adjustment.UI.ViewModels
             this._itemToEdit = itemToEdit;
 
             Initialize();
-        }
-
-        /// <summary>
-        /// Gets or sets the item's code.
-        /// </summary>
-        public bool AutoCalc
-        {
-            get => this._autoCalc;
-            set
-            {
-                this._autoCalc = value;
-                RaisePropertyChanged();
-            }
         }
 
         /// <summary>
@@ -142,21 +128,28 @@ namespace Inventory.Adjustment.UI.ViewModels
             }
         }
 
+        public DelegateCommand AutoCalcCommand => new DelegateCommand(this.AutoCalc);
+
         public DelegateCommand SaveCommand => new DelegateCommand(this.Save);
 
         public DelegateCommand CancelCommand => new DelegateCommand(this.Cancel);
 
         private void Initialize()
         {
-            AutoCalc = true;
             ButtonsEnabled = true;
 
             ItemCode = this._itemToEdit.Code;
             ItemCost = this._itemToEdit.Cost;
             ItemSalesPrice = this._itemToEdit.BasePrice;
 
-            ContractorPrice = AutoCalc ? CalculateContractor(ItemCost) : this._itemToEdit.ContractorPrice;
-            ElectricianPrice = AutoCalc ? CalculateElectrician(ItemCost) : this._itemToEdit.ElectricianPrice;
+            ContractorPrice = this._itemToEdit.ContractorPrice;
+            ElectricianPrice = this._itemToEdit.ElectricianPrice;
+        }
+
+        private void AutoCalc()
+        {
+            ContractorPrice = CalculateContractor(ItemCost);
+            ElectricianPrice = CalculateElectrician(ItemCost);
         }
 
         private double CalculateContractor(double cost)
