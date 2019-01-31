@@ -9,6 +9,7 @@ namespace Inventory.Adjustment.UI.ViewModels
     using System;
     using System.Linq;
     using System.Windows;
+    using System.Windows.Input;
     using System.Windows.Threading;
     using Inventory.Adjustment.Client.QuickBooksClient;
     using Inventory.Adjustment.Data.Serializable;
@@ -173,6 +174,9 @@ namespace Inventory.Adjustment.UI.ViewModels
             // Prevent the user from clicking again
             DisableButtons();
 
+            // Set mouse to busy
+            UpdateMouse(true);
+
             try
             {
                 // Update the item in inventory
@@ -208,12 +212,12 @@ namespace Inventory.Adjustment.UI.ViewModels
             catch (QuickBooksClientException ex)
             {
                 CloseDialog();
-
-                this._dispatcher.Invoke(() => ShowErrorMessage());
+                ShowErrorMessage();
             }
             finally
             {
                 CloseDialog();
+                UpdateMouse(false);
             }
         }
 
@@ -229,11 +233,29 @@ namespace Inventory.Adjustment.UI.ViewModels
 
         private void ShowErrorMessage()
         {
-            string errorLabel = "QuickBooks Client Error";
-            string errorMessage = $"Report: Something went wrong while updating Item # {this._itemToEdit.Code}. " +
-                                   "Please check your connection to QuickBooks and try again";
+            this._dispatcher.Invoke(() =>
+            {
+                string errorLabel = "QuickBooks Client Error";
+                string errorMessage = $"Report: Something went wrong while updating Item # {this._itemToEdit.Code}. " +
+                                       "Please check your connection to QuickBooks and try again";
 
-            MessageBox.Show(errorMessage, errorLabel, MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show(errorMessage, errorLabel, MessageBoxButton.OK, MessageBoxImage.Error);
+            });
+        }
+
+        private void UpdateMouse(bool busy)
+        {
+            this._dispatcher.Invoke(() =>
+            {
+                if (busy)
+                {
+                    Mouse.OverrideCursor = System.Windows.Input.Cursors.AppStarting;
+                }
+                else
+                {
+                    Mouse.OverrideCursor = null;
+                }
+            });
         }
 
         private void CloseDialog()
