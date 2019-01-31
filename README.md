@@ -1,3 +1,3 @@
 # Inventory.Adjustment
 ----------------------
-![](Inventory_Adjustment_Edit_Mode.png)
+![](Inventory_Adjustment_Edit_Mode.PNG)
