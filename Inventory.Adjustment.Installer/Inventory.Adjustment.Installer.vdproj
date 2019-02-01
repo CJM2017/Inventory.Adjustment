@@ -15,7 +15,13 @@
     {
         "Entry"
         {
-        "MsmKey" = "8:_0234C8493AC7496D85EC93CD57523A99"
+        "MsmKey" = "8:_045072C95A7C4C509E25473CB20C0F84"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_04F6AB3466934FA5AB100221C5C51C48"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -28,13 +34,43 @@
         "Entry"
         {
         "MsmKey" = "8:_0FC56114D9F3F6254A7364538E7D066F"
+        "OwnerKey" = "8:_A0B3C60598684F57A2E28D38A9A871D4"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_0FC56114D9F3F6254A7364538E7D066F"
+        "OwnerKey" = "8:_8F45D201D3624C31B5B8CA78C8058C79"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_0FC56114D9F3F6254A7364538E7D066F"
         "OwnerKey" = "8:_7C33DBF67CF822E017735E074B92D431"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_0FC56114D9F3F6254A7364538E7D066F"
-        "OwnerKey" = "8:_DE784395A5F44AAE85FB9DDA693A3CED"
+        "OwnerKey" = "8:_E595072E67E646039A685C0F60A1599B"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_14E3BE11C5D44B98AA6043599D85BD00"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_36F5673BBA9F41C3936D4F2F500DD825"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_44DC1C762D30406E8F95B3FA31A7A8EB"
+        "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -46,19 +82,37 @@
         "Entry"
         {
         "MsmKey" = "8:_4C086CD3B1598A8E90FE6DC014BE0D24"
-        "OwnerKey" = "8:_DE784395A5F44AAE85FB9DDA693A3CED"
+        "OwnerKey" = "8:_A0B3C60598684F57A2E28D38A9A871D4"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_61C3FA2EF42141468AF8715E4C32970D"
+        "MsmKey" = "8:_4C086CD3B1598A8E90FE6DC014BE0D24"
+        "OwnerKey" = "8:_E595072E67E646039A685C0F60A1599B"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_4FCD4056CB37434E97D0A5370A9B4AFE"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_74F5254408524301AF310A2AA35FE346"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_7B0D68A53F453294D60E692A19F58B5D"
-        "OwnerKey" = "8:_DE784395A5F44AAE85FB9DDA693A3CED"
+        "OwnerKey" = "8:_E595072E67E646039A685C0F60A1599B"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_7B0D68A53F453294D60E692A19F58B5D"
+        "OwnerKey" = "8:_A0B3C60598684F57A2E28D38A9A871D4"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -70,7 +124,25 @@
         "Entry"
         {
         "MsmKey" = "8:_7C33DBF67CF822E017735E074B92D431"
-        "OwnerKey" = "8:_DE784395A5F44AAE85FB9DDA693A3CED"
+        "OwnerKey" = "8:_E595072E67E646039A685C0F60A1599B"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_8C77580D5A144BAEB4434EB74B92DDA0"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_8ECD49798B8143EA9E38296BFFDEE463"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_8F45D201D3624C31B5B8CA78C8058C79"
+        "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -82,7 +154,19 @@
         "Entry"
         {
         "MsmKey" = "8:_8F65529B271079ED94D6C21A897683BE"
-        "OwnerKey" = "8:_DE784395A5F44AAE85FB9DDA693A3CED"
+        "OwnerKey" = "8:_A0B3C60598684F57A2E28D38A9A871D4"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_8F65529B271079ED94D6C21A897683BE"
+        "OwnerKey" = "8:_9B186F7AB73447DD8F4A0734ADA82649"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_8F65529B271079ED94D6C21A897683BE"
+        "OwnerKey" = "8:_E595072E67E646039A685C0F60A1599B"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -93,8 +177,44 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_9B186F7AB73447DD8F4A0734ADA82649"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_A0B3C60598684F57A2E28D38A9A871D4"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_A7AF1C716061B1D1391FC05432DF9ABB"
         "OwnerKey" = "8:_4C086CD3B1598A8E90FE6DC014BE0D24"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_A7AF1C716061B1D1391FC05432DF9ABB"
+        "OwnerKey" = "8:_74F5254408524301AF310A2AA35FE346"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_AC76DDBAD78048049A1BC75B26710AB6"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_B3FE3573143149E9BE39BC0D80E573AC"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_B5A7465AA92E4FACAB37F81EFC1F2DC1"
+        "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -106,7 +226,19 @@
         "Entry"
         {
         "MsmKey" = "8:_C5DFEF3D8EC4619D5CD2F39D526CA684"
-        "OwnerKey" = "8:_DE784395A5F44AAE85FB9DDA693A3CED"
+        "OwnerKey" = "8:_A0B3C60598684F57A2E28D38A9A871D4"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_C5DFEF3D8EC4619D5CD2F39D526CA684"
+        "OwnerKey" = "8:_E595072E67E646039A685C0F60A1599B"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_C727F093A7F647B4B1CD033D48BAD828"
+        "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -118,25 +250,139 @@
         "Entry"
         {
         "MsmKey" = "8:_CB191DA4F44ADF779F8CC176A6052A98"
+        "OwnerKey" = "8:_74F5254408524301AF310A2AA35FE346"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_CB191DA4F44ADF779F8CC176A6052A98"
+        "OwnerKey" = "8:_C727F093A7F647B4B1CD033D48BAD828"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_CB191DA4F44ADF779F8CC176A6052A98"
         "OwnerKey" = "8:_4C086CD3B1598A8E90FE6DC014BE0D24"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_CEB3A7FF53AC4F5AA0E8A3EE23CFDD99"
+        "MsmKey" = "8:_CB5AE8F433464BD3AAF2ABB5D183AC58"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_DE784395A5F44AAE85FB9DDA693A3CED"
+        "MsmKey" = "8:_CD144867554B4378A543481DCE2A4DA5"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_D45A0DA1024E4F30B50E6A1BBCAB4D82"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_D5D735F1C9764F85BA8C74F369CBFFC6"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_E0581F8AE0A142B2BDF65A9A84244A17"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_E57521F02459472A94DCFCE1D3EA4517"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_E595072E67E646039A685C0F60A1599B"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_ED4645764F5B4D60BDD5B938C83D13CB"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_EFE178AE153847C4B23FC2A1D0EAECD3"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_DE784395A5F44AAE85FB9DDA693A3CED"
+        "OwnerKey" = "8:_8F65529B271079ED94D6C21A897683BE"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_8C77580D5A144BAEB4434EB74B92DDA0"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_E57521F02459472A94DCFCE1D3EA4517"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_EFE178AE153847C4B23FC2A1D0EAECD3"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_74F5254408524301AF310A2AA35FE346"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_E0581F8AE0A142B2BDF65A9A84244A17"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_A0B3C60598684F57A2E28D38A9A871D4"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_9B186F7AB73447DD8F4A0734ADA82649"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_8F45D201D3624C31B5B8CA78C8058C79"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_C727F093A7F647B4B1CD033D48BAD828"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_E595072E67E646039A685C0F60A1599B"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -179,12 +425,6 @@
         {
         "MsmKey" = "8:_UNDEFINED"
         "OwnerKey" = "8:_0FC56114D9F3F6254A7364538E7D066F"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_8F65529B271079ED94D6C21A897683BE"
         "MsmSig" = "8:_UNDEFINED"
         }
     }
@@ -244,6 +484,14 @@
             "PrerequisitesLocation" = "2:1"
             "Url" = "8:"
             "ComponentsUrl" = "8:"
+                "Items"
+                {
+                    "{EDC2488A-8267-493A-A98E-7D9C3B36CDF3}:.NETFramework,Version=v4.6.1"
+                    {
+                    "Name" = "8:Microsoft .NET Framework 4.6.1 (x86 and x64)"
+                    "ProductCode" = "8:.NETFramework,Version=v4.6.1"
+                    }
+                }
             }
         }
     }
@@ -274,10 +522,30 @@
         }
         "File"
         {
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_0234C8493AC7496D85EC93CD57523A99"
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_045072C95A7C4C509E25473CB20C0F84"
             {
-            "SourcePath" = "8:..\\Inventory.Adjustment\\App.config"
-            "TargetName" = "8:App.config"
+            "SourcePath" = "8:..\\Inventory.Adjustment\\bin\\Debug\\MahApps.Metro.IconPacks.xml"
+            "TargetName" = "8:MahApps.Metro.IconPacks.xml"
+            "Tag" = "8:"
+            "Folder" = "8:_8DAD21D3C488450CB0409FD8EAC4F5AA"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_04F6AB3466934FA5AB100221C5C51C48"
+            {
+            "SourcePath" = "8:..\\Inventory.Adjustment\\bin\\Debug\\Inventory.Adjustment.UI.pdb"
+            "TargetName" = "8:Inventory.Adjustment.UI.pdb"
             "Tag" = "8:"
             "Folder" = "8:_8DAD21D3C488450CB0409FD8EAC4F5AA"
             "Condition" = "8:"
@@ -325,6 +593,66 @@
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_14E3BE11C5D44B98AA6043599D85BD00"
+            {
+            "SourcePath" = "8:..\\Inventory.Adjustment\\bin\\Debug\\log4net.xml"
+            "TargetName" = "8:log4net.xml"
+            "Tag" = "8:"
+            "Folder" = "8:_8DAD21D3C488450CB0409FD8EAC4F5AA"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_36F5673BBA9F41C3936D4F2F500DD825"
+            {
+            "SourcePath" = "8:..\\Inventory.Adjustment\\bin\\Debug\\Inventory.Adjustment.UI.exe.config"
+            "TargetName" = "8:Inventory.Adjustment.UI.exe.config"
+            "Tag" = "8:"
+            "Folder" = "8:_8DAD21D3C488450CB0409FD8EAC4F5AA"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_44DC1C762D30406E8F95B3FA31A7A8EB"
+            {
+            "SourcePath" = "8:..\\Inventory.Adjustment\\Resources\\InventoryColor.png"
+            "TargetName" = "8:InventoryColor.png"
+            "Tag" = "8:"
+            "Folder" = "8:_8DAD21D3C488450CB0409FD8EAC4F5AA"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
             "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_4C086CD3B1598A8E90FE6DC014BE0D24"
             {
             "AssemblyRegister" = "3:1"
@@ -356,10 +684,41 @@
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_61C3FA2EF42141468AF8715E4C32970D"
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_4FCD4056CB37434E97D0A5370A9B4AFE"
             {
-            "SourcePath" = "8:..\\Inventory.Adjustment\\log4net.config"
-            "TargetName" = "8:log4net.config"
+            "SourcePath" = "8:..\\Inventory.Adjustment\\bin\\Debug\\ControlzEx.pdb"
+            "TargetName" = "8:ControlzEx.pdb"
+            "Tag" = "8:"
+            "Folder" = "8:_8DAD21D3C488450CB0409FD8EAC4F5AA"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_74F5254408524301AF310A2AA35FE346"
+            {
+            "AssemblyRegister" = "3:1"
+            "AssemblyIsInGAC" = "11:FALSE"
+            "AssemblyAsmDisplayName" = "8:MahApps.Metro, Version=1.6.5.1, Culture=neutral, processorArchitecture=MSIL"
+                "ScatterAssemblies"
+                {
+                    "_74F5254408524301AF310A2AA35FE346"
+                    {
+                    "Name" = "8:MahApps.Metro.dll"
+                    "Attributes" = "3:512"
+                    }
+                }
+            "SourcePath" = "8:..\\Inventory.Adjustment\\bin\\Debug\\MahApps.Metro.dll"
+            "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_8DAD21D3C488450CB0409FD8EAC4F5AA"
             "Condition" = "8:"
@@ -438,6 +797,88 @@
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_8C77580D5A144BAEB4434EB74B92DDA0"
+            {
+            "AssemblyRegister" = "3:1"
+            "AssemblyIsInGAC" = "11:FALSE"
+            "AssemblyAsmDisplayName" = "8:System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL"
+                "ScatterAssemblies"
+                {
+                    "_8C77580D5A144BAEB4434EB74B92DDA0"
+                    {
+                    "Name" = "8:System.Windows.Interactivity.dll"
+                    "Attributes" = "3:512"
+                    }
+                }
+            "SourcePath" = "8:..\\Inventory.Adjustment\\bin\\Debug\\System.Windows.Interactivity.dll"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_8DAD21D3C488450CB0409FD8EAC4F5AA"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_8ECD49798B8143EA9E38296BFFDEE463"
+            {
+            "SourcePath" = "8:..\\Inventory.Adjustment\\bin\\Debug\\Inventory.Adjustment.UI.Infrastructure.pdb"
+            "TargetName" = "8:Inventory.Adjustment.UI.Infrastructure.pdb"
+            "Tag" = "8:"
+            "Folder" = "8:_8DAD21D3C488450CB0409FD8EAC4F5AA"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_8F45D201D3624C31B5B8CA78C8058C79"
+            {
+            "AssemblyRegister" = "3:1"
+            "AssemblyIsInGAC" = "11:FALSE"
+            "AssemblyAsmDisplayName" = "8:Inventory.Adjustment.Client.QuickBooksClient, Version=1.0.0.0, Culture=neutral, processorArchitecture=x86"
+                "ScatterAssemblies"
+                {
+                    "_8F45D201D3624C31B5B8CA78C8058C79"
+                    {
+                    "Name" = "8:Inventory.Adjustment.Client.QuickBooksClient.dll"
+                    "Attributes" = "3:512"
+                    }
+                }
+            "SourcePath" = "8:..\\Inventory.Adjustment\\bin\\Debug\\Inventory.Adjustment.Client.QuickBooksClient.dll"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_8DAD21D3C488450CB0409FD8EAC4F5AA"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
             "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_8F65529B271079ED94D6C21A897683BE"
             {
             "AssemblyRegister" = "3:1"
@@ -467,6 +908,68 @@
             "Register" = "3:1"
             "Exclude" = "11:FALSE"
             "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_9B186F7AB73447DD8F4A0734ADA82649"
+            {
+            "AssemblyRegister" = "3:1"
+            "AssemblyIsInGAC" = "11:FALSE"
+            "AssemblyAsmDisplayName" = "8:Inventory.Adjustment.Data, Version=1.0.0.0, Culture=neutral, processorArchitecture=x86"
+                "ScatterAssemblies"
+                {
+                    "_9B186F7AB73447DD8F4A0734ADA82649"
+                    {
+                    "Name" = "8:Inventory.Adjustment.Data.dll"
+                    "Attributes" = "3:512"
+                    }
+                }
+            "SourcePath" = "8:..\\Inventory.Adjustment\\bin\\Debug\\Inventory.Adjustment.Data.dll"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_8DAD21D3C488450CB0409FD8EAC4F5AA"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_A0B3C60598684F57A2E28D38A9A871D4"
+            {
+            "AssemblyRegister" = "3:1"
+            "AssemblyIsInGAC" = "11:FALSE"
+            "AssemblyAsmDisplayName" = "8:Inventory.Adjustment.UI.Infrastructure, Version=1.0.0.0, Culture=neutral, processorArchitecture=x86"
+                "ScatterAssemblies"
+                {
+                    "_A0B3C60598684F57A2E28D38A9A871D4"
+                    {
+                    "Name" = "8:Inventory.Adjustment.UI.Infrastructure.dll"
+                    "Attributes" = "3:512"
+                    }
+                }
+            "SourcePath" = "8:..\\Inventory.Adjustment\\bin\\Debug\\Inventory.Adjustment.UI.Infrastructure.dll"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_8DAD21D3C488450CB0409FD8EAC4F5AA"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
             "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_A7AF1C716061B1D1391FC05432DF9ABB"
@@ -500,6 +1003,66 @@
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_AC76DDBAD78048049A1BC75B26710AB6"
+            {
+            "SourcePath" = "8:..\\Inventory.Adjustment\\bin\\Debug\\MahApps.Metro.pdb"
+            "TargetName" = "8:MahApps.Metro.pdb"
+            "Tag" = "8:"
+            "Folder" = "8:_8DAD21D3C488450CB0409FD8EAC4F5AA"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_B3FE3573143149E9BE39BC0D80E573AC"
+            {
+            "SourcePath" = "8:..\\Inventory.Adjustment\\bin\\Debug\\Prism.pdb"
+            "TargetName" = "8:Prism.pdb"
+            "Tag" = "8:"
+            "Folder" = "8:_8DAD21D3C488450CB0409FD8EAC4F5AA"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_B5A7465AA92E4FACAB37F81EFC1F2DC1"
+            {
+            "SourcePath" = "8:..\\Inventory.Adjustment\\bin\\Debug\\MahApps.Metro.IconPacks.pdb"
+            "TargetName" = "8:MahApps.Metro.IconPacks.pdb"
+            "Tag" = "8:"
+            "Folder" = "8:_8DAD21D3C488450CB0409FD8EAC4F5AA"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
             "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_C5DFEF3D8EC4619D5CD2F39D526CA684"
             {
             "AssemblyRegister" = "3:1"
@@ -529,6 +1092,37 @@
             "Register" = "3:1"
             "Exclude" = "11:FALSE"
             "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_C727F093A7F647B4B1CD033D48BAD828"
+            {
+            "AssemblyRegister" = "3:1"
+            "AssemblyIsInGAC" = "11:FALSE"
+            "AssemblyAsmDisplayName" = "8:ControlzEx, Version=3.0.2.4, Culture=neutral, processorArchitecture=MSIL"
+                "ScatterAssemblies"
+                {
+                    "_C727F093A7F647B4B1CD033D48BAD828"
+                    {
+                    "Name" = "8:ControlzEx.dll"
+                    "Attributes" = "3:512"
+                    }
+                }
+            "SourcePath" = "8:..\\Inventory.Adjustment\\bin\\Debug\\ControlzEx.dll"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_8DAD21D3C488450CB0409FD8EAC4F5AA"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
             "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_CB191DA4F44ADF779F8CC176A6052A98"
@@ -562,10 +1156,10 @@
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_CEB3A7FF53AC4F5AA0E8A3EE23CFDD99"
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_CB5AE8F433464BD3AAF2ABB5D183AC58"
             {
-            "SourcePath" = "8:..\\Inventory.Adjustment\\packages.config"
-            "TargetName" = "8:packages.config"
+            "SourcePath" = "8:..\\Inventory.Adjustment\\Resources\\inventory.ico"
+            "TargetName" = "8:inventory.ico"
             "Tag" = "8:"
             "Folder" = "8:_8DAD21D3C488450CB0409FD8EAC4F5AA"
             "Condition" = "8:"
@@ -582,20 +1176,193 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_DE784395A5F44AAE85FB9DDA693A3CED"
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_CD144867554B4378A543481DCE2A4DA5"
+            {
+            "SourcePath" = "8:..\\Inventory.Adjustment\\bin\\Debug\\Prism.xml"
+            "TargetName" = "8:Prism.xml"
+            "Tag" = "8:"
+            "Folder" = "8:_8DAD21D3C488450CB0409FD8EAC4F5AA"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_D45A0DA1024E4F30B50E6A1BBCAB4D82"
+            {
+            "SourcePath" = "8:..\\Inventory.Adjustment\\bin\\Debug\\Inventory.Adjustment.Data.pdb"
+            "TargetName" = "8:Inventory.Adjustment.Data.pdb"
+            "Tag" = "8:"
+            "Folder" = "8:_8DAD21D3C488450CB0409FD8EAC4F5AA"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_D5D735F1C9764F85BA8C74F369CBFFC6"
+            {
+            "SourcePath" = "8:..\\Inventory.Adjustment\\bin\\Debug\\Inventory.Adjustment.Client.QuickBooksClient.pdb"
+            "TargetName" = "8:Inventory.Adjustment.Client.QuickBooksClient.pdb"
+            "Tag" = "8:"
+            "Folder" = "8:_8DAD21D3C488450CB0409FD8EAC4F5AA"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_E0581F8AE0A142B2BDF65A9A84244A17"
+            {
+            "AssemblyRegister" = "3:1"
+            "AssemblyIsInGAC" = "11:FALSE"
+            "AssemblyAsmDisplayName" = "8:log4net, Version=2.0.8.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL"
+                "ScatterAssemblies"
+                {
+                    "_E0581F8AE0A142B2BDF65A9A84244A17"
+                    {
+                    "Name" = "8:log4net.dll"
+                    "Attributes" = "3:512"
+                    }
+                }
+            "SourcePath" = "8:..\\Inventory.Adjustment\\bin\\Debug\\log4net.dll"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_8DAD21D3C488450CB0409FD8EAC4F5AA"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_E57521F02459472A94DCFCE1D3EA4517"
+            {
+            "AssemblyRegister" = "3:1"
+            "AssemblyIsInGAC" = "11:FALSE"
+            "AssemblyAsmDisplayName" = "8:Prism, Version=7.1.0.431, Culture=neutral, PublicKeyToken=40ee6c3a2184dc59, processorArchitecture=MSIL"
+                "ScatterAssemblies"
+                {
+                    "_E57521F02459472A94DCFCE1D3EA4517"
+                    {
+                    "Name" = "8:Prism.dll"
+                    "Attributes" = "3:512"
+                    }
+                }
+            "SourcePath" = "8:..\\Inventory.Adjustment\\bin\\Debug\\Prism.dll"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_8DAD21D3C488450CB0409FD8EAC4F5AA"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_E595072E67E646039A685C0F60A1599B"
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
             "AssemblyAsmDisplayName" = "8:Inventory.Adjustment.UI, Version=1.0.0.0, Culture=neutral, processorArchitecture=x86"
                 "ScatterAssemblies"
                 {
-                    "_DE784395A5F44AAE85FB9DDA693A3CED"
+                    "_E595072E67E646039A685C0F60A1599B"
                     {
                     "Name" = "8:Inventory.Adjustment.UI.exe"
                     "Attributes" = "3:512"
                     }
                 }
             "SourcePath" = "8:..\\Inventory.Adjustment\\bin\\Debug\\Inventory.Adjustment.UI.exe"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_8DAD21D3C488450CB0409FD8EAC4F5AA"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_ED4645764F5B4D60BDD5B938C83D13CB"
+            {
+            "SourcePath" = "8:..\\Inventory.Adjustment\\bin\\Debug\\MahApps.Metro.xml"
+            "TargetName" = "8:MahApps.Metro.xml"
+            "Tag" = "8:"
+            "Folder" = "8:_8DAD21D3C488450CB0409FD8EAC4F5AA"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_EFE178AE153847C4B23FC2A1D0EAECD3"
+            {
+            "AssemblyRegister" = "3:1"
+            "AssemblyIsInGAC" = "11:FALSE"
+            "AssemblyAsmDisplayName" = "8:MahApps.Metro.IconPacks, Version=2.0.0.31, Culture=neutral, processorArchitecture=MSIL"
+                "ScatterAssemblies"
+                {
+                    "_EFE178AE153847C4B23FC2A1D0EAECD3"
+                    {
+                    "Name" = "8:MahApps.Metro.IconPacks.dll"
+                    "Attributes" = "3:512"
+                    }
+                }
+            "SourcePath" = "8:..\\Inventory.Adjustment\\bin\\Debug\\MahApps.Metro.IconPacks.dll"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_8DAD21D3C488450CB0409FD8EAC4F5AA"
@@ -622,7 +1389,7 @@
             "{1525181F-901A-416C-8A58-119130FE478E}:_684C391C60CA4DB59536DCD711D2738B"
             {
             "Name" = "8:#1916"
-            "AlwaysCreate" = "11:FALSE"
+            "AlwaysCreate" = "11:TRUE"
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Property" = "8:DesktopFolder"
@@ -645,7 +1412,7 @@
             "{1525181F-901A-416C-8A58-119130FE478E}:_9195811C7904472D8E4FB13DD5F4F54A"
             {
             "Name" = "8:#1919"
-            "AlwaysCreate" = "11:FALSE"
+            "AlwaysCreate" = "11:TRUE"
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Property" = "8:ProgramMenuFolder"
@@ -668,24 +1435,24 @@
         "Product"
         {
         "Name" = "8:Microsoft Visual Studio"
-        "ProductName" = "8:Inventory.Adjustment.Installer"
+        "ProductName" = "8:Inventory Adjustment"
         "ProductCode" = "8:{31DA1114-8DEF-4286-8FBF-DFB7BACC46D3}"
-        "PackageCode" = "8:{F5093F88-FBEB-4CEF-8C42-3C675963191A}"
+        "PackageCode" = "8:{7069A082-7798-49EA-92C9-7284084AD1C4}"
         "UpgradeCode" = "8:{F6EA7621-F026-4AD9-BD7A-0A61C3D92C87}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
-        "RemovePreviousVersions" = "11:FALSE"
+        "RemovePreviousVersions" = "11:TRUE"
         "DetectNewerInstalledVersion" = "11:TRUE"
         "InstallAllUsers" = "11:FALSE"
         "ProductVersion" = "8:1.0.0"
-        "Manufacturer" = "8:Default Company Name"
+        "Manufacturer" = "8:Inventory Adjustment"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:"
-        "Title" = "8:Inventory.Adjustment.Installer"
+        "Title" = "8:Inventory Adjustment Installer"
         "Subject" = "8:"
-        "ARPCONTACT" = "8:Default Company Name"
+        "ARPCONTACT" = "8:Connor J. McCann"
         "Keywords" = "8:"
-        "ARPCOMMENTS" = "8:"
+        "ARPCOMMENTS" = "8:Installs Inventory Adjusment Desktop Application"
         "ARPURLINFOABOUT" = "8:"
         "ARPPRODUCTICON" = "8:"
         "ARPIconIndex" = "3:0"
@@ -790,6 +1557,34 @@
         }
         "Shortcut"
         {
+            "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_3D1D496AEB10491CB0A81C5C9CB3F54D"
+            {
+            "Name" = "8:Inventory Adjustment"
+            "Arguments" = "8:"
+            "Description" = "8:Inventory Adjustment"
+            "ShowCmd" = "3:1"
+            "IconIndex" = "3:0"
+            "Transitive" = "11:FALSE"
+            "Target" = "8:_E595072E67E646039A685C0F60A1599B"
+            "Folder" = "8:_684C391C60CA4DB59536DCD711D2738B"
+            "WorkingFolder" = "8:_8DAD21D3C488450CB0409FD8EAC4F5AA"
+            "Icon" = "8:_CB5AE8F433464BD3AAF2ABB5D183AC58"
+            "Feature" = "8:"
+            }
+            "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_6D14DFDDCBC24359984BC37C8D5BA44E"
+            {
+            "Name" = "8:Inventory Adjustment"
+            "Arguments" = "8:"
+            "Description" = "8:Inventory Adjustment"
+            "ShowCmd" = "3:1"
+            "IconIndex" = "3:0"
+            "Transitive" = "11:FALSE"
+            "Target" = "8:_E595072E67E646039A685C0F60A1599B"
+            "Folder" = "8:_9195811C7904472D8E4FB13DD5F4F54A"
+            "WorkingFolder" = "8:_8DAD21D3C488450CB0409FD8EAC4F5AA"
+            "Icon" = "8:_CB5AE8F433464BD3AAF2ABB5D183AC58"
+            "Feature" = "8:"
+            }
         }
         "UserInterface"
         {
