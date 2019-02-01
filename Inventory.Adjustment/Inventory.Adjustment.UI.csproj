@@ -159,7 +159,7 @@
     <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\InventoryColor.png" />
+    <SplashScreen Include="Resources\InventoryColor.png" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Inventory.Adjustment.Client.QuickBooksClient\Inventory.Adjustment.Client.QuickBooksClient.csproj">
