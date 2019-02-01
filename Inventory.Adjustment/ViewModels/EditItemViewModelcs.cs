@@ -232,7 +232,7 @@ namespace Inventory.Adjustment.UI.ViewModels
             {
                 string errorLabel = "QuickBooks Client Error";
                 string errorMessage = $"Report: Something went wrong while updating Item # {this._itemToEdit.Code}. " +
-                                       "Please check your connection to QuickBooks and try again";
+                                       "Please check your connection to QuickBooks and try again!";
 
                 MessageBox.Show(errorMessage, errorLabel, MessageBoxButton.OK, MessageBoxImage.Error);
             });
