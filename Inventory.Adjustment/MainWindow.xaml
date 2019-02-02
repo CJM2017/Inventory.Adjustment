@@ -28,7 +28,7 @@
                   Background="Transparent"
                   RenderOptions.EdgeMode="Aliased"
                   RenderOptions.BitmapScalingMode="HighQuality">
-                <Image Source="Resources/InventoryColor.png"></Image>
+                <Image Source="Resources/InventoryIcon.png"></Image>
             </Grid>
         </DataTemplate>
     </controls:MetroWindow.IconTemplate>

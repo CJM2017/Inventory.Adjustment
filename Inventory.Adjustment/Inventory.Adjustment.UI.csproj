@@ -159,9 +159,6 @@
     <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
   <ItemGroup>
-    <SplashScreen Include="Resources\InventoryColor.png" />
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\Inventory.Adjustment.Client.QuickBooksClient\Inventory.Adjustment.Client.QuickBooksClient.csproj">
       <Project>{e6593514-c43d-4577-a6f2-d36bc176f317}</Project>
       <Name>Inventory.Adjustment.Client.QuickBooksClient</Name>
@@ -183,6 +180,12 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\Report.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <SplashScreen Include="Resources\InvetorySplash.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\InventoryIcon.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
