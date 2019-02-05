@@ -10,7 +10,7 @@
             dialogs:DialogParticipation.Register="{Binding}"
             Width="380"
             Height="600">
-    
+
     <dialogs:CustomDialog.Resources>
         <Style TargetType="{x:Type TextBox}">
             <Setter Property="Background" Value="White"/>
@@ -54,63 +54,57 @@
             </Grid.ColumnDefinitions>
 
             <StackPanel Grid.Row="0" Grid.ColumnSpan="2" Orientation="Vertical" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="20">
-                <TextBlock Text="Edit Item" FontSize="24" Foreground="Black"/>
+                <TextBlock Text="Edit Item" FontSize="26" Foreground="Black"/>
                 <Separator BorderBrush="Gray" BorderThickness="5" Width="360"/>
             </StackPanel>
 
             <StackPanel Grid.Row="1" Grid.Column="0" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10,0,0,0">
-                <TextBlock Foreground="Gray" FontSize="18" Margin="10" VerticalAlignment="Bottom">Item #</TextBlock>
+                <TextBlock Foreground="Black" FontSize="18" Margin="10" VerticalAlignment="Bottom">Item #</TextBlock>
             </StackPanel>
             <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right">
                 <TextBox IsEnabled="False" Margin="20" VerticalAlignment="Bottom" Text="{Binding ItemCode}"/>
             </StackPanel>
             
             <StackPanel Grid.Row="2" Grid.Column="0" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10,0,0,0">
-                <TextBlock Foreground="Gray" FontSize="18" Margin="10" VerticalAlignment="Bottom">Cost</TextBlock>
+                <TextBlock Foreground="Black" FontSize="18" Margin="10" VerticalAlignment="Bottom">Cost</TextBlock>
             </StackPanel>
             <StackPanel Grid.Row="2" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right">
                 <TextBox Margin="20" VerticalAlignment="Bottom" Text="{Binding ItemCost}"/>
             </StackPanel>
             
             <StackPanel Grid.Row="3" Grid.Column="0" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10,0,0,0">
-                <TextBlock Foreground="Gray" FontSize="18" Margin="10" VerticalAlignment="Bottom">Price</TextBlock>
+                <TextBlock Foreground="Black" FontSize="18" Margin="10" VerticalAlignment="Bottom">Price</TextBlock>
             </StackPanel>
             <StackPanel Grid.Row="3" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right">
                 <TextBox Margin="20" VerticalAlignment="Bottom" Text="{Binding ItemSalesPrice}"/>
             </StackPanel>
 
             <StackPanel Grid.Row="4" Grid.Column="0" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10,0,0,0">
-                <TextBlock Foreground="Gray" FontSize="18" Margin="10" VerticalAlignment="Bottom">Price Levels</TextBlock>
+                <TextBlock Foreground="Black" FontSize="18" Margin="10" VerticalAlignment="Bottom">Price Levels</TextBlock>
             </StackPanel>
 
             <Button x:Name="AutoCalc"
-                        Grid.Row="4"
-                        Grid.Column="1"
-                        Height="32"
-                        Width="150"
+                    Grid.Row="4"
+                    Grid.Column="1"
+                    Width="150"
                     HorizontalAlignment="Right"
-                        Margin="0,20,20,20"
-                        Visibility="Visible"
-                        IsEnabled="true"
-                        Command="{Binding AutoCalcCommand}">
-                <Button.Style>
-                    <Style TargetType="{x:Type Button}">
-                        <Setter Property="Background" Value="LightGray"/>
-                        <Setter Property="Opacity" Value="1.0"/>
-                    </Style>
-                </Button.Style>
-                <TextBlock Foreground="Black">Auto Calculate</TextBlock>
+                    Margin="0,20,20,20"
+                    Visibility="Visible"
+                    Foreground="Black"
+                    IsEnabled="true"
+                    Command="{Binding AutoCalcCommand}">
+                <TextBlock>Auto Calculate</TextBlock>
             </Button>
 
             <StackPanel Grid.Row="5" Grid.Column="0" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10,0,0,0">
-                <TextBlock Foreground="Gray" FontSize="18" Margin="10" VerticalAlignment="Bottom">Contractor</TextBlock>
+                <TextBlock Foreground="Black" FontSize="18" Margin="10" VerticalAlignment="Bottom">Contractor</TextBlock>
             </StackPanel>
             <StackPanel Grid.Row="5" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right">
                 <TextBox Margin="0,20,20,20" VerticalAlignment="Bottom" Text="{Binding ContractorPrice}"/>
             </StackPanel>
 
             <StackPanel Grid.Row="6" Grid.Column="0" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10,0,0,0">
-                <TextBlock Foreground="Gray" FontSize="18" Margin="10" VerticalAlignment="Bottom">Electrician</TextBlock>
+                <TextBlock Foreground="Black" FontSize="18" Margin="10" VerticalAlignment="Bottom">Electrician</TextBlock>
             </StackPanel>
             <StackPanel Grid.Row="6" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right">
                 <TextBox Margin="20" VerticalAlignment="Bottom" Text="{Binding ElectricianPrice}"/>
@@ -118,36 +112,20 @@
 
             <StackPanel Grid.Row="7" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Bottom">
                 <Button x:Name="SaveButton"
-                    Height="32"
-                    Width="90"
-                    Margin="20,20,20,20"
-                    Visibility="Visible"
-                    IsEnabled="{Binding ButtonsEnabled}"
-                    Command="{Binding SaveCommand}"
-                    IsDefault="True">
-                    <Button.Style>
-                        <Style TargetType="{x:Type Button}">
-                            <Setter Property="Background" Value="DodgerBlue"/>
-                            <Setter Property="Opacity" Value="1.0"/>
-                        </Style>
-                    </Button.Style>
+                        Margin="20"
+                        Visibility="Visible"
+                        Foreground="White"
+                        Background="DodgerBlue"
+                        Command="{Binding SaveCommand}"
+                        IsDefault="True">
                     <TextBlock Foreground="White">Save</TextBlock>
                 </Button>
 
                 <Button x:Name="CancelButton"
-                        Height="32"
-                        Width="90"
                         Margin="0,20,20,20"
                         Visibility="Visible"
-                        IsEnabled="{Binding ButtonsEnabled}"
                         Command="{Binding CancelCommand}">
-                    <Button.Style>
-                        <Style TargetType="{x:Type Button}">
-                            <Setter Property="Background" Value="LightGray"/>
-                            <Setter Property="Opacity" Value="1.0"/>
-                        </Style>
-                    </Button.Style>
-                    <TextBlock Foreground="Black">Cancel</TextBlock>
+                    <TextBlock>Cancel</TextBlock>
                 </Button>
             </StackPanel>
         </Grid>

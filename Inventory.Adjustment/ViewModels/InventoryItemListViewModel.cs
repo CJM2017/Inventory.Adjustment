@@ -41,9 +41,10 @@ namespace Inventory.Adjustment.UI.ViewModels
             this._sessionManager = sessionManager;
             this._dialogCoordinator = coordinator;
 
-            EditItemCommand = new DelegateCommand(ExecuteEdit, () => SelectedItems.Count > 0);
-            SearchCommand = new DelegateCommand(ExecuteSearch, () => SearchString != null && SearchString != string.Empty);
-            DeleteItemCommand = new DelegateCommand(ExecuteDelete, () => Items != null && Items.Count > 0);
+            CreateItemCommand = new DelegateCommand(this.ExecuteCreate);
+            EditItemCommand = new DelegateCommand(this.ExecuteEdit, () => SelectedItems.Any());
+            DeleteItemCommand = new DelegateCommand(this.ExecuteDelete, () => Items != null && Items.Count > 0);
+            SearchCommand = new DelegateCommand(this.ExecuteSearch, () => SearchString != null && SearchString != string.Empty);
 
             GridHeaders = new List<string>() { "Code", "Description", "Vendor", "Quantity", "Cost",
                                                 "Price", "Contractor Price", "Electrician Price" };
@@ -54,6 +55,8 @@ namespace Inventory.Adjustment.UI.ViewModels
             SelectedItems = new List<InventoryItem>();
             Items =  new ObservableCollection<InventoryItem>(_sessionManager.Inventory.Items); 
         }
+
+        public DelegateCommand CreateItemCommand { get; private set; }
 
         public DelegateCommand EditItemCommand { get; private set; }
 
@@ -188,6 +191,11 @@ namespace Inventory.Adjustment.UI.ViewModels
         {
             var editDialog = new EditItem(this, this._sessionManager, SelectedItems.First());
             await this._dialogCoordinator.ShowMetroDialogAsync(this, editDialog);
+        }
+
+        private void ExecuteCreate()
+        {
+            // TODO
         }
 
         private void ExecuteDelete()

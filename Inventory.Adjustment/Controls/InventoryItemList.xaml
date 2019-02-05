@@ -46,6 +46,29 @@
                 </Setter.Value>
             </Setter>
         </Style>
+
+        <ControlTemplate x:Key="DefaultMenuItemControl" TargetType="{x:Type MenuItem}">
+            <Border x:Name="Bd" Padding="17,0,17,0" BorderBrush="{TemplateBinding BorderBrush}" 
+                    BorderThickness="{TemplateBinding BorderThickness}" 
+                    Background="{TemplateBinding Background}" 
+                    SnapsToDevicePixels="True" Uid="Border_38">
+                <ContentPresenter x:Name="ContentPresenter"  Content="{TemplateBinding Header}" 
+                                  Grid.Column="1" ContentSource="Header" Margin="{TemplateBinding Padding}" 
+                                  RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" 
+                                  Uid="ContentPresenter_33"/>
+            </Border>
+            <ControlTemplate.Triggers>
+                <Trigger Property="IsHighlighted" Value="True">
+                    <Setter Property="Background" TargetName="Bd">
+                        <Setter.Value>
+                            <SolidColorBrush Color="PowderBlue" Opacity="0.5"/>
+                        </Setter.Value>
+                    </Setter>
+                    <Setter Property="BorderBrush" TargetName="Bd" Value="Black"/>
+                </Trigger>
+            </ControlTemplate.Triggers>
+        </ControlTemplate>
+
     </UserControl.Resources>
 
     <Grid x:Name="RootGrid" Margin="10">
@@ -69,6 +92,7 @@
                 <Label Content="Look for" FontSize="13" Foreground="Black" 
                        VerticalAlignment="Center" Margin="10,5,10,5"/>
                 <TextBox Height="32" Width="150" FontSize="15" Padding="0,2,0,0"
+                         BorderBrush="Gray"
                          Controls:TextBoxHelper.Watermark="Search" 
                          Controls:TextBoxHelper.ClearTextButton="True"
                          Text="{Binding SearchString, UpdateSourceTrigger=PropertyChanged}"/>
@@ -77,41 +101,29 @@
                 <ComboBox Height="32" Width="150" Margin="5,15,15,15"
                           ItemsSource="{Binding DropDownOptions}"
                           SelectedItem="{Binding SelectedField}"
-                          Foreground="Black"/>
-                    <Button x:Name="SearchButton"
-                    Margin="3"
-                    Height="32"
-                    Width="90"
-                    Visibility="Visible"
-                    HorizontalAlignment="Center"
-                    Command="{Binding SearchCommand}"
-                    IsDefault="True">
-                    <Button.Style>
-                        <Style TargetType="{x:Type Button}">
-                            <Setter Property="Background" Value="DodgerBlue"/>
-                            <Setter Property="Opacity" Value="1.0"/>
-                        </Style>
-                    </Button.Style>
+                          Foreground="Black" BorderBrush="Black"/>
+                <Button x:Name="SearchButton"
+                        Margin="3"
+                        Visibility="Visible"
+                        HorizontalAlignment="Center"
+                        Foreground="White"
+                        Background="DodgerBlue"
+                        Command="{Binding SearchCommand}"
+                        IsDefault="True">
                     <TextBlock Foreground="White">Search</TextBlock>
                 </Button>
             </StackPanel>
-            
-            <Button x:Name="EditInventoryItemButton"       
+
+            <Button x:Name="CreateInventoryItemButton"       
                     Grid.Column="2"
                     Margin="15"
-                    Height="32"
-                    Width="90"
+                    Foreground="White"
+                    Background="LightGreen"
                     Visibility="Visible"
                     HorizontalAlignment="Center"
-                    VerticalAlignment="Center"
-                    Command="{Binding EditItemCommand}">
-                <Button.Style>
-                    <Style TargetType="{x:Type Button}">
-                        <Setter Property="Background" Value="LightGreen"/>
-                        <Setter Property="Opacity" Value="1.0"/>
-                    </Style>
-                </Button.Style>
-                <TextBlock Foreground="White">Edit</TextBlock>
+                    VerticalAlignment="Center" 
+                    Command="{Binding CreateItemCommand}">
+                <TextBlock>Create</TextBlock>
             </Button>
         </Grid>
 
@@ -121,8 +133,7 @@
                           CanUserReorderColumns="False" CanUserResizeColumns="True" CanUserResizeRows="False" CanUserSortColumns="True"
                           ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Auto" 
                           ScrollViewer.CanContentScroll="True"
-                          IsReadOnly="True" EnableRowVirtualization="True"
-                          MouseDown="DataGrid_MouseLeftButtonDown">
+                          IsReadOnly="True" EnableRowVirtualization="True">
             <DataGrid.Resources>
                 <utils:BindingProxy x:Key="proxy" Data="{Binding}" />
                 <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="DarkGray" />
@@ -137,6 +148,15 @@
                 <Style TargetType="DataGridRow">
                     <Setter Property="BorderBrush" Value="LightGray"/>
                     <Setter Property="BorderThickness" Value="0.75"/>
+                    <Setter Property="ContextMenu">
+                        <Setter.Value>
+                            <ContextMenu>
+                                <MenuItem Header="Edit"
+                                          Template="{StaticResource DefaultMenuItemControl}"
+                                          Command="{Binding Data.EditItemCommand, Source={StaticResource proxy}}"/>
+                            </ContextMenu>
+                        </Setter.Value>
+                    </Setter>
                     <Style.Triggers>
                         <Trigger Property="AlternationIndex" Value="0">
                             <Setter Property="Background" Value="White" />

@@ -109,11 +109,11 @@ namespace Inventory.Adjustment.ViewModels
             });
 
             // Report menu item image
-            var ReportImage = new Image
+            var CustomersImage = new Image
             {
                 Height = 28,
                 Width = 28,
-                Source = new BitmapImage(new Uri("pack://application:,,,/Inventory.Adjustment.UI;Component/Resources/Report.png"))
+                Source = new BitmapImage(new Uri("pack://application:,,,/Inventory.Adjustment.UI;Component/Resources/Customers.png"))
             };
 
             // Add inventory menu item
@@ -121,9 +121,9 @@ namespace Inventory.Adjustment.ViewModels
             {
                 IsSelected = false,
                 IsEnabled = false,
-                Text = "Reports",
-                Tag = "Reports",
-                Icon = ReportImage,
+                Text = "Customers",
+                Tag = "Customers",
+                Icon = CustomersImage,
                 NavDestination = new Uri("Views/ReportsPage.xaml", UriKind.RelativeOrAbsolute)
             });
 
