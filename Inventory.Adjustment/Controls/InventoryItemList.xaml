@@ -40,7 +40,7 @@
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type DataGridCell}">
                         <Grid Background="{TemplateBinding Background}">
-                            <ContentPresenter HorizontalAlignment="Center"/>
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
                         </Grid>
                     </ControlTemplate>
                 </Setter.Value>
@@ -59,16 +59,24 @@
             </Border>
             <ControlTemplate.Triggers>
                 <Trigger Property="IsHighlighted" Value="True">
-                    <Setter Property="Background" TargetName="Bd">
-                        <Setter.Value>
-                            <SolidColorBrush Color="PowderBlue" Opacity="0.5"/>
-                        </Setter.Value>
-                    </Setter>
-                    <Setter Property="BorderBrush" TargetName="Bd" Value="Black"/>
+                    <Setter Property="Background" TargetName="Bd" Value="{StaticResource ListAccentLowColorBrush}"/>
                 </Trigger>
             </ControlTemplate.Triggers>
         </ControlTemplate>
 
+        <Style TargetType="{x:Type MenuItem}">
+            <Setter Property="Foreground" Value="Black"/>
+            <Setter Property="Width" Value="150"/>
+            <Setter Property="Height" Value="Auto"/>
+            <Setter Property="Padding" Value="2,5,2,5"/>
+            <Setter Property="HorizontalAlignment" Value="Left"/>
+            <Setter Property="FontSize" Value="15"/>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Foreground" Value="White"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
     </UserControl.Resources>
 
     <Grid x:Name="RootGrid" Margin="10">
@@ -130,18 +138,28 @@
         <DataGrid x:Name="InventoryDataGrid" Grid.Row="1"
                           SelectionUnit="FullRow" Margin="10,10,10,10" AutoGenerateColumns="False" 
                           ItemsSource="{Binding Items}" SelectionChanged="Handle_Selection" CanUserAddRows="False" CanUserDeleteRows="False" 
-                          CanUserReorderColumns="False" CanUserResizeColumns="True" CanUserResizeRows="False" CanUserSortColumns="True"
+                          CanUserReorderColumns="False" CanUserResizeColumns="True" CanUserResizeRows="True" CanUserSortColumns="True"
                           ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Auto" 
                           ScrollViewer.CanContentScroll="True"
                           IsReadOnly="True" EnableRowVirtualization="True">
             <DataGrid.Resources>
                 <utils:BindingProxy x:Key="proxy" Data="{Binding}" />
-                <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="DarkGray" />
-                <SolidColorBrush x:Key="{x:Static SystemColors.ControlBrushKey}" Color="DarkGray" />
+                <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="Transparent" />
+                <SolidColorBrush x:Key="{x:Static SystemColors.ControlBrushKey}" Color="Transparent" />
                 <Style BasedOn="{StaticResource MetroDataGridColumnHeader}" TargetType="{x:Type DataGridColumnHeader}">
+                    <Setter Property="OverridesDefaultStyle" Value="True"/>
                     <Setter Property="Background" Value="#3f5d99" />
                     <Setter Property="Foreground" Value="White" />
                     <Setter Property="Padding" Value="6"/>
+                    <Style.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="ToolTip" Value="Click to sort."/>
+                        </Trigger>
+                        <Trigger Property="IsHitTestVisible" Value="True">
+                            <Setter Property="Background" Value="Transparent"/>
+                            <Setter Property="Foreground" Value="White"/>
+                        </Trigger>
+                    </Style.Triggers>
                 </Style>
             </DataGrid.Resources>
             <DataGrid.RowStyle>
@@ -151,9 +169,10 @@
                     <Setter Property="ContextMenu">
                         <Setter.Value>
                             <ContextMenu>
-                                <MenuItem Header="Edit"
+                                <MenuItem Header="Edit Item" Width="100"
                                           Template="{StaticResource DefaultMenuItemControl}"
-                                          Command="{Binding Data.EditItemCommand, Source={StaticResource proxy}}"/>
+                                          Command="{Binding Data.EditItemCommand, Source={StaticResource proxy}}"
+                                          />
                             </ContextMenu>
                         </Setter.Value>
                     </Setter>
@@ -165,7 +184,7 @@
                             <Setter Property="Background" Value="White" />
                         </Trigger>
                         <Trigger Property="IsSelected" Value="True">
-                            <Setter Property="Background" Value="LightGray" />
+                            <Setter Property="Background" Value="DarkGray" />
                             <Setter Property="Foreground" Value="Black" />
                             <Setter Property="FontWeight" Value="Bold" />
                         </Trigger>
