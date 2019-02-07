@@ -7,18 +7,16 @@
 namespace Inventory.Adjustment.UI.ViewModels
 {
     using System;
-    using System.Windows.Threading;
+    using System.Threading.Tasks;
     using Inventory.Adjustment.Data.Serializable;
-    using Inventory.Adjustment.UI.Infrastructure.Interfaces;
     using MahApps.Metro.Controls.Dialogs;
     using Prism.Commands;
     using Prism.Mvvm;
 
     public class EditItemViewModelcs : BindableBase
     {
-        private readonly Dispatcher _dispatcher;
+        private readonly IDialogCoordinator _dialogCoordinator;
         private readonly InventoryItemListViewModel _inventoryItemListViewModel;
-        private readonly ISessionManager _sessionManger;
         private readonly InventoryItem _selectedItem;
 
         private string _Code;
@@ -33,11 +31,11 @@ namespace Inventory.Adjustment.UI.ViewModels
         /// Initializes a new instance of the <see cref="EditItemViewModel"/> class
         /// </summary>
         public EditItemViewModelcs(
-            Dispatcher dispatcher, 
+            IDialogCoordinator dialogCoordinator,
             InventoryItemListViewModel vm, 
             InventoryItem selectedItem)
         {
-            this._dispatcher = dispatcher;
+            this._dialogCoordinator = dialogCoordinator;
             this._inventoryItemListViewModel = vm;
             this._selectedItem = selectedItem;
 
@@ -156,10 +154,10 @@ namespace Inventory.Adjustment.UI.ViewModels
             return ((cost * 3) / 2) + 20;
         }
 
-        private void Save()
+        private async void Save()
         {
             // Close first so the next dialog loads smoothly
-            CloseDialog();
+            await CloseDialog();
 
             // Set the item to modify fields
             this._inventoryItemListViewModel.ItemsToModify.Add(new InventoryItem()
@@ -173,22 +171,19 @@ namespace Inventory.Adjustment.UI.ViewModels
             });
         }
 
-        private void Cancel()
+        private async void Cancel()
         {
-            CloseDialog();
+            await CloseDialog();
         }
 
-        private void CloseDialog()
+        private async Task CloseDialog()
         {
-            this._dispatcher.Invoke(async () =>
-            {
-                BaseMetroDialog dialogOnScreen = await DialogCoordinator.Instance.GetCurrentDialogAsync<BaseMetroDialog>(this._inventoryItemListViewModel);
+            var dialogOnScreen = await this._dialogCoordinator.GetCurrentDialogAsync<BaseMetroDialog>(this._inventoryItemListViewModel);
 
-                if (dialogOnScreen != null)
-                {
-                    await DialogCoordinator.Instance.HideMetroDialogAsync(this._inventoryItemListViewModel, dialogOnScreen);
-                }
-            });
+            if (dialogOnScreen != null)
+            {
+                await DialogCoordinator.Instance.HideMetroDialogAsync(this, dialogOnScreen);
+            }
         }
     }
 }

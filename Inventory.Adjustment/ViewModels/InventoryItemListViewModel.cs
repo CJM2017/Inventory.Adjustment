@@ -23,6 +23,7 @@ namespace Inventory.Adjustment.UI.ViewModels
     using System.Windows.Input;
     using System.Windows;
     using System.Collections.Specialized;
+    using System.Threading.Tasks;
 
     /// <summary>
     /// View model class for the inventory item list.
@@ -214,7 +215,7 @@ namespace Inventory.Adjustment.UI.ViewModels
 
         private async void ExecuteEdit()
         {
-            var editDialog = new EditItem(this, SelectedItems.First());
+            var editDialog = new EditItem(this._dialogCoordinator, this, SelectedItems.First());
             await this._dialogCoordinator.ShowMetroDialogAsync(this, editDialog);
         }
 
@@ -285,15 +286,20 @@ namespace Inventory.Adjustment.UI.ViewModels
             }
             catch (QuickBooksClientException ex)
             {
-                CloseActiveDialog();
+                await TearDown();
                 ShowErrorMessage(itemToModify.Code);
             }
             finally
             {
-                ClearQueue();
-                CloseActiveDialog();
-                UpdateMouse(false);
+                await TearDown();
             }
+        }
+
+        private async Task TearDown()
+        {
+            ClearQueue();
+            await CloseActiveDialog();
+            UpdateMouse(false);
         }
 
         private void UpdateMouse(bool busy)
@@ -323,18 +329,14 @@ namespace Inventory.Adjustment.UI.ViewModels
             });
         }
 
-        private void CloseActiveDialog()
+        private async Task CloseActiveDialog()
         {
-            this._dispatcher.Invoke(async () =>
-            {
-                BaseMetroDialog dialogOnScreen = await DialogCoordinator.Instance.GetCurrentDialogAsync<BaseMetroDialog>(this);
+            var dialogOnScreen = await this._dialogCoordinator.GetCurrentDialogAsync<BaseMetroDialog>(this);
 
-                if (dialogOnScreen != null)
-                {
-                    await DialogCoordinator.Instance.HideMetroDialogAsync(this, dialogOnScreen);
-                    await dialogOnScreen._WaitForCloseAsync();
-                }
-            });
+            if (dialogOnScreen != null)
+            {
+                await DialogCoordinator.Instance.HideMetroDialogAsync(this, dialogOnScreen);
+            }
         }
     }
 }

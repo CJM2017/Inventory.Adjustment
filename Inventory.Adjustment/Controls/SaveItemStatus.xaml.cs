@@ -6,7 +6,6 @@
 
 namespace Inventory.Adjustment.UI.Controls
 {
-    using Inventory.Adjustment.UI.Infrastructure.Interfaces;
     using Inventory.Adjustment.UI.ViewModels;
     using MahApps.Metro.Controls.Dialogs;
 

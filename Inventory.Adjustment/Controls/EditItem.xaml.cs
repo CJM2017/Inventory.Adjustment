@@ -7,7 +7,6 @@
 namespace Inventory.Adjustment.UI.Controls
 {
     using Inventory.Adjustment.Data.Serializable;
-    using Inventory.Adjustment.UI.Infrastructure.Interfaces;
     using Inventory.Adjustment.UI.ViewModels;
     using MahApps.Metro.Controls.Dialogs;
 
@@ -19,10 +18,10 @@ namespace Inventory.Adjustment.UI.Controls
         /// <summary>
         /// Initializes a new instance of the <see cref="EditItem"/> class.
         /// </summary>
-        public EditItem(InventoryItemListViewModel vm, InventoryItem selectedItem)
+        public EditItem(IDialogCoordinator dialogCoordinator, InventoryItemListViewModel vm, InventoryItem selectedItem)
         {
             InitializeComponent();
-            this.DataContext = new EditItemViewModelcs(this.Dispatcher, vm, selectedItem);
+            this.DataContext = new EditItemViewModelcs(dialogCoordinator, vm, selectedItem);
         }
     }
 }
