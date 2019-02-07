@@ -7,11 +7,7 @@
 namespace Inventory.Adjustment.UI.ViewModels
 {
     using System;
-    using System.Linq;
-    using System.Windows;
-    using System.Windows.Input;
     using System.Windows.Threading;
-    using Inventory.Adjustment.Client.QuickBooksClient;
     using Inventory.Adjustment.Data.Serializable;
     using Inventory.Adjustment.UI.Infrastructure.Interfaces;
     using MahApps.Metro.Controls.Dialogs;
@@ -23,7 +19,7 @@ namespace Inventory.Adjustment.UI.ViewModels
         private readonly Dispatcher _dispatcher;
         private readonly InventoryItemListViewModel _inventoryItemListViewModel;
         private readonly ISessionManager _sessionManger;
-        private readonly InventoryItem _itemToEdit;
+        private readonly InventoryItem _selectedItem;
 
         private string _Code;
         private bool _buttonsEnabled;
@@ -34,18 +30,16 @@ namespace Inventory.Adjustment.UI.ViewModels
         private double _contractorPrice;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="EditItemViewModelcs"/> class
+        /// Initializes a new instance of the <see cref="EditItemViewModel"/> class
         /// </summary>
         public EditItemViewModelcs(
             Dispatcher dispatcher, 
             InventoryItemListViewModel vm, 
-            ISessionManager sessionManager, 
-            InventoryItem itemToEdit)
+            InventoryItem selectedItem)
         {
             this._dispatcher = dispatcher;
             this._inventoryItemListViewModel = vm;
-            this._sessionManger = sessionManager;
-            this._itemToEdit = itemToEdit;
+            this._selectedItem = selectedItem;
 
             Initialize();
         }
@@ -138,12 +132,12 @@ namespace Inventory.Adjustment.UI.ViewModels
         {
             ButtonsEnabled = true;
 
-            ItemCode = this._itemToEdit.Code;
-            ItemCost = this._itemToEdit.Cost;
-            ItemSalesPrice = this._itemToEdit.BasePrice;
+            ItemCode = this._selectedItem.Code;
+            ItemCost = this._selectedItem.Cost;
+            ItemSalesPrice = this._selectedItem.BasePrice;
 
-            ContractorPrice = this._itemToEdit.ContractorPrice;
-            ElectricianPrice = this._itemToEdit.ElectricianPrice;
+            ContractorPrice = this._selectedItem.ContractorPrice;
+            ElectricianPrice = this._selectedItem.ElectricianPrice;
         }
 
         private void AutoCalc()
@@ -162,95 +156,26 @@ namespace Inventory.Adjustment.UI.ViewModels
             return ((cost * 3) / 2) + 20;
         }
 
-        private async void Save()
+        private void Save()
         {
-            // Prevent the user from clicking again
-            DisableButtons();
+            // Close first so the next dialog loads smoothly
+            CloseDialog();
 
-            // Set mouse to busy
-            UpdateMouse(true);
-
-            try
+            // Set the item to modify fields
+            this._inventoryItemListViewModel.ItemsToModify.Add(new InventoryItem()
             {
-                // Update the item in inventory
-                InventoryItem requestItem = new InventoryItem()
-                {
-                    ListId = this._itemToEdit.ListId,
-                    EditSequence = this._itemToEdit.EditSequence,
-                    Cost = ItemCost,
-                    BasePrice = ItemSalesPrice,
-                };
-
-                var returnedItem = await this._sessionManger.QBClient.UpdateInventoryItem<InventoryItem>(requestItem);
-                returnedItem.Item.ContractorPrice = this.ContractorPrice;
-                returnedItem.Item.ElectricianPrice = this.ElectricianPrice;
-
-                // Update the contactor price level for the item
-                var contractorLevel = this._sessionManger.PriceLevels.Items.First(item => item.Name.ToLower().Equals("contractor"));
-                var responseContractorLevel = await this._sessionManger.QBClient.SetPriceLevel<PriceLevel>(
-                                                                                                           this._itemToEdit.ListId, 
-                                                                                                           contractorLevel.ListId, 
-                                                                                                           contractorLevel.EditSequence, 
-                                                                                                           ContractorPrice);
-
-                // Update the electrician price level for the item
-                var electricianLevel = this._sessionManger.PriceLevels.Items.First(item => item.Name.ToLower().Equals("electrician"));
-                var responseElectricianLevel = await this._sessionManger.QBClient.SetPriceLevel<PriceLevel>(
-                                                                                                            this._itemToEdit.ListId, 
-                                                                                                            electricianLevel.ListId, 
-                                                                                                            electricianLevel.EditSequence, 
-                                                                                                            ElectricianPrice);
-
-                // Merge the returned source changes into the target session manager
-                this._sessionManger.MergeUpdates(returnedItem.Item, responseContractorLevel.Item, responseElectricianLevel.Item);
-            }
-            catch (QuickBooksClientException ex)
-            {
-                CloseDialog();
-                ShowErrorMessage();
-            }
-            finally
-            {
-                CloseDialog();
-                UpdateMouse(false);
-            }
+                ListId = this._selectedItem.ListId,
+                EditSequence = this._selectedItem.EditSequence,
+                Cost = ItemCost,
+                BasePrice = ItemSalesPrice,
+                ContractorPrice = this.ContractorPrice,
+                ElectricianPrice = this.ElectricianPrice
+            });
         }
 
         private void Cancel()
         {
             CloseDialog();
-        }
-        
-        private void DisableButtons()
-        {
-            ButtonsEnabled = false;
-        }
-
-        private void ShowErrorMessage()
-        {
-            this._dispatcher.Invoke(() =>
-            {
-                string errorLabel = "QuickBooks Client Error";
-                string errorMessage = $"Report: Something went wrong while updating Item # {this._itemToEdit.Code}. " +
-                                       "Please check your connection to QuickBooks and try again!";
-
-                MessageBox.Show(errorMessage, errorLabel, MessageBoxButton.OK, MessageBoxImage.Error);
-            });
-        }
-
-        private void UpdateMouse(bool busy)
-        {
-            this._dispatcher.Invoke(() =>
-            {
-                if (busy)
-                {
-                    Mouse.OverrideCursor = System.Windows.Input.Cursors.AppStarting;
-                }
-                else
-                {
-                    Mouse.OverrideCursor = null;
-                }
-            });
         }
 
         private void CloseDialog()

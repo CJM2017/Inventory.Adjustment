@@ -6,23 +6,21 @@
 
 namespace Inventory.Adjustment.UI.Controls
 {
-    using Inventory.Adjustment.Data.Serializable;
     using Inventory.Adjustment.UI.Infrastructure.Interfaces;
     using Inventory.Adjustment.UI.ViewModels;
     using MahApps.Metro.Controls.Dialogs;
 
     /// <summary>
-    /// Interaction logic for EditItem.xaml
+    /// Interaction logic for SaveItemStatus.xaml
     /// </summary>
-    public partial class EditItem : CustomDialog
+    public partial class SaveItemStatus : CustomDialog
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="EditItem"/> class.
+        /// Initializes a new instance of the <see cref="SaveItemStatus"/> class.
         /// </summary>
-        public EditItem(InventoryItemListViewModel vm, InventoryItem selectedItem)
+        public SaveItemStatus(InventoryItemListViewModel vm)
         {
             InitializeComponent();
-            this.DataContext = new EditItemViewModelcs(this.Dispatcher, vm, selectedItem);
         }
     }
 }

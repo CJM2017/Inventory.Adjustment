@@ -82,6 +82,9 @@
     <Compile Include="Controls\InventoryItemList.xaml.cs">
       <DependentUpon>InventoryItemList.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\SaveItemStatus.xaml.cs">
+      <DependentUpon>SaveItemStatus.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\WorkflowToolbar.xaml.cs">
       <DependentUpon>WorkflowToolbar.xaml</DependentUpon>
     </Compile>
@@ -91,6 +94,7 @@
     <Compile Include="ViewModels\InventoryItemListViewModel.cs" />
     <Compile Include="ViewModels\InventoryViewModel.cs" />
     <Compile Include="ViewModels\MenuItem.cs" />
+    <Compile Include="ViewModels\SaveItemViewModel.cs" />
     <Compile Include="ViewModels\ShellViewModel.cs" />
     <Compile Include="Views\InventoryPage.xaml.cs">
       <DependentUpon>InventoryPage.xaml</DependentUpon>
@@ -100,6 +104,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\InventoryItemList.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\SaveItemStatus.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

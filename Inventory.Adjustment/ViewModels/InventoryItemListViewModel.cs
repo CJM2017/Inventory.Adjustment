@@ -18,6 +18,11 @@ namespace Inventory.Adjustment.UI.ViewModels
     using System.Reflection;
     using Inventory.Adjustment.UI.Controls;
     using MahApps.Metro.Controls.Dialogs;
+    using System.Windows.Threading;
+    using Inventory.Adjustment.Client.QuickBooksClient;
+    using System.Windows.Input;
+    using System.Windows;
+    using System.Collections.Specialized;
 
     /// <summary>
     /// View model class for the inventory item list.
@@ -26,6 +31,7 @@ namespace Inventory.Adjustment.UI.ViewModels
     {
         private readonly ISessionManager _sessionManager;
         private readonly IDialogCoordinator _dialogCoordinator;
+        private readonly Dispatcher _dispatcher;
 
         private ObservableCollection<InventoryItem> _items;
         private List<InventoryItem> _selectedItems;
@@ -36,10 +42,14 @@ namespace Inventory.Adjustment.UI.ViewModels
         /// <summary>
         /// Initializes a new instance of the <see cref="InventoryItemListViewModel"/> class
         /// </summary>
-        public InventoryItemListViewModel(ISessionManager sessionManager, IDialogCoordinator coordinator)
+        public InventoryItemListViewModel(
+            ISessionManager sessionManager, 
+            IDialogCoordinator coordinator, 
+            Dispatcher dispatcher)
         {
             this._sessionManager = sessionManager;
             this._dialogCoordinator = coordinator;
+            this._dispatcher = dispatcher;
 
             CreateItemCommand = new DelegateCommand(this.ExecuteCreate);
             EditItemCommand = new DelegateCommand(this.ExecuteEdit, () => SelectedItems.Any());
@@ -53,7 +63,10 @@ namespace Inventory.Adjustment.UI.ViewModels
             SelectedField = DropDownOptions.First();
 
             SelectedItems = new List<InventoryItem>();
-            Items =  new ObservableCollection<InventoryItem>(_sessionManager.Inventory.Items); 
+            Items =  new ObservableCollection<InventoryItem>(_sessionManager.Inventory.Items);
+
+            ItemsToModify = new ObservableCollection<InventoryItem>();
+            ItemsToModify.CollectionChanged += HandleSave;
         }
 
         public DelegateCommand CreateItemCommand { get; private set; }
@@ -63,6 +76,12 @@ namespace Inventory.Adjustment.UI.ViewModels
         public DelegateCommand SearchCommand { get; private set; }
 
         public DelegateCommand DeleteItemCommand { get; private set; }
+
+        /// <summary>
+        /// Item which contains user's modifications which need
+        /// to be sent to the QuickBooks service for updates.
+        /// </summary>
+        public ObservableCollection<InventoryItem> ItemsToModify { get; private set; }
 
         /// <summary>
         /// Gets or sets whether the inventory item modification was made successfully.
@@ -187,9 +206,15 @@ namespace Inventory.Adjustment.UI.ViewModels
             }
         }
 
+        private void Reset()
+        {
+            SelectedItems = new List<InventoryItem>();
+            Items = new ObservableCollection<InventoryItem>(_sessionManager.Inventory.Items);
+        }
+
         private async void ExecuteEdit()
         {
-            var editDialog = new EditItem(this, this._sessionManager, SelectedItems.First());
+            var editDialog = new EditItem(this, SelectedItems.First());
             await this._dialogCoordinator.ShowMetroDialogAsync(this, editDialog);
         }
 
@@ -203,10 +228,113 @@ namespace Inventory.Adjustment.UI.ViewModels
             // TODO
         }
 
-        private void Reset()
+        private void HandleSave(object sender, NotifyCollectionChangedEventArgs e)
         {
-            SelectedItems = new List<InventoryItem>();
-            Items = new ObservableCollection<InventoryItem>(_sessionManager.Inventory.Items);
+            if (e.NewItems != null)
+            {
+                foreach (var item in e.NewItems)
+                {
+                    SaveItem(item as InventoryItem);
+                }
+            }
+        }
+
+        private void ClearQueue()
+        {
+            while (ItemsToModify.Any())
+            {
+                ItemsToModify.Remove(ItemsToModify.First());
+            }
+        }
+
+        private async void SaveItem(InventoryItem itemToModify)
+        {
+            // Set mouse to busy
+            UpdateMouse(true);
+
+            // Setup the saving state dialog
+            var saveDialog = new SaveItemStatus(this);
+
+            // Launch the saving to QuickBooks dialog
+            await this._dialogCoordinator.ShowMetroDialogAsync(this, saveDialog);
+
+            try
+            {
+                var returnedItem = await this._sessionManager.QBClient.UpdateInventoryItem<InventoryItem>(itemToModify);
+                returnedItem.Item.ContractorPrice = itemToModify.ContractorPrice;
+                returnedItem.Item.ElectricianPrice = itemToModify.ElectricianPrice;
+
+                // Update the contactor price level for the item
+                var contractorLevel = this._sessionManager.PriceLevels.Items.First(item => item.Name.ToLower().Equals("contractor"));
+                var responseContractorLevel = await this._sessionManager.QBClient.SetPriceLevel<PriceLevel>(
+                                                                                                           itemToModify.ListId,
+                                                                                                           contractorLevel.ListId,
+                                                                                                           contractorLevel.EditSequence,
+                                                                                                           itemToModify.ContractorPrice);
+
+                // Update the electrician price level for the item
+                var electricianLevel = this._sessionManager.PriceLevels.Items.First(item => item.Name.ToLower().Equals("electrician"));
+                var responseElectricianLevel = await this._sessionManager.QBClient.SetPriceLevel<PriceLevel>(
+                                                                                                            itemToModify.ListId,
+                                                                                                            electricianLevel.ListId,
+                                                                                                            electricianLevel.EditSequence,
+                                                                                                            itemToModify.ElectricianPrice);
+
+                // Merge the returned source changes into the target session manager
+                this._sessionManager.MergeUpdates(returnedItem.Item, responseContractorLevel.Item, responseElectricianLevel.Item);
+            }
+            catch (QuickBooksClientException ex)
+            {
+                CloseActiveDialog();
+                ShowErrorMessage(itemToModify.Code);
+            }
+            finally
+            {
+                ClearQueue();
+                CloseActiveDialog();
+                UpdateMouse(false);
+            }
+        }
+
+        private void UpdateMouse(bool busy)
+        {
+            this._dispatcher.Invoke(() =>
+            {
+                if (busy)
+                {
+                    Mouse.OverrideCursor = System.Windows.Input.Cursors.AppStarting;
+                }
+                else
+                {
+                    Mouse.OverrideCursor = null;
+                }
+            });
+        }
+
+        private void ShowErrorMessage(string itemCode)
+        {
+            this._dispatcher.Invoke(() =>
+            {
+                string errorLabel = "QuickBooks Client Error";
+                string errorMessage = $"Report: Something went wrong while updating Item # {itemCode}. " +
+                                       "Please check your connection to QuickBooks and try again!";
+
+                MessageBox.Show(errorMessage, errorLabel, MessageBoxButton.OK, MessageBoxImage.Error);
+            });
+        }
+
+        private void CloseActiveDialog()
+        {
+            this._dispatcher.Invoke(async () =>
+            {
+                BaseMetroDialog dialogOnScreen = await DialogCoordinator.Instance.GetCurrentDialogAsync<BaseMetroDialog>(this);
+
+                if (dialogOnScreen != null)
+                {
+                    await DialogCoordinator.Instance.HideMetroDialogAsync(this, dialogOnScreen);
+                    await dialogOnScreen._WaitForCloseAsync();
+                }
+            });
         }
     }
 }

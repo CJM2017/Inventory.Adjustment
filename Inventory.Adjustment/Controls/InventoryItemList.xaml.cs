@@ -28,7 +28,7 @@ namespace Inventory.Adjustment.UI.Controls
         {
             InitializeComponent();
 
-            _viewModel = new InventoryItemListViewModel(SessionManager.Instance, DialogCoordinator.Instance);
+            _viewModel = new InventoryItemListViewModel(SessionManager.Instance, DialogCoordinator.Instance, this.Dispatcher);
             this.DataContext = _viewModel;
         }
 

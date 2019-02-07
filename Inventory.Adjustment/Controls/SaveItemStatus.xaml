@@ -1,0 +1,32 @@
+﻿<dialogs:CustomDialog x:Class="Inventory.Adjustment.UI.Controls.SaveItemStatus"
+                      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+                      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+                      xmlns:local="clr-namespace:Inventory.Adjustment.UI.Controls"
+                      xmlns:dialogs="clr-namespace:MahApps.Metro.Controls.Dialogs;assembly=MahApps.Metro"
+                      xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
+                      mc:Ignorable="d"
+                      dialogs:DialogParticipation.Register="{Binding}"
+                      Height="300"
+                      Width="300">
+    <Border Margin="-75,-10,-75, 0" BorderBrush="{StaticResource AccentNeutralColorBrush}" BorderThickness="2">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <StackPanel Grid.Row="0" Grid.Column="0"  HorizontalAlignment="Center" VerticalAlignment="Center" Orientation="Vertical">
+                <mah:ProgressRing HorizontalAlignment="Center" VerticalAlignment="Top" 
+                                  Height="100" Width="100" Foreground="DodgerBlue"
+                                  Margin="0,0,0,40"/>
+                <TextBlock Width="250" HorizontalAlignment="Center" VerticalAlignment="Bottom"
+                           Foreground="Black" FontSize="18" Margin="20,0,20,0" TextAlignment="Center">Saving Item To QuickBooks ...</TextBlock>
+            </StackPanel>
+        </Grid>
+    </Border>
+</dialogs:CustomDialog>
