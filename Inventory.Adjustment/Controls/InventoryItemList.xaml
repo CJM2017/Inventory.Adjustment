@@ -39,7 +39,7 @@
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type DataGridCell}">
-                        <Grid Background="{TemplateBinding Background}">
+                        <Grid>
                             <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
                         </Grid>
                     </ControlTemplate>
@@ -50,7 +50,7 @@
         <ControlTemplate x:Key="DefaultMenuItemControl" TargetType="{x:Type MenuItem}">
             <Border x:Name="Bd" Padding="17,0,17,0" BorderBrush="{TemplateBinding BorderBrush}" 
                     BorderThickness="{TemplateBinding BorderThickness}" 
-                    Background="{TemplateBinding Background}" 
+                    Background="{TemplateBinding Background}"
                     SnapsToDevicePixels="True" Uid="Border_38">
                 <ContentPresenter x:Name="ContentPresenter"  Content="{TemplateBinding Header}" 
                                   Grid.Column="1" ContentSource="Header" Margin="{TemplateBinding Padding}" 
@@ -59,7 +59,7 @@
             </Border>
             <ControlTemplate.Triggers>
                 <Trigger Property="IsHighlighted" Value="True">
-                    <Setter Property="Background" TargetName="Bd" Value="{StaticResource ListAccentLowColorBrush}"/>
+                    <Setter Property="Background" TargetName="Bd" Value="LightGray"/>
                 </Trigger>
             </ControlTemplate.Triggers>
         </ControlTemplate>
@@ -71,11 +71,7 @@
             <Setter Property="Padding" Value="2,5,2,5"/>
             <Setter Property="HorizontalAlignment" Value="Left"/>
             <Setter Property="FontSize" Value="15"/>
-            <Style.Triggers>
-                <Trigger Property="IsMouseOver" Value="True">
-                    <Setter Property="Foreground" Value="White"/>
-                </Trigger>
-            </Style.Triggers>
+            <Setter Property="FontWeight" Value="Normal"/>
         </Style>
     </UserControl.Resources>
 
@@ -96,20 +92,21 @@
                 <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
 
-            <StackPanel Grid.Column="0" Orientation="Horizontal">
-                <Label Content="Look for" FontSize="13" Foreground="Black" 
-                       VerticalAlignment="Center" Margin="10,5,10,5"/>
+            <StackPanel Grid.Column="0" Orientation="Horizontal" Margin="2">
+                <Label Content="Look for" FontSize="15" Foreground="Black" 
+                       VerticalAlignment="Center" Margin="15,5,10,5"/>
                 <TextBox Height="32" Width="150" FontSize="15" Padding="0,2,0,0"
                          BorderBrush="Gray"
                          Controls:TextBoxHelper.Watermark="Search" 
                          Controls:TextBoxHelper.ClearTextButton="True"
                          Text="{Binding SearchString, UpdateSourceTrigger=PropertyChanged}"/>
-                <Label Content="in" FontSize="13" Foreground="Black"
+                <Label Content="in" FontSize="15" Foreground="Black"
                        VerticalAlignment="Center" Margin="10,5,6,5"/>
                 <ComboBox Height="32" Width="150" Margin="5,15,15,15"
                           ItemsSource="{Binding DropDownOptions}"
                           SelectedItem="{Binding SelectedField}"
-                          Foreground="Black" BorderBrush="Black"/>
+                          Foreground="Black" BorderBrush="Black"
+                          FontSize="15"/>
                 <Button x:Name="SearchButton"
                         Margin="3"
                         Visibility="Visible"
@@ -124,7 +121,7 @@
 
             <Button x:Name="CreateInventoryItemButton"       
                     Grid.Column="2"
-                    Margin="15"
+                    Margin="15,15, 25, 15"
                     Foreground="White"
                     Background="LightGreen"
                     Visibility="Visible"
@@ -136,12 +133,12 @@
         </Grid>
 
         <DataGrid x:Name="InventoryDataGrid" Grid.Row="1"
-                          SelectionUnit="FullRow" Margin="10,10,10,10" AutoGenerateColumns="False" 
-                          ItemsSource="{Binding Items}" SelectionChanged="Handle_Selection" CanUserAddRows="False" CanUserDeleteRows="False" 
-                          CanUserReorderColumns="False" CanUserResizeColumns="True" CanUserResizeRows="True" CanUserSortColumns="True"
-                          ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Auto" 
-                          ScrollViewer.CanContentScroll="True"
-                          IsReadOnly="True" EnableRowVirtualization="True">
+                  SelectionUnit="FullRow" Margin="10,10,10,10" AutoGenerateColumns="False" 
+                  ItemsSource="{Binding Items}" SelectionChanged="Handle_Selection" CanUserAddRows="False" CanUserDeleteRows="False" 
+                  CanUserReorderColumns="False" CanUserResizeColumns="True" CanUserResizeRows="True" CanUserSortColumns="True"
+                  ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Auto" 
+                  ScrollViewer.CanContentScroll="True"
+                  IsReadOnly="True" EnableRowVirtualization="True">
             <DataGrid.Resources>
                 <utils:BindingProxy x:Key="proxy" Data="{Binding}" />
                 <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="Transparent" />
@@ -163,7 +160,7 @@
                 </Style>
             </DataGrid.Resources>
             <DataGrid.RowStyle>
-                <Style TargetType="DataGridRow">
+                <Style TargetType="{x:Type DataGridRow}">
                     <Setter Property="BorderBrush" Value="LightGray"/>
                     <Setter Property="BorderThickness" Value="0.75"/>
                     <Setter Property="ContextMenu">
@@ -177,19 +174,13 @@
                         </Setter.Value>
                     </Setter>
                     <Style.Triggers>
-                        <Trigger Property="AlternationIndex" Value="0">
-                            <Setter Property="Background" Value="White" />
-                        </Trigger>
-                        <Trigger Property="AlternationIndex" Value="1">
-                            <Setter Property="Background" Value="White" />
-                        </Trigger>
                         <Trigger Property="IsSelected" Value="True">
-                            <Setter Property="Background" Value="DarkGray" />
-                            <Setter Property="Foreground" Value="Black" />
+                            <Setter Property="Background" Value="{StaticResource ListAccentLowColorBrush}"/>
+                            <Setter Property="Foreground" Value="White" />
                             <Setter Property="FontWeight" Value="Bold" />
                         </Trigger>
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter Property="Background" Value="LightBlue" />
+                            <Setter Property="Background" Value="LightGray"/>
                             <Setter Property="Foreground" Value="Black" />
                             <Setter Property="FontWeight" Value="Bold" />
                         </Trigger>
