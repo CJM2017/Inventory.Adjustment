@@ -8,9 +8,12 @@
                       xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
                       mc:Ignorable="d"
                       dialogs:DialogParticipation.Register="{Binding}"
-                      Height="300"
-                      Width="300">
-    <Border Margin="-75,-10,-75, 0" BorderBrush="{StaticResource AccentNeutralColorBrush}" BorderThickness="2">
+                      Background="WhiteSmoke" Opacity="0.2"
+                      Height="100"
+                      Width="400">
+    <Border Margin="-100,-10,-100, 0" 
+            BorderBrush="{StaticResource AccentNeutralColorBrush}" 
+            BorderThickness="2">
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>
@@ -21,11 +24,18 @@
             </Grid.ColumnDefinitions>
 
             <StackPanel Grid.Row="0" Grid.Column="0"  HorizontalAlignment="Center" VerticalAlignment="Center" Orientation="Vertical">
-                <mah:ProgressRing HorizontalAlignment="Center" VerticalAlignment="Top" 
-                                  Height="100" Width="100" Foreground="DodgerBlue"
-                                  Margin="0,0,0,40"/>
+                <mah:MetroProgressBar HorizontalAlignment="Center" 
+                                      VerticalAlignment="Top"
+                                      Height="10"
+                                      Width="230"
+                                      Background="LightGray"
+                                      Foreground="DodgerBlue"
+                                      BorderBrush="Black"
+                                      BorderThickness="0.50"
+                                      Value="{Binding Progress}"
+                                      Margin="0,10,0,10"/>
                 <TextBlock Width="250" HorizontalAlignment="Center" VerticalAlignment="Bottom"
-                           Foreground="Black" FontSize="18" Margin="20,0,20,0" TextAlignment="Center">Saving Item To QuickBooks ...</TextBlock>
+                           Foreground="Black" FontSize="16" Margin="20,0,20,0" TextAlignment="Center">Saving Item To QuickBooks ...</TextBlock>
             </StackPanel>
         </Grid>
     </Border>

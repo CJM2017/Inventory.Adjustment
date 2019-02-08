@@ -164,6 +164,7 @@ namespace Inventory.Adjustment.UI.ViewModels
             {
                 ListId = this._selectedItem.ListId,
                 EditSequence = this._selectedItem.EditSequence,
+                Code = this._selectedItem.Code,
                 Cost = ItemCost,
                 BasePrice = ItemSalesPrice,
                 ContractorPrice = this.ContractorPrice,
@@ -182,7 +183,7 @@ namespace Inventory.Adjustment.UI.ViewModels
 
             if (dialogOnScreen != null)
             {
-                await DialogCoordinator.Instance.HideMetroDialogAsync(this, dialogOnScreen);
+                await this._dialogCoordinator.HideMetroDialogAsync(this, dialogOnScreen);
             }
         }
     }

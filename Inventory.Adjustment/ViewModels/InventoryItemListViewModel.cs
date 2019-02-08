@@ -19,9 +19,6 @@ namespace Inventory.Adjustment.UI.ViewModels
     using Inventory.Adjustment.UI.Controls;
     using MahApps.Metro.Controls.Dialogs;
     using System.Windows.Threading;
-    using Inventory.Adjustment.Client.QuickBooksClient;
-    using System.Windows.Input;
-    using System.Windows;
     using System.Collections.Specialized;
     using System.Threading.Tasks;
 
@@ -229,114 +226,21 @@ namespace Inventory.Adjustment.UI.ViewModels
             // TODO
         }
 
-        private void HandleSave(object sender, NotifyCollectionChangedEventArgs e)
+        private async void HandleSave(object sender, NotifyCollectionChangedEventArgs e)
         {
             if (e.NewItems != null)
             {
                 foreach (var item in e.NewItems)
                 {
-                    SaveItem(item as InventoryItem);
+                    await SaveItem(item as InventoryItem);
                 }
             }
         }
 
-        private void ClearQueue()
+        private async Task SaveItem(InventoryItem itemToModify)
         {
-            while (ItemsToModify.Any())
-            {
-                ItemsToModify.Remove(ItemsToModify.First());
-            }
-        }
-
-        private async void SaveItem(InventoryItem itemToModify)
-        {
-            // Set mouse to busy
-            UpdateMouse(true);
-
-            // Setup the saving state dialog
-            var saveDialog = new SaveItemStatus(this);
-
-            // Launch the saving to QuickBooks dialog
+            var saveDialog = new SaveItemStatus(this._sessionManager, this._dialogCoordinator, this, itemToModify);
             await this._dialogCoordinator.ShowMetroDialogAsync(this, saveDialog);
-
-            try
-            {
-                var returnedItem = await this._sessionManager.QBClient.UpdateInventoryItem<InventoryItem>(itemToModify);
-                returnedItem.Item.ContractorPrice = itemToModify.ContractorPrice;
-                returnedItem.Item.ElectricianPrice = itemToModify.ElectricianPrice;
-
-                // Update the contactor price level for the item
-                var contractorLevel = this._sessionManager.PriceLevels.Items.First(item => item.Name.ToLower().Equals("contractor"));
-                var responseContractorLevel = await this._sessionManager.QBClient.SetPriceLevel<PriceLevel>(
-                                                                                                           itemToModify.ListId,
-                                                                                                           contractorLevel.ListId,
-                                                                                                           contractorLevel.EditSequence,
-                                                                                                           itemToModify.ContractorPrice);
-
-                // Update the electrician price level for the item
-                var electricianLevel = this._sessionManager.PriceLevels.Items.First(item => item.Name.ToLower().Equals("electrician"));
-                var responseElectricianLevel = await this._sessionManager.QBClient.SetPriceLevel<PriceLevel>(
-                                                                                                            itemToModify.ListId,
-                                                                                                            electricianLevel.ListId,
-                                                                                                            electricianLevel.EditSequence,
-                                                                                                            itemToModify.ElectricianPrice);
-
-                // Merge the returned source changes into the target session manager
-                this._sessionManager.MergeUpdates(returnedItem.Item, responseContractorLevel.Item, responseElectricianLevel.Item);
-            }
-            catch (QuickBooksClientException ex)
-            {
-                await TearDown();
-                ShowErrorMessage(itemToModify.Code);
-            }
-            finally
-            {
-                await TearDown();
-            }
-        }
-
-        private async Task TearDown()
-        {
-            ClearQueue();
-            await CloseActiveDialog();
-            UpdateMouse(false);
-        }
-
-        private void UpdateMouse(bool busy)
-        {
-            this._dispatcher.Invoke(() =>
-            {
-                if (busy)
-                {
-                    Mouse.OverrideCursor = System.Windows.Input.Cursors.AppStarting;
-                }
-                else
-                {
-                    Mouse.OverrideCursor = null;
-                }
-            });
-        }
-
-        private void ShowErrorMessage(string itemCode)
-        {
-            this._dispatcher.Invoke(() =>
-            {
-                string errorLabel = "QuickBooks Client Error";
-                string errorMessage = $"Report: Something went wrong while updating Item # {itemCode}. " +
-                                       "Please check your connection to QuickBooks and try again!";
-
-                MessageBox.Show(errorMessage, errorLabel, MessageBoxButton.OK, MessageBoxImage.Error);
-            });
-        }
-
-        private async Task CloseActiveDialog()
-        {
-            var dialogOnScreen = await this._dialogCoordinator.GetCurrentDialogAsync<BaseMetroDialog>(this);
-
-            if (dialogOnScreen != null)
-            {
-                await DialogCoordinator.Instance.HideMetroDialogAsync(this, dialogOnScreen);
-            }
         }
     }
 }

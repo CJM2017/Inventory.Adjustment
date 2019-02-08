@@ -45,12 +45,6 @@ namespace Inventory.Adjustment
             }
             catch (QuickBooksClientException ex)
             {
-                string errorLabel = "QuickBooks Client Error";
-                string errorMessage = "Report: Unable to connect to " +
-                                      "the QuickBooks Desktop Application - " +
-                                      "Please verify that QuickBooks is also running!";
-
-                MessageBox.Show(errorMessage, errorLabel, MessageBoxButton.OK, MessageBoxImage.Error);
                 throw ex;
             }
 
