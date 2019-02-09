@@ -154,7 +154,7 @@ namespace Inventory.Adjustment.UI.ViewModels
             this._dispatcher.Invoke(() =>
             {
                 string errorLabel = "QuickBooks Client Error";
-                string errorMessage = $"Report: Something went wrong while updating Item #: {itemCode}. " +
+                string errorMessage = $"Report: Something went wrong while updating Item-# {itemCode}. " +
                                        "Please check your connection to QuickBooks and try again!";
 
                 MessageBox.Show(errorMessage, errorLabel, MessageBoxButton.OK, MessageBoxImage.Error);
