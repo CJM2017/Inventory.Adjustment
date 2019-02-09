@@ -63,49 +63,7 @@ namespace Inventory.Adjustment.UI.ViewModels
         private async Task Save()
         {
             // TODO - pub/sub event driven
-            // Set mouse to busy
-            UpdateMouse(true);
-            var error = false;
-
-            try
-            {
-                // Update the item itself
-                var returnedItem = await this._sessionManager.QBClient.UpdateInventoryItem<InventoryItem>(this._itemToModify);
-                returnedItem.Item.ContractorPrice = this._itemToModify.ContractorPrice;
-                returnedItem.Item.ElectricianPrice = this._itemToModify.ElectricianPrice;
-                UpdateProgress();
-
-                // Update the contactor price level for the item
-                var contractorLevel = this._sessionManager.PriceLevels.Items.First(item => item.Name.ToLower().Equals("contractor"));
-                var responseContractorLevel = await this._sessionManager.QBClient.SetPriceLevel<PriceLevel>(
-                                                                                                           this._itemToModify.ListId,
-                                                                                                           contractorLevel.ListId,
-                                                                                                           contractorLevel.EditSequence,
-                                                                                                           this._itemToModify.ContractorPrice);
-                UpdateProgress();
-
-                // Update the electrician price level for the item
-                var electricianLevel = this._sessionManager.PriceLevels.Items.First(item => item.Name.ToLower().Equals("electrician"));
-                var responseElectricianLevel = await this._sessionManager.QBClient.SetPriceLevel<PriceLevel>(
-                                                                                                            this._itemToModify.ListId,
-                                                                                                            electricianLevel.ListId,
-                                                                                                            electricianLevel.EditSequence,
-                                                                                                            this._itemToModify.ElectricianPrice);
-                UpdateProgress();
-
-                // Merge the returned source changes into the target session manager
-                this._sessionManager.MergeUpdates(returnedItem.Item, responseContractorLevel.Item, responseElectricianLevel.Item);
-                UpdateProgress();
-            }
-            catch (QuickBooksClientException ex)
-            {
-                // TODO - Log
-                error = true;
-            }
-            finally
-            {
-                await TearDown(error);
-            }
+            
         }
 
         private void UpdateProgress()

@@ -89,6 +89,7 @@
       <DependentUpon>WorkflowToolbar.xaml</DependentUpon>
     </Compile>
     <Compile Include="Utilities\BindingProxy.cs" />
+    <Compile Include="Utilities\BoolToOppositeBoolConverter .cs" />
     <Compile Include="Utilities\Navigation.cs" />
     <Compile Include="ViewModels\EditItemViewModelcs.cs" />
     <Compile Include="ViewModels\InventoryItemListViewModel.cs" />

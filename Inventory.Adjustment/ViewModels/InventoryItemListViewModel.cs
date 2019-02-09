@@ -18,9 +18,12 @@ namespace Inventory.Adjustment.UI.ViewModels
     using System.Reflection;
     using Inventory.Adjustment.UI.Controls;
     using MahApps.Metro.Controls.Dialogs;
-    using System.Windows.Threading;
     using System.Collections.Specialized;
     using System.Threading.Tasks;
+    using System.Windows.Input;
+    using System.Windows;
+    using Inventory.Adjustment.Client.QuickBooksClient;
+    using System.Windows.Threading;
 
     /// <summary>
     /// View model class for the inventory item list.
@@ -36,13 +39,14 @@ namespace Inventory.Adjustment.UI.ViewModels
 
         private string _selectedField;
         private string _searchString;
+        private bool _isSaving;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="InventoryItemListViewModel"/> class
         /// </summary>
         public InventoryItemListViewModel(
             ISessionManager sessionManager, 
-            IDialogCoordinator coordinator, 
+            IDialogCoordinator coordinator,
             Dispatcher dispatcher)
         {
             this._sessionManager = sessionManager;
@@ -65,6 +69,7 @@ namespace Inventory.Adjustment.UI.ViewModels
 
             ItemsToModify = new ObservableCollection<InventoryItem>();
             ItemsToModify.CollectionChanged += HandleSave;
+            IsSaving = false;
         }
 
         public DelegateCommand CreateItemCommand { get; private set; }
@@ -95,6 +100,19 @@ namespace Inventory.Adjustment.UI.ViewModels
         /// Gets or sets the drop down search options.
         /// </summary>
         public List<string> DropDownOptions { get; private set; }
+
+        /// <summary>
+        /// Gets or sets whether we're in the saving item state.
+        /// </summary>
+        public bool IsSaving
+        {
+            get => this._isSaving;
+            set
+            {
+                this._isSaving = value;
+                RaisePropertyChanged();
+            }
+        }
 
         /// <summary>
         /// Gets or sets the selected search field.
@@ -239,8 +257,93 @@ namespace Inventory.Adjustment.UI.ViewModels
 
         private async Task SaveItem(InventoryItem itemToModify)
         {
-            var saveDialog = new SaveItemStatus(this._sessionManager, this._dialogCoordinator, this, itemToModify);
-            await this._dialogCoordinator.ShowMetroDialogAsync(this, saveDialog);
+            // Sets the saving progress wheel visible
+            // and disables grid hittest
+            IsSaving = true;
+
+            // Set mouse to busy
+            UpdateMouse(true);
+
+            await Task.Run(async () =>
+            {
+                try
+                {
+                    // Update the item itself
+                    var returnedItem = await this._sessionManager.QBClient.UpdateInventoryItem<InventoryItem>(itemToModify);
+                    returnedItem.Item.ContractorPrice = itemToModify.ContractorPrice;
+                    returnedItem.Item.ElectricianPrice = itemToModify.ElectricianPrice;
+
+                    // Update the contactor price level for the item
+                    var contractorLevel = this._sessionManager.PriceLevels.Items.First(item => item.Name.ToLower().Equals("contractor"));
+                    var responseContractorLevel = await this._sessionManager.QBClient.SetPriceLevel<PriceLevel>(
+                                                                                                               itemToModify.ListId,
+                                                                                                               contractorLevel.ListId,
+                                                                                                               contractorLevel.EditSequence,
+                                                                                                               itemToModify.ContractorPrice);
+
+                    // Update the electrician price level for the item
+                    var electricianLevel = this._sessionManager.PriceLevels.Items.First(item => item.Name.ToLower().Equals("electrician"));
+                    var responseElectricianLevel = await this._sessionManager.QBClient.SetPriceLevel<PriceLevel>(
+                                                                                                                itemToModify.ListId,
+                                                                                                                electricianLevel.ListId,
+                                                                                                                electricianLevel.EditSequence,
+                                                                                                                itemToModify.ElectricianPrice);
+
+                    // Merge the returned source changes into the target session manager
+                    this._sessionManager.MergeUpdates(returnedItem.Item, responseContractorLevel.Item, responseElectricianLevel.Item);
+                }
+                catch (QuickBooksClientException ex)
+                {
+                    // TODO - Log
+                    ShowErrorMessage(itemToModify.Code);
+                }
+                finally
+                {
+                    TearDown();
+                }
+            }).ConfigureAwait(false);
+        }
+
+        private void TearDown()
+        {
+            ClearQueue();
+            UpdateMouse(false);
+            IsSaving = false;
+        }
+
+        private void ClearQueue()
+        {
+            while (this.ItemsToModify.Any())
+            {
+                this.ItemsToModify.Remove(this.ItemsToModify.First());
+            }
+        }
+
+        private void UpdateMouse(bool busy)
+        {
+            this._dispatcher.Invoke(() =>
+            {
+                if (busy)
+                {
+                    Mouse.OverrideCursor = System.Windows.Input.Cursors.AppStarting;
+                }
+                else
+                {
+                    Mouse.OverrideCursor = null;
+                }
+            });
+        }
+
+        private void ShowErrorMessage(string itemCode)
+        {
+            this._dispatcher.Invoke(() =>
+            {
+                string errorLabel = "QuickBooks Client Error";
+                string errorMessage = $"Report: Something went wrong while updating Item-# {itemCode}. " +
+                                        "Please check your connection to QuickBooks and try again!";
+
+                MessageBox.Show(errorMessage, errorLabel, MessageBoxButton.OK, MessageBoxImage.Error);
+            });
         }
     }
 }

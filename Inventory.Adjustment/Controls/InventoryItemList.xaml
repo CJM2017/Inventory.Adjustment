@@ -3,7 +3,6 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:Inventory.Adjustment.UI.Controls"
              xmlns:utils="clr-namespace:Inventory.Adjustment.UI.Utilities"
              xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
              xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
@@ -13,6 +12,9 @@
              d:DesignHeight="450" d:DesignWidth="800">
 
     <UserControl.Resources>
+
+        <utils:BoolToOppositeBoolConverter x:Key="oppositeConverter" />
+        
         <Style x:Key="DeleteButton" TargetType="{x:Type Button}">
             <Setter Property="Background" Value="DimGray"/>
             <Setter Property="Template">
@@ -75,7 +77,10 @@
         </Style>
     </UserControl.Resources>
 
-    <Grid x:Name="RootGrid" Margin="10">
+    <Grid x:Name="RootGrid" 
+          Margin="10"
+          IsHitTestVisible="{Binding IsSaving, Converter={StaticResource oppositeConverter}}">
+        
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
@@ -221,5 +226,27 @@
                 </DataGridTemplateColumn>
             </DataGrid.Columns>
         </DataGrid>
+        
+        <Popup x:Name="LoadingPopup" Placement="Center"
+               PlacementTarget="{Binding ElementName=RootGrid}"
+               HorizontalOffset="0"
+               Height="200"
+               Width="200"
+               IsOpen="{Binding IsSaving}"
+               StaysOpen="True"
+               PopupAnimation="Fade"
+               AllowsTransparency="True">
+            <StackPanel Background="Black" Opacity="0.5"
+                        Height="200"
+                        Width="200">
+                <Controls:ProgressRing Foreground="DarkGray"
+                                       Background="Black"
+                                       Opacity="1.0"
+                                       Height="125"
+                                       Width="125"
+                                       Margin="0,35,0,0">
+                </Controls:ProgressRing>
+            </StackPanel>
+        </Popup>
     </Grid>
 </UserControl>
