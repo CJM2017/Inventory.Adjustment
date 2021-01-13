@@ -8,13 +8,10 @@ namespace Inventory.Adjustment.UI.Infrastructure
 {
     using System;
     using System.Reflection;
-    using System.Threading.Tasks;
     using System.ComponentModel.Composition.Hosting;
-    using Inventory.Adjustment.Data.Serializable;
     using Inventory.Adjustment.UI.Infrastructure.Interfaces;
     using Inventory.Adjustment.Client.QuickBooksClient;
     using log4net;
-    using System.Linq;
 
     /// <summary>
     /// Singleton class for holding session data for the application.
@@ -32,7 +29,7 @@ namespace Inventory.Adjustment.UI.Infrastructure
         /// </summary>
         private SessionManager()
         {
-            _log = LogManager.GetLogger(typeof(SessionManager));
+            this._log = LogManager.GetLogger(typeof(SessionManager));
             AggregateCatalog catalog = new AggregateCatalog();
 
             // 1. this adds the executables of the current executable folder to the catalog
@@ -42,20 +39,23 @@ namespace Inventory.Adjustment.UI.Infrastructure
             catalog.Catalogs.Add(new DirectoryCatalog(execPath, "*.exe"));
 
             // 2. this creates the container that is passed to map view and beyond
-            _container = new CompositionContainer(catalog);
+            this._container = new CompositionContainer(catalog);
 
             // Get information on the application 
-            AppName = Assembly.GetExecutingAssembly().GetName().Name.ToString().Replace(".", " ").Replace("UI", "");
-            AppVersion = Assembly.GetExecutingAssembly().GetName().Version.ToString();
-            QBClient = new QuickBooksClient(string.Empty, $"{AppName} v{AppVersion}", "US");
+            this.AppName = Assembly.GetExecutingAssembly().GetName().Name.ToString().Replace(".", " ").Replace("UI", "");
+            this.AppVersion = Assembly.GetExecutingAssembly().GetName().Version.ToString();
+            var client = new QuickBooksClient(string.Empty, $"{this.AppName} v{this.AppVersion}", "US");
 
-            Inventory = new QBItemCollection<InventoryItem>();
+            this.InventoryManager = new InventoryManager(client);
         }
 
         /// <summary>
         /// Gets a singleton instance of this class.
         /// </summary>
         public static ISessionManager Instance => _instance ?? (_instance = new SessionManager());
+
+        /// <inheritdoc/>
+        public InventoryManager InventoryManager { get; }
 
         /// <inheritdoc/>
         public string AppName { get; private set; }
@@ -66,76 +66,9 @@ namespace Inventory.Adjustment.UI.Infrastructure
         /// <inheritdoc/>
         public CompositionContainer Container => _container;
 
-        /// <inheritdoc/>
-        public IQuickBooksClient QBClient { get; private set; }
-
-        /// <inheritdoc/>
-        public QBItemCollection<InventoryItem> Inventory { get; set; }
-
-        /// <inheritdoc/>
-        public QBPriceLevelCollection<PriceLevel> PriceLevels { get; set; }
-
-        /// <inheritdoc/>
-        public void MergeUpdates(InventoryItem sourceItem, PriceLevel sourceContractor, PriceLevel sourceElectrician)
-        {
-            // Merge the inventory item
-            var target = Inventory.Items.First(item => item.ListId.Equals(sourceItem.ListId));
-
-            target.EditSequence = sourceItem.EditSequence;
-            target.Cost = sourceItem.Cost;
-            target.BasePrice = sourceItem.BasePrice;
-            target.ContractorPrice = sourceItem.ContractorPrice;
-            target.ElectricianPrice = sourceItem.ElectricianPrice;
-
-            // Merge contractor price level
-            var targetContractor = PriceLevels.Items.First(level => level.ListId.Equals(sourceContractor.ListId));
-            targetContractor.EditSequence = sourceContractor.EditSequence;
-
-            // Merge electrician price level
-            var targetElectrician = PriceLevels.Items.First(level => level.ListId.Equals(sourceElectrician.ListId));
-            targetElectrician.EditSequence = sourceElectrician.EditSequence;
-        }
-
-        /// <inheritdoc/>
-        public async Task LoadSessionData()
-        {
-            try
-            {
-                Inventory = await QBClient.GetInventory<InventoryItem>();
-                PriceLevels = await QBClient.GetPriceLevels<PriceLevel>();
-                CleanItems();
-
-                var electricianMap = PriceLevels.Items.First(item => item.Name.ToLower().Equals("electrician")).PriceLevelItems.Select(
-                                                             item => new { item.ItemRef.Name, item.CustomPrice }).ToDictionary(
-                                                             item => item.Name, item => item.CustomPrice);
-
-                var contractorMap = PriceLevels.Items.First(item => item.Name.ToLower().Equals("contractor")).PriceLevelItems.Select(
-                                                            item => new { item.ItemRef.Name, item.CustomPrice }).ToDictionary(
-                                                            item => item.Name, item => item.CustomPrice);
-
-                foreach (var item in Inventory.Items)
-                {
-                    double price;
-
-                    electricianMap.TryGetValue(item.Code, out price);
-                    item.ElectricianPrice = price;
-
-                    contractorMap.TryGetValue(item.Code, out price);
-                    item.ContractorPrice = price;
-                }
-
-                _log.Debug("Inventory session data has been loaded");
-            }
-            catch (Exception ex)
-            {
-                throw new QuickBooksClientException(ex.ToString());
-            }
-        }
-
         public void Dispose()
         {
-            Dispose(true);
-            // TODO: uncomment the following line if the finalizer is overridden above.
+            this.Dispose(true);
             GC.SuppressFinalize(this);
         }
 
@@ -145,22 +78,10 @@ namespace Inventory.Adjustment.UI.Infrastructure
             {
                 if (disposing)
                 {
-                    QBClient.Dispose();
+                    this.InventoryManager.Dispose();
                 }
 
-                // TODO: free unmanaged resources (unmanaged objects) and override a finalizer below.
-                // TODO: set large fields to null.
-
                 _disposedValue = true;
-            }
-        }
-
-        private void CleanItems()
-        {
-            var itemsToDelete = Inventory.Items.Where(item => item.Code == null || !item.IsActive).ToList();
-            foreach (var item in itemsToDelete)
-            {
-                Inventory.Items.Remove(item);
             }
         }
     }

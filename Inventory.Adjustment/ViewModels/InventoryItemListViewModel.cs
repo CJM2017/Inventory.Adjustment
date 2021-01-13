@@ -30,7 +30,7 @@ namespace Inventory.Adjustment.UI.ViewModels
     /// </summary>
     public class InventoryItemListViewModel : BindableBase
     {
-        private readonly ISessionManager _sessionManager;
+        private readonly IInventoryManager _inventoryManager;
         private readonly IDialogCoordinator _dialogCoordinator;
         private readonly Dispatcher _dispatcher;
 
@@ -45,11 +45,11 @@ namespace Inventory.Adjustment.UI.ViewModels
         /// Initializes a new instance of the <see cref="InventoryItemListViewModel"/> class
         /// </summary>
         public InventoryItemListViewModel(
-            ISessionManager sessionManager, 
+            IInventoryManager inventoryManager, 
             IDialogCoordinator coordinator,
             Dispatcher dispatcher)
         {
-            this._sessionManager = sessionManager;
+            this._inventoryManager = inventoryManager;
             this._dialogCoordinator = coordinator;
             this._dispatcher = dispatcher;
 
@@ -65,7 +65,7 @@ namespace Inventory.Adjustment.UI.ViewModels
             SelectedField = DropDownOptions.First();
 
             SelectedItems = new List<InventoryItem>();
-            Items =  new ObservableCollection<InventoryItem>(_sessionManager.Inventory.Items);
+            Items =  new ObservableCollection<InventoryItem>(_inventoryManager.Inventory.Items);
 
             ItemsToModify = new ObservableCollection<InventoryItem>();
             ItemsToModify.CollectionChanged += HandleSave;
@@ -73,11 +73,8 @@ namespace Inventory.Adjustment.UI.ViewModels
         }
 
         public DelegateCommand CreateItemCommand { get; private set; }
-
         public DelegateCommand EditItemCommand { get; private set; }
-
         public DelegateCommand SearchCommand { get; private set; }
-
         public DelegateCommand DeleteItemCommand { get; private set; }
 
         /// <summary>
@@ -210,13 +207,13 @@ namespace Inventory.Adjustment.UI.ViewModels
         {
             if (SelectedField.ToLower().Equals("vendor"))
             {
-                Items = new ObservableCollection<InventoryItem>(_sessionManager.Inventory.Items.Where(
+                Items = new ObservableCollection<InventoryItem>(_inventoryManager.Inventory.Items.Where(
                                                                 item => item.Vendor.Name.ToLower().Contains(
                                                                  SearchString.ToLower())));
             }
             else
             {
-                Items = new ObservableCollection<InventoryItem>(_sessionManager.Inventory.Items.Where(
+                Items = new ObservableCollection<InventoryItem>(_inventoryManager.Inventory.Items.Where(
                                                             item => item[SelectedField].ToString().ToLower().Contains(
                                                             SearchString.ToLower())));
             }
@@ -225,7 +222,7 @@ namespace Inventory.Adjustment.UI.ViewModels
         private void Reset()
         {
             SelectedItems = new List<InventoryItem>();
-            Items = new ObservableCollection<InventoryItem>(_sessionManager.Inventory.Items);
+            Items = new ObservableCollection<InventoryItem>(_inventoryManager.Inventory.Items);
         }
 
         private async void ExecuteEdit()
@@ -264,44 +261,19 @@ namespace Inventory.Adjustment.UI.ViewModels
             // Set mouse to busy
             UpdateMouse(true);
 
-            await Task.Run(async () =>
+            try
             {
-                try
-                {
-                    // Update the item itself
-                    var returnedItem = await this._sessionManager.QBClient.UpdateInventoryItem<InventoryItem>(itemToModify);
-                    returnedItem.Item.ContractorPrice = itemToModify.ContractorPrice;
-                    returnedItem.Item.ElectricianPrice = itemToModify.ElectricianPrice;
-
-                    // Update the contactor price level for the item
-                    var contractorLevel = this._sessionManager.PriceLevels.Items.First(item => item.Name.ToLower().Equals("contractor"));
-                    var responseContractorLevel = await this._sessionManager.QBClient.SetPriceLevel<PriceLevel>(
-                                                                                                               itemToModify.ListId,
-                                                                                                               contractorLevel.ListId,
-                                                                                                               contractorLevel.EditSequence,
-                                                                                                               itemToModify.ContractorPrice);
-
-                    // Update the electrician price level for the item
-                    var electricianLevel = this._sessionManager.PriceLevels.Items.First(item => item.Name.ToLower().Equals("electrician"));
-                    var responseElectricianLevel = await this._sessionManager.QBClient.SetPriceLevel<PriceLevel>(
-                                                                                                                itemToModify.ListId,
-                                                                                                                electricianLevel.ListId,
-                                                                                                                electricianLevel.EditSequence,
-                                                                                                                itemToModify.ElectricianPrice);
-
-                    // Merge the returned source changes into the target session manager
-                    this._sessionManager.MergeUpdates(returnedItem.Item, responseContractorLevel.Item, responseElectricianLevel.Item);
-                }
-                catch (QuickBooksClientException ex)
-                {
-                    // TODO - Log
-                    ShowErrorMessage(itemToModify.Code);
-                }
-                finally
-                {
-                    TearDown();
-                }
-            }).ConfigureAwait(false);
+                await this._inventoryManager.UpdateItem(itemToModify);
+            }
+            catch (QuickBooksClientException)
+            {
+                // TODO - Log
+                ShowErrorMessage(itemToModify.Code);
+            }
+            finally
+            {
+                TearDown();
+            }
         }
 
         private void TearDown()
@@ -325,7 +297,7 @@ namespace Inventory.Adjustment.UI.ViewModels
             {
                 if (busy)
                 {
-                    Mouse.OverrideCursor = System.Windows.Input.Cursors.AppStarting;
+                    Mouse.OverrideCursor = Cursors.AppStarting;
                 }
                 else
                 {

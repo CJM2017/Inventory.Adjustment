@@ -10,11 +10,11 @@ namespace Inventory.Adjustment.Client.QuickBooksClient
     using System.Threading.Tasks;
     using System.Collections.ObjectModel;
     using Inventory.Adjustment.Data.Serializable;
-    using Interop.QBFC13;
     using System.Xml.Serialization;
     using System.IO;
     using System.Xml;
     using System.Text;
+    using QBFC14Lib;
 
     public class QuickBooksClient : IQuickBooksClient
     {

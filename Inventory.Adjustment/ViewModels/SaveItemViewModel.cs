@@ -11,7 +11,6 @@ namespace Inventory.Adjustment.UI.ViewModels
     using System.Windows;
     using System.Windows.Input;
     using System.Windows.Threading;
-    using Inventory.Adjustment.Client.QuickBooksClient;
     using Inventory.Adjustment.Data.Serializable;
     using Inventory.Adjustment.UI.Infrastructure.Interfaces;
     using MahApps.Metro.Controls.Dialogs;
@@ -43,8 +42,6 @@ namespace Inventory.Adjustment.UI.ViewModels
             this._inventoryItemListViewModel = vm;
             this._dispatcher = dispatcher;
             this._itemToModify = itemToMod;
-
-            Save();
         }
 
         /// <summary>
@@ -58,12 +55,6 @@ namespace Inventory.Adjustment.UI.ViewModels
                 this._progress = value;
                 RaisePropertyChanged();
             }
-        }
-
-        private async Task Save()
-        {
-            // TODO - pub/sub event driven
-            
         }
 
         private void UpdateProgress()
@@ -98,7 +89,7 @@ namespace Inventory.Adjustment.UI.ViewModels
             {
                 if (busy)
                 {
-                    Mouse.OverrideCursor = System.Windows.Input.Cursors.AppStarting;
+                    Mouse.OverrideCursor = Cursors.AppStarting;
                 }
                 else
                 {

@@ -31,7 +31,11 @@ namespace Inventory.Adjustment.UI.Controls
         {
             InitializeComponent();
 
-            _viewModel = new InventoryItemListViewModel(SessionManager.Instance, DialogCoordinator.Instance, this.Dispatcher);
+            _viewModel = new InventoryItemListViewModel(
+                SessionManager.Instance.InventoryManager,
+                DialogCoordinator.Instance,
+                this.Dispatcher);
+
             this.DataContext = _viewModel;
 
             // call this as a post-load event so that all the fields are set
@@ -95,17 +99,18 @@ namespace Inventory.Adjustment.UI.Controls
         {
             if (sender != null)
             {
-                DataGrid grid = sender as DataGrid;
-                if (grid != null && grid.SelectedItems != null && grid.SelectedItems.Count > 0)
+                if (sender is DataGrid grid && grid.SelectedItems
+                    != null && grid.SelectedItems.Count > 0)
                 {
                     while (grid.SelectedItems.Count > 0)
                     {
                         try
                         {
-                            DataGridRow dgr = grid.ItemContainerGenerator.ContainerFromItem(grid.SelectedItems[0]) as DataGridRow;
+                            DataGridRow dgr = 
+                                grid.ItemContainerGenerator.ContainerFromItem(grid.SelectedItems[0]) as DataGridRow;
                             (dgr as DataGridRow).IsSelected = false;
                         }
-                        catch (Exception ex)
+                        catch (Exception)
                         {
                             break;
                         }

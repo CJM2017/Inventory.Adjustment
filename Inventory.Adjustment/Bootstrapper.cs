@@ -35,7 +35,7 @@ namespace Inventory.Adjustment
 
                 Task.Run(async () =>
                 {
-                    await _manager.LoadSessionData();
+                    await _manager.InventoryManager.LoadSessionData();
                 }).GetAwaiter().GetResult();
                 
                 if (_manager.Container == null)

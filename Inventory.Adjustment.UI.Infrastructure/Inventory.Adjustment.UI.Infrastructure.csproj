@@ -64,7 +64,9 @@
     <Compile Include="ApplicationEventAggregator.cs" />
     <Compile Include="Bases\BasePage.cs" />
     <Compile Include="Events\PageNavigationEvent.cs" />
+    <Compile Include="Interfaces\IInventoryManager.cs" />
     <Compile Include="Interfaces\ISessionManager.cs" />
+    <Compile Include="InventoryManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SessionManager.cs" />
   </ItemGroup>

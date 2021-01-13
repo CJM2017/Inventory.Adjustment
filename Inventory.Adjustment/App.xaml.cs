@@ -34,7 +34,7 @@ namespace Inventory.Adjustment
             {
                 this.bootstrapper.Run();
             }
-            catch (QuickBooksClientException ex)
+            catch (QuickBooksClientException)
             {
                 // Log
                 Application.Current.Shutdown();
@@ -47,7 +47,7 @@ namespace Inventory.Adjustment
             {
                 SessionManager.Instance.Dispose();
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 // LOG the error 
             }
