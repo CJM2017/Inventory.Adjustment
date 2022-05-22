@@ -57,8 +57,8 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <COMReference Include="QBFC14Lib">
-      <Guid>{AE580877-774F-40BD-AB9A-04FB7CD96DC0}</Guid>
+    <COMReference Include="QBFC15Lib">
+      <Guid>{26D049B7-5D02-4FF9-A803-C783F54A307E}</Guid>
       <VersionMajor>1</VersionMajor>
       <VersionMinor>0</VersionMinor>
       <Lcid>0</Lcid>
