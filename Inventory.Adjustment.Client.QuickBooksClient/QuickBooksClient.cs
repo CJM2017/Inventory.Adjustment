@@ -14,7 +14,7 @@ namespace Inventory.Adjustment.Client.QuickBooksClient
     using System.IO;
     using System.Xml;
     using System.Text;
-    using QBFC15Lib;
+    using QBFC16Lib;
 
     public class QuickBooksClient : IQuickBooksClient
     {

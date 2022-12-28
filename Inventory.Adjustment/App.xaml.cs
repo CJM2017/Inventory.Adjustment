@@ -10,12 +10,14 @@ namespace Inventory.Adjustment
     using System.Windows;
     using Inventory.Adjustment.Client.QuickBooksClient;
     using Inventory.Adjustment.UI.Infrastructure;
-    
+    using log4net;
+
     /// <summary>
     /// Interaction logic for App.xaml.
     /// </summary>
     public partial class App : Application
     {
+        private ILog _log;
         private Bootstrapper bootstrapper;
 
         /// <summary>
@@ -25,6 +27,9 @@ namespace Inventory.Adjustment
         protected override void OnStartup(StartupEventArgs e)
         {
             base.OnStartup(e);
+            this._log = LogManager.GetLogger(typeof(App));
+            this._log.Debug("Application is starting up...");
+
             this.ShutdownMode = ShutdownMode.OnMainWindowClose;
             this.Exit += this.OnExit;
 
@@ -34,9 +39,12 @@ namespace Inventory.Adjustment
             {
                 this.bootstrapper.Run();
             }
-            catch (QuickBooksClientException)
+            catch (QuickBooksClientException ex)
             {
                 // Log
+                this._log.Error($"{nameof(QuickBooksClientException)} occurred while running the bootstrapper...");
+                this._log.Error(ex.ToString());
+
                 Application.Current.Shutdown();
             }
         }
@@ -47,9 +55,11 @@ namespace Inventory.Adjustment
             {
                 SessionManager.Instance.Dispose();
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                // LOG the error 
+                // LOG the error
+                this._log.Error("Exception occurred while disposing the session manager...");
+                this._log.Error(ex.ToString());
             }
         }
     }
