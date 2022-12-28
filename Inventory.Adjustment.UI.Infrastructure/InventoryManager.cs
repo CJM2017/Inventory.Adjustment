@@ -68,6 +68,9 @@ namespace Inventory.Adjustment.UI.Infrastructure
             }
             catch (Exception ex)
             {
+                this._log.Error($"Exception occurred while {nameof(InventoryManager)} was loading the session...");
+                this._log.Error(ex.ToString());
+
                 throw new QuickBooksClientException(ex.ToString());
             }
         }
